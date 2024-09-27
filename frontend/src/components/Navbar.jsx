@@ -34,7 +34,7 @@ const Navbar = () => {
       <div className="frame12">
         <img src={searchGlass} alt="search" className="search" />
         <div className="frame11">
-          <p className="text">Sign Up  kjkjk</p>
+          <p className="text">Sign Up</p>
           <div className="frame1">
             <Link to = "/login">
             <p className="text login-button">Log In</p></Link>
