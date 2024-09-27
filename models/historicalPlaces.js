@@ -74,11 +74,11 @@ historicalPlacesSchema.statics.findByFields = async function(searchCriteria) {
 historicalPlacesSchema.statics.filterByTag = async function(types,periods) {
     const query = [];
     let historicalTags = null;
-    if((types === undefined || types === null || types === "") && (periods === undefined || periods === null || periods === ""))
+    if((types === undefined || types === null || types.length===0) && (periods === undefined || periods === null || periods.length===0))
         return this.find().populate('governor').populate('historicalTag').exec();
-    else if(types === undefined || types === null || types === "")
+    else if(types === undefined || types === null || types.length===0)
         historicalTags = await HistoricalTag.find({ period: { $in: periods } });
-    else if(periods === undefined || periods === null || periods === "")
+    else if(periods === undefined || periods === null || periods.length===0)
         historicalTags = await HistoricalTag.find({ type: { $in: types } });
     else
         historicalTags = await HistoricalTag.find({ type: { $in: types }, period: { $in: periods } });
