@@ -19,7 +19,7 @@ import WishlistPage from "@/components/touristWishlist.jsx";
 
 import CreateItineraryPage from "@/pages/CreateItineraryPage.jsx";
 import CreateProduct from "@/components/CreateProduct.jsx";
-import { NavbarComponent } from "@/components/navbar.jsx";
+import { NavbarComponent } from "@/components/Navbar.jsx";
 import { FooterComponent } from "@/components/footer.jsx";
 import AllHistoricalPlacesComponent from "@/pages/viewAllHistoricalPlaces.jsx";
 import { AllItinerariesComponent } from "@/components/all-trip-plans.jsx";
