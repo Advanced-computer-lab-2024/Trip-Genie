@@ -106,7 +106,9 @@ export default function AddCard() {
       await axios.put(
         "https://trip-genie-apis.vercel.app/tourist/add-card",
         cardDetails,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
       setMessage({ text: "Card added successfully", type: "success" });
@@ -162,7 +164,9 @@ export default function AddCard() {
       const token = Cookies.get("jwt");
       await axios.delete(
         `https://trip-genie-apis.vercel.app/tourist/card/${cardId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       fetchCards();
       setMessage({ text: "Card removed successfully", type: "success" });

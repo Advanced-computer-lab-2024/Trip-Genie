@@ -6,81 +6,81 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Login from "./pages/login.jsx";
-import ItineraryDetail from "./components/ItineraryDetail.jsx";
-import UpdateItinerary from "./components/UpdateItinerary.jsx";
-import UpdateProduct from "./components/UpdateProduts.jsx";
-import UpdatehistoricalPlace from "./components/UpdateHP.jsx";
-import ProductDetail from "./components/ProductDetail.jsx";
-import ShoppingCart from "./components/touristCart.jsx";
-import WishlistPage from "./components/touristWishlist.jsx";
+import Home from "@/pages/Home.jsx";
+import Login from "@/pages/login.jsx";
+import ItineraryDetail from "@/components/ItineraryDetail.jsx";
+import UpdateItinerary from "@/components/UpdateItinerary.jsx";
+import UpdateProduct from "@/components/UpdateProduts.jsx";
+import UpdatehistoricalPlace from "@/components/UpdateHP.jsx";
+import ProductDetail from "@/components/ProductDetail.jsx";
+import ShoppingCart from "@/components/touristCart.jsx";
+import WishlistPage from "@/components/touristWishlist.jsx";
 // import TouristPurchases from "./components/touristPurchases.jsx";
 
-import CreateItineraryPage from "./pages/CreateItineraryPage.jsx";
-import CreateProduct from "./components/CreateProduct.jsx";
-import { NavbarComponent } from "./components/navbar.jsx";
-import { FooterComponent } from "./components/footer.jsx";
-import AllHistoricalPlacesComponent from "./pages/viewAllHistoricalPlaces.jsx";
-import { AllItinerariesComponent } from "./components/all-trip-plans.jsx";
-import { MyItinerariesComponent } from "./components/myItineraries.jsx";
-import { MyProducts } from "./components/myProducts.jsx";
-import HistoricalPlaceDetail from "./components/HistoricalPlaceDetail.jsx";
-import ViewComplaints from "./components/ViewComplaints.jsx";
-import { ViewComplaintDetails } from "./components/ViewComplaintDetails.jsx";
+import CreateItineraryPage from "@/pages/CreateItineraryPage.jsx";
+import CreateProduct from "@/components/CreateProduct.jsx";
+import { NavbarComponent } from "@/components/navbar.jsx";
+import { FooterComponent } from "@/components/footer.jsx";
+import AllHistoricalPlacesComponent from "@/pages/viewAllHistoricalPlaces.jsx";
+import { AllItinerariesComponent } from "@/components/all-trip-plans.jsx";
+import { MyItinerariesComponent } from "@/components/myItineraries.jsx";
+import { MyProducts } from "@/components/myProducts.jsx";
+import HistoricalPlaceDetail from "@/components/HistoricalPlaceDetail.jsx";
+import ViewComplaints from "@/components/ViewComplaints.jsx";
+import { ViewComplaintDetails } from "@/components/ViewComplaintDetails.jsx";
 
-import { AllProducts } from "./components/all-products.jsx";
-import { SignupForm } from "./pages/SignUp.jsx";
-import TourGuideItineraryReport from "./pages/TourGuideReport.jsx";
-import AdvertiserReport from "./components/advertiser-report.jsx";
-import ProductReport from "./components/ProductReportSellerForSeller.jsx"
-import StockReport from "./pages/StockReport.jsx";
+import { AllProducts } from "@/components/all-products.jsx";
+import { SignupForm } from "@/pages/SignUp.jsx";
+import TourGuideItineraryReport from "@/pages/TourGuideReport.jsx";
+import AdvertiserReport from "@/components/advertiser-report.jsx";
+import ProductReport from "@/components/ProductReportSellerForSeller.jsx";
+import StockReport from "@/pages/StockReport.jsx";
 
-import SellerNotifications from "./pages/SellerNotifications.jsx";
-import AdminNotifications from "./pages/AdminNotifications.jsx";
-import AdvertiserNotifications from "./pages/AdvertiserNotifications.jsx";
-import TourGuideNotifications from "./pages/TourGuideNotifications.jsx";
-import TouristNotifications from "./pages/TouristNotifications.jsx";
+import SellerNotifications from "@/pages/SellerNotifications.jsx";
+import AdminNotifications from "@/pages/AdminNotifications.jsx";
+import AdvertiserNotifications from "@/pages/AdvertiserNotifications.jsx";
+import TourGuideNotifications from "@/pages/TourGuideNotifications.jsx";
+import TouristNotifications from "@/pages/TouristNotifications.jsx";
 
-import { Dashboard } from "./pages/AdminDashProMax.jsx";
-import CreateHpPage from "./pages/CreateHpPage.jsx";
-import Checkout from "./pages/checkout.jsx";
-import CheckoutPage from "./pages/checkout2.jsx";
-import AllActivities from "./components/all-activities.jsx";
-import MyActivitiesComponent from "./pages/myActivities.jsx";
-import ActivityDetail from "./pages/SingleActivity.jsx";
-import FileComplaint from "./pages/FileComplaint.jsx";
-import OrdersPage from "./pages/touristOrders.jsx";
-// import {Cart} from "./pages/AccountTourist.jsx";
-// import {RedeemPoints} from "./pages/AccountTourist.jsx";
-// import {AccountInfo} from "./pages/AccountTourist.jsx";
-import AccountTourist from "./pages/AccountTourist.jsx";
+import { Dashboard } from "@/pages/AdminDashProMax.jsx";
+import CreateHpPage from "@/pages/CreateHpPage.jsx";
+import Checkout from "@/pages/checkout.jsx";
+import CheckoutPage from "@/pages/checkout2.jsx";
+import AllActivities from "@/components/all-activities.jsx";
+import MyActivitiesComponent from "@/pages/myActivities.jsx";
+import ActivityDetail from "@/pages/SingleActivity.jsx";
+import FileComplaint from "@/pages/FileComplaint.jsx";
+import OrdersPage from "@/pages/touristOrders.jsx";
+// import {Cart} from "@/pages/AccountTourist.jsx";
+// import {RedeemPoints} from "@/pages/AccountTourist.jsx";
+// import {AccountInfo} from "@/pages/AccountTourist.jsx";
+import AccountTourist from "@/pages/AccountTourist.jsx";
 
-import UpdateActivity from "./components/UpdateActivity.jsx";
-import CreateActivity from "./pages/CreateActivity.jsx";
-import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
-import CreateHtpage from "./pages/CreateHtpage.jsx";
-import NotFound from "./components/NotFound.jsx";
-import SettingsPage from "./pages/SettingsPage.jsx";
-import TouristActivities from "./pages/TouristActivities.jsx";
-import ProductArchive from "./components/product-archive.jsx";
-import BookingPage from "./pages/FlightBooking.jsx";
-import FileViewer from "./components/FileViewer.jsx";
-import HotelBookingPage from "./pages/HotelBooking.jsx";
-import UserApproval from "./components/userApproval.jsx";
-import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
-import FAQs from "./pages/FAQs.jsx";
-import TermsandCondition from "./pages/TermsandCondition.jsx";
+import UpdateActivity from "@/components/UpdateActivity.jsx";
+import CreateActivity from "@/pages/CreateActivity.jsx";
+import { ProtectedRoute } from "@/components/ProtectedRoute.jsx";
+import CreateHtpage from "@/pages/CreateHtpage.jsx";
+import NotFound from "@/components/NotFound.jsx";
+import SettingsPage from "@/pages/SettingsPage.jsx";
+import TouristActivities from "@/pages/TouristActivities.jsx";
+import ProductArchive from "@/components/product-archive.jsx";
+import BookingPage from "@/pages/FlightBooking.jsx";
+import FileViewer from "@/components/FileViewer.jsx";
+import HotelBookingPage from "@/pages/HotelBooking.jsx";
+import UserApproval from "@/components/userApproval.jsx";
+import PrivacyPolicy from "@/pages/PrivacyPolicy.jsx";
+import FAQs from "@/pages/FAQs.jsx";
+import TermsandCondition from "@/pages/TermsandCondition.jsx";
 import { DeleteAccount } from "@/components/DeleteAccPopout.jsx";
-import AdminGovernorPage from "./pages/AdminGovernorPage";
-import TagsPage from "./pages/TagsPage";
-import CategoriesPage from "./pages/CategoriesPage";
-import TransportationPage from "./pages/TransportationPage.jsx";
-import MyHistoricalPlacesComponent from "./pages/myHP.jsx";
-import HotelSearch from "./components/hotel-search.jsx";
-import HotelDetails from "./pages/HotelDetails.jsx";
-import ActivityReport from "./components/ActivityReport.jsx";
-import TouristActivitiesPage from "./pages/TouristActivitiesPage";
+import AdminGovernorPage from "@/pages/AdminGovernorPage";
+import TagsPage from "@/pages/TagsPage";
+import CategoriesPage from "@/pages/CategoriesPage";
+import TransportationPage from "@/pages/TransportationPage.jsx";
+import MyHistoricalPlacesComponent from "@/pages/myHP.jsx";
+import HotelSearch from "@/components/hotel-search.jsx";
+import HotelDetails from "@/pages/HotelDetails.jsx";
+import ActivityReport from "@/components/ActivityReport.jsx";
+import TouristActivitiesPage from "@/pages/TouristActivitiesPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -415,7 +415,7 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
-             <Route
+          <Route
             path="/seller-report"
             element={
               <ProtectedRoute allowedRoles={["seller"]}>
@@ -423,7 +423,7 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
-             <Route
+          <Route
             path="/seller-stock-report"
             element={
               <ProtectedRoute allowedRoles={["seller"]}>
