@@ -58,7 +58,7 @@ const HistoricalPlaceCard = ({
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/populate`,
+        `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
           headers: {
@@ -86,7 +86,7 @@ const HistoricalPlaceCard = ({
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/${userRole}/getCurrency/${historicalPlace.currency}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${historicalPlace.currency}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -258,12 +258,15 @@ export default function MyHistoricalPlacesComponent() {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -280,7 +283,7 @@ export default function MyHistoricalPlacesComponent() {
       const token = Cookies.get("jwt");
       const role = getUserRole();
       const response = await fetch(
-        `http://localhost:4000/${role}/historical-places?myPlaces=true`,
+        `https://trip-genie-apis.vercel.app/${role}/historical-places?myPlaces=true`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -303,7 +306,9 @@ export default function MyHistoricalPlacesComponent() {
   const fetchTypesAndPeriods = async () => {
     try {
       const [typesResponse] = await Promise.all([
-        axios.get("http://localhost:4000/api/getAllHistoricalTypes"),
+        axios.get(
+          "https://trip-genie-apis.vercel.app/api/getAllHistoricalTypes"
+        ),
       ]);
       setTypesOptions(typesResponse.data);
     } catch (error) {
@@ -338,7 +343,7 @@ export default function MyHistoricalPlacesComponent() {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/historical-places/${historicalPlaceToDelete.id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${historicalPlaceToDelete.id}`,
         {
           method: "DELETE",
           headers: {
@@ -370,7 +375,7 @@ export default function MyHistoricalPlacesComponent() {
     try {
       const role = getUserRole();
       const url = new URL(
-        `http://localhost:4000/${role}/historical-places?myPlaces=true`
+        `https://trip-genie-apis.vercel.app/${role}/historical-places?myPlaces=true`
       );
       if (searchTerm) url.searchParams.append("searchBy", searchTerm);
       if (selectedTypes.length > 0)

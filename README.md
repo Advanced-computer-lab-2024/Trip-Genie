@@ -152,14 +152,17 @@ const Login = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:4000/auth/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/auth/login",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -428,7 +431,7 @@ const CreateProductForm = () => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          `http://localhost:4000/${userRole}/currencies`,
+          `https://trip-genie-apis.vercel.app/${userRole}/currencies`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -485,7 +488,7 @@ const CreateProductForm = () => {
     const token = Cookies.get("jwt");
     try {
       const response = await axios.post(
-        `http://localhost:4000/${userRole}/products`,
+        `https://trip-genie-apis.vercel.app/${userRole}/products`,
         formData,
         {
           headers: {
@@ -947,47 +950,30 @@ The project follows modern web development practices and conventions:
 ### For Tourists
 
 - **Login**: Login using username and password.
-  
 - **Forget password**: Forget password using an OTP sent to email.
-  
 - **Manage profile**: View my profile, edit my profile details, delete account, change password and currency.
 
 - **Manage wallet**: View my wallet, previous wallet transactions and redeem loyalty points for wallet money.
 
 - **Loyalty points**: Receive loyalty points upon payment for any event/itinerary.
-  
 - **Delete account**: Request account to be deleted off the system.
-  
 - **Joyride**: View a step-by-step guide on the steps I must take in order to begin a vacation.
-  
 - **Select preferences**: Select preferences for a vacation.
-  
 - **Booking**: Book flights, hotels, transportation, itineraries or activities.
 
 - **Cancel booking**: Cancel booking and view refunded money in wallet.
-  
 - **Share events**: Share an acitivity, historical places or itinerary via copy link or email.
-  
 - **Rate/comment**: Rate/comment on tourguides, itineraries and activities attended or products purchased.
-  
 - **Payment**: Pay online for an event using credit card/debit card or from wallet.
-  
 - **Save**: Bookmark events so to view them later.
-  
 - **Manage wishlist**: View, add and remove from my wishlist of products.
-  
 - **Manage cart**: Add, remove and change number of items of a product in cart.
-  
 - **Manage notifications**: View notifications and mark them as read.
-  
 - **Complaints**: File a complaint and view a list of my complaints.
-  
 - **Checkout**: Checkout order and choose delivery address and payment type and use promocode if applicable.
 
 - **View orders**: View a list of orders and each order details and status.
-  
 - **Cancel order**: Cancel order and view refunded money in wallet.
-
 
 ### For Tour Guides
 
@@ -1032,7 +1018,6 @@ The project follows modern web development practices and conventions:
 - **View My Reviews:** Access and review feedback provided by users, including ratings and detailed comments, after attending an activity.
 - **View Legal Information:** Access the FAQ, Terms and Conditions, and Privacy Policy.
 
-
 ### For Tourism Governors
 
 - **View All Historical Places:** Navigate to the "Historical Places" dropdown in the navbar and select "All Historical Places" to explore all the historical places available on the platform.
@@ -1052,36 +1037,35 @@ The project follows modern web development practices and conventions:
   - Search by name or location
   - Filter by ticket price range
 
-
 ### For Admins
 
-- **View Registration Documents**: Browse documents uploaded by tour guides, advertisers, and sellers during registration.  
-- **Approve/Reject Registrations**: Accept or reject tour guides, advertisers, and sellers based on their uploaded documents.  
+- **View Registration Documents**: Browse documents uploaded by tour guides, advertisers, and sellers during registration.
+- **Approve/Reject Registrations**: Accept or reject tour guides, advertisers, and sellers based on their uploaded documents.
 
-- **Delete Accounts**: Remove accounts from the system.  
+- **Delete Accounts**: Remove accounts from the system.
 - **Add Admin or Tourism Governor**: Create a new Admin or Tourism Governor account
 
-- **View Sales Report**: Access detailed revenue reports from events, itineraries, and gift shop sales.  
-- **Filter Sales Reports**: Narrow down reports by product, date, or month.  
+- **View Sales Report**: Access detailed revenue reports from events, itineraries, and gift shop sales.
+- **Filter Sales Reports**: Narrow down reports by product, date, or month.
 - **Manage Activity Categories**: Manage categories for activities.
 
 - **Manage Preference Tags**: Manage tags like beaches or family-friendly options.
-- **Flag Events/Itineraries**: Mark events or itineraries as inappropriate.  
+- **Flag Events/Itineraries**: Mark events or itineraries as inappropriate.
 - **View User Statistics**: See total users and page visits per day.
-- **View Complaints**: Browse all complaints with their statuses (pending/resolved).  
-- **Complaint Details**: Access detailed information about selected complaints.  
-- **Manage Complaints**: Mark complaints as pending or resolved, reply to complaints, and sort/filter them by date or status.  
+- **View Complaints**: Browse all complaints with their statuses (pending/resolved).
+- **Complaint Details**: Access detailed information about selected complaints.
+- **Manage Complaints**: Mark complaints as pending or resolved, reply to complaints, and sort/filter them by date or status.
 
-- **View Products**: See product details, including available quantity, sales, and ratings.  
-- **Search Products**: Find products by name.  
-- **Filter and Sort Products**: Narrow down products by price or ratings.  
-- **Add New Products**: Add products with details, price, quantity, and images.  
-- **Manage Product Details**: Manage product details, price, or quantity.  
-- **Archive/Unarchive Products**: Temporarily hide or restore products.  
+- **View Products**: See product details, including available quantity, sales, and ratings.
+- **Search Products**: Find products by name.
+- **Filter and Sort Products**: Narrow down products by price or ratings.
+- **Add New Products**: Add products with details, price, quantity, and images.
+- **Manage Product Details**: Manage product details, price, or quantity.
+- **Archive/Unarchive Products**: Temporarily hide or restore products.
 
-- **Stock Notifications**: Receive system and email alerts when a product is out of stock.  
+- **Stock Notifications**: Receive system and email alerts when a product is out of stock.
 
-- **Create Promo Codes**: Generate discount codes for use in the system.  
+- **Create Promo Codes**: Generate discount codes for use in the system.
 
 ## Installation
 
@@ -1609,7 +1593,6 @@ test("GET /itinerary", async () => {
 });
 ```
 
-
 <details><summary>
   Here are our test cases that will run with npm run test:
 </summary>
@@ -1985,10 +1968,9 @@ test("DELETE /tourist/delete-account - should delete tourist account", async () 
 
 </details>
 
-Test examples using postman: 
+Test examples using postman:
 ![Screenshot 2024-12-19 190307](https://github.com/user-attachments/assets/ed9ff080-5e22-4d38-b3d6-26f388a9a6c0)
 ![Screenshot 2024-12-19 190506](https://github.com/user-attachments/assets/5b334787-a2a1-4295-97de-92b57221d36f)
-
 
 Postman Collection link with 20 more tests: [Postman Collection Link](https://sam-and-aby.postman.co/workspace/Sam-and-Aby-Workspace~71afcd01-1885-4c49-8c9e-9f419f489cae/collection/38513772-4b45eeb0-aff2-457b-aa8e-8c278217d4bd?action=share&creator=38513772)
 
@@ -2038,7 +2020,7 @@ Link to the exported collections with the test scripts: [Exported Collection](./
    - **View your Wishlist:** Quickly view and manage the items you’ve added by clicking the heart icon located in the top-right of the navbar
 
    - **Manage profile settings:** To view and manage your preferences, wallet, wallet history, redeem loyalty points and notifications, click on the burger button (☰) at the top right corner of the navbar. Once clicked, select the 'My Account' tab.
-   
+
    - **Get Assistance and Resolve Issues:** Under the 'Help and Support' tab, accessible by clicking the burger button (☰) at the top right corner of the navbar, you can view the FAQs for common queries or submit complaints for further assistance.
 
    - **Manage your orders:** You can access your orders (pending, delivered, cancelled) by clicking the burger button (☰) at the top right corner of the navbar, then selecting 'Orders' from the menu.
@@ -2148,10 +2130,9 @@ Link to the exported collections with the test scripts: [Exported Collection](./
 
    - **View Sales Reports:** Stay updated on your performance by checking "Sales Report" in the navbar. This section provides insights into bookings and revenue generated by your activities.
 
-    - **Enhanced Search and Filtering:** Utilize the platform’s Search, Filter, and Sort features to quickly find and manage the information you need.
+   - **Enhanced Search and Filtering:** Utilize the platform’s Search, Filter, and Sort features to quickly find and manage the information you need.
 
 #### For Tourism Governors
-
 
 1. **Request Joining from An Admin:**
 
@@ -2194,61 +2175,71 @@ Link to the exported collections with the test scripts: [Exported Collection](./
      - Filter by historical place type
      - Search by name or location
 
-#### For Admins  
+#### For Admins
 
-1. **Login:**  
-   - Access the admin portal by logging in with your credentials.  
-   - Use the navbar to access account settings, view notifications, and update your password if needed.  
+1. **Login:**
 
-2. **Dashboard Overview:**  
-   - The first page displays a dashboard with an overview of total users, new registrations, total revenue, and sales.  
+   - Access the admin portal by logging in with your credentials.
+   - Use the navbar to access account settings, view notifications, and update your password if needed.
 
-3. **Accounts Management:**  
-   - Navigate to the "Accounts" section in the sidebar to:  
-     - **Review Registrations**: Approve or reject user registrations.  
-     - **Manage Accounts**: Delete existing accounts.  
-     - **Add Admin/Governor**: Create accounts with unique credentials.  
+2. **Dashboard Overview:**
 
-4. **Product Management:**  
-   - Click on "Product Management" in the sidebar to:  
-     - View **My Products**, **All Products**, and **Archived Products**.  
-     - **Create Product**: Add new products with details, pricing, and images.  
+   - The first page displays a dashboard with an overview of total users, new registrations, total revenue, and sales.
 
-5. **Activity Management:**  
-   - Access "Activity Management" from the sidebar to:  
-     - View **All Activities** available on the platform.  
-     - **Manage Categories**: Create, update, or delete activity categories.  
-     - **Manage Tags**: Add or modify preference tags like family-friendly or historic areas.  
+3. **Accounts Management:**
 
-6. **Itinerary Management:**  
-   - Use the "Itineraries" tab to:  
-     - View all itineraries.  
-     - Flag itineraries as appropriate or inappropriate.  
+   - Navigate to the "Accounts" section in the sidebar to:
+     - **Review Registrations**: Approve or reject user registrations.
+     - **Manage Accounts**: Delete existing accounts.
+     - **Add Admin/Governor**: Create accounts with unique credentials.
 
-7. **Historical Places:**  
-   - Access the "Historical Places" tab to view all listed historical sites.  
+4. **Product Management:**
 
-8. **Promo Codes:**  
-   - Go to the "Promo Codes" tab to:  
-     - View **All Promo Codes**.  
-     - **Create Promo Code**: Generate new discount codes.  
+   - Click on "Product Management" in the sidebar to:
+     - View **My Products**, **All Products**, and **Archived Products**.
+     - **Create Product**: Add new products with details, pricing, and images.
 
-9. **Reports:**  
-   - Navigate to the "Reports" tab to access:  
-     - **Itineraries Report**: Performance and revenue of itineraries.  
-     - **Activities Report**: Insights on activities booked.  
-     - **My Products Sales Report**: Revenue from your products.  
-     - **My Products Stock Report**: Stock levels of your products.  
-     - **Seller's Products Report**: Performance of products from sellers.  
-     - **User Statistics**: Data on total users and new registrations.  
+5. **Activity Management:**
 
-10. **Complaints Management:**  
-    - Open the "Complaints" tab to:  
-      - View, manage, and reply to user complaints.  
-      - Mark complaints as resolved or pending.  
+   - Access "Activity Management" from the sidebar to:
+     - View **All Activities** available on the platform.
+     - **Manage Categories**: Create, update, or delete activity categories.
+     - **Manage Tags**: Add or modify preference tags like family-friendly or historic areas.
 
-11. **Notifications:**  
-    - Use the "Notifications" tab to view all system alerts, including stock updates and flagged events.  
+6. **Itinerary Management:**
+
+   - Use the "Itineraries" tab to:
+     - View all itineraries.
+     - Flag itineraries as appropriate or inappropriate.
+
+7. **Historical Places:**
+
+   - Access the "Historical Places" tab to view all listed historical sites.
+
+8. **Promo Codes:**
+
+   - Go to the "Promo Codes" tab to:
+     - View **All Promo Codes**.
+     - **Create Promo Code**: Generate new discount codes.
+
+9. **Reports:**
+
+   - Navigate to the "Reports" tab to access:
+     - **Itineraries Report**: Performance and revenue of itineraries.
+     - **Activities Report**: Insights on activities booked.
+     - **My Products Sales Report**: Revenue from your products.
+     - **My Products Stock Report**: Stock levels of your products.
+     - **Seller's Products Report**: Performance of products from sellers.
+     - **User Statistics**: Data on total users and new registrations.
+
+10. **Complaints Management:**
+
+    - Open the "Complaints" tab to:
+      - View, manage, and reply to user complaints.
+      - Mark complaints as resolved or pending.
+
+11. **Notifications:**
+    - Use the "Notifications" tab to view all system alerts, including stock updates and flagged events.
 
 ## Contribute
 
@@ -2345,7 +2336,6 @@ Link to the exported collections with the test scripts: [Exported Collection](./
 ## License
 
 [TRIP_GENIE_LICENSE](./LICENSE)
-
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

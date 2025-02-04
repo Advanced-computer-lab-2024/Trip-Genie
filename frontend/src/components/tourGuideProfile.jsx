@@ -12,13 +12,13 @@ import {
   addMonths,
   addYears,
   startOfYear,
-  formatDistanceToNow
+  formatDistanceToNow,
 } from "date-fns";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import PasswordChanger from "@/components/Passwords";
-import { Separator } from "@/components/ui/separator"
-import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';  // Thumbs up and down icons for liked and disliked
-import Flag from 'react-world-flags'
+import { Separator } from "@/components/ui/separator";
+import { FaThumbsUp, FaThumbsDown } from "react-icons/fa"; // Thumbs up and down icons for liked and disliked
+import Flag from "react-world-flags";
 import {
   XCircle,
   CheckCircle,
@@ -53,11 +53,9 @@ import {
   UserRound,
   ThumbsDown,
   ThumbsUp,
-
 } from "lucide-react";
 import { X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 
 import { Button } from "@/components/ui/button";
 import PhoneInput from "react-phone-input-2";
@@ -83,7 +81,14 @@ import "react-phone-input-2/lib/style.css";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { ImageCropper } from "@/components/ImageCropper";
 import { Modal } from "@/components/Modal";
-import { Toast, ToastClose, ToastDescription, ToastTitle, ToastProvider, ToastViewport } from "@/components/ui/toast";
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastTitle,
+  ToastProvider,
+  ToastViewport,
+} from "@/components/ui/toast";
 import {
   Area,
   AreaChart,
@@ -93,7 +98,12 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const phoneValidator = (value) => {
   // Check if the input starts with a "+"
@@ -122,8 +132,9 @@ const StarRating = ({ rating, readOnly = true }) => {
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
-          className={`w-5 h-5 ${readOnly ? "" : "cursor-pointer"} ${star <= rating ? "text-[#1A3B47] fill-current" : "text-gray-300"
-            }`}
+          className={`w-5 h-5 ${readOnly ? "" : "cursor-pointer"} ${
+            star <= rating ? "text-[#1A3B47] fill-current" : "text-gray-300"
+          }`}
           aria-label={`${star} star${star !== 1 ? "s" : ""}`}
         />
       ))}
@@ -151,19 +162,25 @@ const PreviousWorks = ({ works, onEdit, onRemove, onAdd, onView }) => {
       <CardContent className="bg-gray-50 rounded-lg">
         <ScrollArea className="max-h-[200px] overflow-y-auto pt-1">
           {works.length === 0 ? (
-            <p className="text-[#1A3B47] p-4 text-center">No works to display yet.</p>
+            <p className="text-[#1A3B47] p-4 text-center">
+              No works to display yet.
+            </p>
           ) : (
             <ul className="divide-y p-0 divide-gray-200">
               {works.map((work, index) => (
-                <li key={index} className="p-3 bg-white rounded-lg mb-3 shadow-sm hover:shadow-md transition-shadow relative">
+                <li
+                  key={index}
+                  className="p-3 bg-white rounded-lg mb-3 shadow-sm hover:shadow-md transition-shadow relative"
+                >
                   <div className="mb-3">
                     <h3 className="text-lg font-semibold">{work.title}</h3>
                     <p className="text-sm text-gray-500">{work.company}</p>
                     <p className="text-sm text-gray-500">{work.duration}</p>
-                    <p className="text-sm">{work.description.substring(0, 25)}...</p>
+                    <p className="text-sm">
+                      {work.description.substring(0, 25)}...
+                    </p>
                   </div>
                   <div className=" pt-1 mt-3 border-t border-gray-100">
-
                     <div className="flex justify-between w-full">
                       <Button
                         onClick={() => onView(index)}
@@ -190,9 +207,7 @@ const PreviousWorks = ({ works, onEdit, onRemove, onAdd, onView }) => {
                         Delete
                       </Button>
                     </div>
-
                   </div>
-
                 </li>
               ))}
             </ul>
@@ -233,7 +248,9 @@ const Comments = ({ comments, tourGuide }) => {
   };
 
   const handleToggleComment = (index) => {
-    setExpandedCommentIndex((prevIndex) => (prevIndex === index ? null : index));
+    setExpandedCommentIndex((prevIndex) =>
+      prevIndex === index ? null : index
+    );
   };
 
   const handleCommentClick = (comment) => {
@@ -271,7 +288,9 @@ const Comments = ({ comments, tourGuide }) => {
       <CardContent>
         <ScrollArea className="max-h-[200px] overflow-y-auto pt-1">
           {filteredComments.length === 0 ? (
-            <p className="text-[#1A3B47] p-4 text-center">No comments to display yet.</p>
+            <p className="text-[#1A3B47] p-4 text-center">
+              No comments to display yet.
+            </p>
           ) : (
             <ul className="divide-y divide-gray-300">
               {filteredComments.map((comment, index) => (
@@ -293,13 +312,20 @@ const Comments = ({ comments, tourGuide }) => {
                           />
                         ) : (
                           <div className="w-9 h-9 flex items-center justify-center bg-gray-300 rounded-full mr-2">
-                            <UserRound strokeWidth={2.25} className="text-white w-5 h-5" />
+                            <UserRound
+                              strokeWidth={2.25}
+                              className="text-white w-5 h-5"
+                            />
                           </div>
                         )}
                         {/* Username and Date under the username */}
                         <div>
-                          <h3 className="text-base font-semibold">{comment.username}</h3>
-                          <p className="text-xs text-gray-500">{formatCommentDate(comment.date)}</p>
+                          <h3 className="text-base font-semibold">
+                            {comment.username}
+                          </h3>
+                          <p className="text-xs text-gray-500">
+                            {formatCommentDate(comment.date)}
+                          </p>
                         </div>
                       </div>
                       {/* Rating on the right side */}
@@ -308,11 +334,12 @@ const Comments = ({ comments, tourGuide }) => {
 
                     {/* Display Liked or Disliked content (truncated to 20 chars and add "..." if more than 20 characters) */}
                     <p className="text-sm mt-2">
-                      {(
-                        comment.content.liked || comment.content.disliked
-                      ).length > 20
-                        ? (comment.content.liked || comment.content.disliked).substring(0, 20) + "..."
-                        : (comment.content.liked || comment.content.disliked)}
+                      {(comment.content.liked || comment.content.disliked)
+                        .length > 20
+                        ? (
+                            comment.content.liked || comment.content.disliked
+                          ).substring(0, 20) + "..."
+                        : comment.content.liked || comment.content.disliked}
                     </p>
                   </div>
                 </li>
@@ -344,13 +371,20 @@ const Comments = ({ comments, tourGuide }) => {
                   />
                 ) : (
                   <div className="w-12 h-12 flex items-center justify-center bg-gray-300 rounded-full mr-3">
-                    <UserRound strokeWidth={2.25} className="text-white w-7 h-7" />
+                    <UserRound
+                      strokeWidth={2.25}
+                      className="text-white w-7 h-7"
+                    />
                   </div>
                 )}
                 {/* Username and Date */}
                 <div>
-                  <h3 className="text-lg font-semibold">{selectedComment.username}</h3>
-                  <p className="text-sm text-gray-500">{formatCommentDate(selectedComment.date)}</p>
+                  <h3 className="text-lg font-semibold">
+                    {selectedComment.username}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    {formatCommentDate(selectedComment.date)}
+                  </p>
                 </div>
                 {/* Rating on the right */}
                 <div className="ml-auto">
@@ -365,11 +399,13 @@ const Comments = ({ comments, tourGuide }) => {
               <div>
                 <p className="flex items-center">
                   <ThumbsUp className="text-green-500 mr-2 w-4 h-4" />
-                  <strong className="mr-2">Liked: </strong> {selectedComment.content.liked}
+                  <strong className="mr-2">Liked: </strong>{" "}
+                  {selectedComment.content.liked}
                 </p>
                 <p className="flex items-center mt-2">
                   <ThumbsDown className="text-red-500 mr-2 w-4 h-4" />
-                  <strong className="mr-2">Disliked: </strong> {selectedComment.content.disliked}
+                  <strong className="mr-2">Disliked: </strong>{" "}
+                  {selectedComment.content.disliked}
                 </p>
               </div>
             </div>
@@ -378,13 +414,18 @@ const Comments = ({ comments, tourGuide }) => {
 
         {/* All Comments Popup */}
         {isAllCommentsPopupOpen && (
-          <Dialog open={isAllCommentsPopupOpen} onOpenChange={setIsAllCommentsPopupOpen}>
+          <Dialog
+            open={isAllCommentsPopupOpen}
+            onOpenChange={setIsAllCommentsPopupOpen}
+          >
             <DialogContent className="max-w-2xl p-6">
               <DialogHeader>
                 <DialogTitle>All Reviews</DialogTitle>
                 <DialogDescription>
                   <div className="text-center my-4">
-                    <span className="text-gray-500 uppercase text-sm">Overall</span>
+                    <span className="text-gray-500 uppercase text-sm">
+                      Overall
+                    </span>
                     <div className="flex justify-center items-center">
                       <span className="text-4xl font-bold">
                         {tourGuide.rating ? tourGuide.rating.toFixed(1) : 0}
@@ -392,11 +433,26 @@ const Comments = ({ comments, tourGuide }) => {
                       <div className="ml-2 flex items-center">
                         {[...Array(5)].map((_, i) => {
                           if (i < Math.floor(tourGuide.rating)) {
-                            return <Star key={i} className="w-6 h-6 text-[#1A3B47]" />;
-                          } else if (i === Math.floor(tourGuide.rating) && tourGuide.rating % 1 >= 0.5) {
-                            return <StarHalf key={i} className="w-6 h-6 text-[#1A3B47]" />;
+                            return (
+                              <Star
+                                key={i}
+                                className="w-6 h-6 text-[#1A3B47]"
+                              />
+                            );
+                          } else if (
+                            i === Math.floor(tourGuide.rating) &&
+                            tourGuide.rating % 1 >= 0.5
+                          ) {
+                            return (
+                              <StarHalf
+                                key={i}
+                                className="w-6 h-6 text-[#1A3B47]"
+                              />
+                            );
                           } else {
-                            return <Star key={i} className="w-6 h-6 text-gray-300" />;
+                            return (
+                              <Star key={i} className="w-6 h-6 text-gray-300" />
+                            );
                           }
                         })}
                       </div>
@@ -412,7 +468,11 @@ const Comments = ({ comments, tourGuide }) => {
                   {/* Filter by Rating Buttons */}
                   <div className="flex justify-center space-x-2 mb-4">
                     <button
-                      className={`px-3 py-2 rounded-md ${filteredRating === 0 ? "bg-[#388A94] text-white" : "bg-gray-200"}`}
+                      className={`px-3 py-2 rounded-md ${
+                        filteredRating === 0
+                          ? "bg-[#388A94] text-white"
+                          : "bg-gray-200"
+                      }`}
                       onClick={() => handleFilterRating(0, tourGuide.comments)}
                     >
                       All
@@ -420,8 +480,14 @@ const Comments = ({ comments, tourGuide }) => {
                     {[5, 4, 3, 2, 1].map((star) => (
                       <button
                         key={star}
-                        className={`px-3 py-2 rounded-md ${filteredRating === star ? "bg-[#388A94] text-white" : "bg-gray-200"}`}
-                        onClick={() => handleFilterRating(star, tourGuide.comments)}
+                        className={`px-3 py-2 rounded-md ${
+                          filteredRating === star
+                            ? "bg-[#388A94] text-white"
+                            : "bg-gray-200"
+                        }`}
+                        onClick={() =>
+                          handleFilterRating(star, tourGuide.comments)
+                        }
                       >
                         {star} Star{star > 1 ? "s" : ""}
                       </button>
@@ -440,7 +506,9 @@ const Comments = ({ comments, tourGuide }) => {
                       </Avatar>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <h4 className="text-lg font-semibold">{review.username}</h4>
+                          <h4 className="text-lg font-semibold">
+                            {review.username}
+                          </h4>
                           <StarRating rating={review.rating} />
                         </div>
 
@@ -460,20 +528,23 @@ const Comments = ({ comments, tourGuide }) => {
                         </p>
 
                         {/* Only show "Show more" if the comment length exceeds 100 characters */}
-                        {(review.content.liked && review.content.disliked) && (
+                        {review.content.liked && review.content.disliked && (
                           <button
                             onClick={() => handleToggleComment(index)}
                             className="text-blue-500 mt-2 hover:underline"
                           >
-                            {expandedCommentIndex === index ? "Show less" : "Show more"}
+                            {expandedCommentIndex === index
+                              ? "Show less"
+                              : "Show more"}
                           </button>
                         )}
-
                       </div>
                     </div>
                   ))
                 ) : (
-                  <p className="text-center text-gray-500">No reviews for this rating.</p>
+                  <p className="text-center text-gray-500">
+                    No reviews for this rating.
+                  </p>
                 )}
               </div>
 
@@ -488,13 +559,10 @@ const Comments = ({ comments, tourGuide }) => {
             </DialogContent>
           </Dialog>
         )}
-
       </CardContent>
     </Card>
   );
 };
-
-
 
 const formatCommentDate = (date) => {
   const commentDate = new Date(date);
@@ -533,7 +601,12 @@ export function TourGuideProfileComponent() {
   const [showFullComment, setShowFullComment] = useState(false);
   const [base64Image, setBase64Image] = useState(null);
 
-  const [currentWork, setCurrentWork] = useState({ title: '', company: '', duration: '', description: '' });
+  const [currentWork, setCurrentWork] = useState({
+    title: "",
+    company: "",
+    duration: "",
+    description: "",
+  });
   const [showWorkDialog, setShowWorkDialog] = useState(false);
   const [currentWorkIndex, setCurrentWorkIndex] = useState(null);
 
@@ -542,10 +615,11 @@ export function TourGuideProfileComponent() {
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('success');
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
 
-  const [isPreviousWorksPopupOpen, setIsPreviousWorksPopupOpen] = useState(false);
+  const [isPreviousWorksPopupOpen, setIsPreviousWorksPopupOpen] =
+    useState(false);
 
   const handlePreviousWorksClick = () => {
     setIsPreviousWorksPopupOpen(true);
@@ -555,7 +629,7 @@ export function TourGuideProfileComponent() {
     setIsPreviousWorksPopupOpen(false);
   };
 
-  const showToast = (message, type = 'success') => {
+  const showToast = (message, type = "success") => {
     setToastMessage(message);
     setToastType(type);
     setIsToastOpen(true);
@@ -577,9 +651,8 @@ export function TourGuideProfileComponent() {
     setViewedWork(null);
   };
 
-
   const handleAddWork = () => {
-    setCurrentWork({ title: '', company: '', duration: '', description: '' });
+    setCurrentWork({ title: "", company: "", duration: "", description: "" });
     setCurrentWorkIndex(null);
     setShowWorkDialog(true);
   };
@@ -612,11 +685,10 @@ export function TourGuideProfileComponent() {
     fetchNotifications();
   }, []);
 
-
   const checkUnseenNotifications = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/tour-guide/unseen-notifications`,
+        `https://trip-genie-apis.vercel.app/tour-guide/unseen-notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -631,7 +703,7 @@ export function TourGuideProfileComponent() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:4000/tour-guide/notifications`,
+        `https://trip-genie-apis.vercel.app/tour-guide/notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -652,7 +724,7 @@ export function TourGuideProfileComponent() {
   const markNotificationAsSeen = async (notificationID) => {
     try {
       await axios.post(
-        `http://localhost:4000/tour-guide/notifications/markAsSeen/${notificationID}`,
+        `https://trip-genie-apis.vercel.app/tour-guide/notifications/markAsSeen/${notificationID}`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
@@ -687,7 +759,7 @@ export function TourGuideProfileComponent() {
         const token = Cookies.get("jwt");
         const role = getUserRole();
 
-        const api = `http://localhost:4000/${role}`;
+        const api = `https://trip-genie-apis.vercel.app/${role}`;
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -719,7 +791,7 @@ export function TourGuideProfileComponent() {
     const fetchNationalities = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/nationalities"
+          "https://trip-genie-apis.vercel.app/api/nationalities"
         );
         setNationalities(response.data);
       } catch (error) {
@@ -803,18 +875,13 @@ export function TourGuideProfileComponent() {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const {
-        username,
-        email,
-        mobile,
-        yearsOfExperience,
-        nationality,
-        name,
-      } = editedTourGuide;
+      const { username, email, mobile, yearsOfExperience, nationality, name } =
+        editedTourGuide;
 
       const formData = new FormData();
       formData.append("name", name);
-      profilePicture && formData.append("profilePicture", JSON.stringify(profilePicture));
+      profilePicture &&
+        formData.append("profilePicture", JSON.stringify(profilePicture));
       formData.append("username", username);
       formData.append("email", email);
       formData.append("mobile", "+" + mobile);
@@ -825,10 +892,13 @@ export function TourGuideProfileComponent() {
       formData.append("nationality", nationalityToAppend);
 
       // If newWorks is provided and has items, append newWorks; otherwise, append previousWorks
-      const worksToAppend = (newWorks && newWorks.length > 0) ? newWorks : editedTourGuide.previousWorks;
+      const worksToAppend =
+        newWorks && newWorks.length > 0
+          ? newWorks
+          : editedTourGuide.previousWorks;
       formData.append("previousWorks", JSON.stringify(worksToAppend));
 
-      const api = `http://localhost:4000/${role}`;
+      const api = `https://trip-genie-apis.vercel.app/${role}`;
       const response = await axios.put(api, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -848,7 +918,6 @@ export function TourGuideProfileComponent() {
     }
   };
 
-
   const handleUpdateError = (err) => {
     if (err.response?.data?.message === "Email already exists") {
       setValidationMessages({ email: "Email already exists" });
@@ -858,7 +927,6 @@ export function TourGuideProfileComponent() {
       showToast("Error updating profile. Please try again later.", "error");
     }
   };
-
 
   const handleRemoveWork = (index) => {
     const newWorks = [...editedTourGuide.previousWorks];
@@ -919,7 +987,7 @@ export function TourGuideProfileComponent() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/tour-guide/itineraries-report`,
+        `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -1032,14 +1100,13 @@ export function TourGuideProfileComponent() {
     );
   }
 
-
-
   return (
-
     <ToastProvider>
       <div>
         <h1 className="text-3xl font-bold mb-2">Account</h1>
-        <p className="text-sm text-gray-500 mb-2">Settings and Privacy / Account</p>
+        <p className="text-sm text-gray-500 mb-2">
+          Settings and Privacy / Account
+        </p>
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-12 gap-6">
             {/* Profile Picture and Info Card - 8 columns */}
@@ -1125,10 +1192,16 @@ export function TourGuideProfileComponent() {
                               name="username"
                               value={editedTourGuide.username}
                               onChange={handleInputChange}
-                              className={validationMessages.username ? "border-red-500" : ""}
+                              className={
+                                validationMessages.username
+                                  ? "border-red-500"
+                                  : ""
+                              }
                             />
                             {validationMessages.username && (
-                              <p className="text-red-500 text-xs mt-1">{validationMessages.username}</p>
+                              <p className="text-red-500 text-xs mt-1">
+                                {validationMessages.username}
+                              </p>
                             )}
                           </div>
                         ) : (
@@ -1141,7 +1214,9 @@ export function TourGuideProfileComponent() {
                                 ) : (
                                   <UserRoundX className="w-5 h-5 text-[#F88C33]" />
                                 )}
-                                <h2 className="text-xl font-bold ml-1">{tourGuide?.username}</h2>
+                                <h2 className="text-xl font-bold ml-1">
+                                  {tourGuide?.username}
+                                </h2>
                               </div>
                             </div>
                           </>
@@ -1154,14 +1229,20 @@ export function TourGuideProfileComponent() {
                             name="email"
                             value={editedTourGuide.email}
                             onChange={handleInputChange}
-                            className={validationMessages.email ? "border-red-500" : ""}
+                            className={
+                              validationMessages.email ? "border-red-500" : ""
+                            }
                           />
                           {validationMessages.email && (
-                            <p className="text-red-500 text-xs mt-1">{validationMessages.email}</p>
+                            <p className="text-red-500 text-xs mt-1">
+                              {validationMessages.email}
+                            </p>
                           )}
                         </div>
                       ) : (
-                        <p className="text-sm text-gray-500 mt-1">{tourGuide?.email}</p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {tourGuide?.email}
+                        </p>
                       )}
                     </div>
                     <Separator />
@@ -1200,7 +1281,6 @@ export function TourGuideProfileComponent() {
                     )}
                   </div>
 
-
                   {/* Vertical Separator */}
                   <div className="border-r border-gray-200 h-[260px] mx-2"></div>
 
@@ -1217,18 +1297,26 @@ export function TourGuideProfileComponent() {
                               name="name"
                               value={editedTourGuide.name}
                               onChange={handleInputChange}
-                              className={validationMessages.name ? "border-red-500" : ""}
+                              className={
+                                validationMessages.name ? "border-red-500" : ""
+                              }
                             />
                             {validationMessages.name && (
-                              <p className="text-red-500 text-xs mt-1">{validationMessages.name}</p>
+                              <p className="text-red-500 text-xs mt-1">
+                                {validationMessages.name}
+                              </p>
                             )}
                           </div>
                         ) : (
-                          <p className="text-sm font-medium">{tourGuide?.name}</p>
+                          <p className="text-sm font-medium">
+                            {tourGuide?.name}
+                          </p>
                         )}
                       </div>
                       <div>
-                        <p className="text-xs text-gray-500">Years of Experience</p>
+                        <p className="text-xs text-gray-500">
+                          Years of Experience
+                        </p>
                         {isEditing ? (
                           <div>
                             <Input
@@ -1236,14 +1324,22 @@ export function TourGuideProfileComponent() {
                               name="yearsOfExperience"
                               value={editedTourGuide.yearsOfExperience}
                               onChange={handleInputChange}
-                              className={validationMessages.yearsOfExperience ? "border-red-500" : ""}
+                              className={
+                                validationMessages.yearsOfExperience
+                                  ? "border-red-500"
+                                  : ""
+                              }
                             />
                             {validationMessages.yearsOfExperience && (
-                              <p className="text-red-500 text-xs mt-1">{validationMessages.yearsOfExperience}</p>
+                              <p className="text-red-500 text-xs mt-1">
+                                {validationMessages.yearsOfExperience}
+                              </p>
                             )}
                           </div>
                         ) : (
-                          <p className="text-sm font-medium">{tourGuide?.yearsOfExperience} years</p>
+                          <p className="text-sm font-medium">
+                            {tourGuide?.yearsOfExperience} years
+                          </p>
                         )}
                       </div>
                     </div>
@@ -1259,22 +1355,32 @@ export function TourGuideProfileComponent() {
                               country="eg"
                               value={editedTourGuide.mobile}
                               onChange={(value) =>
-                                handleInputChange({ target: { name: 'mobile', value } })
+                                handleInputChange({
+                                  target: { name: "mobile", value },
+                                })
                               }
                               inputProps={{
-                                name: 'mobile',
+                                name: "mobile",
                                 required: true,
-                                className: `w-full pt-2 pb-2 pl-11 text-sm ${validationMessages.mobile ? 'border-red-500' : 'border-gray-300'}`,
+                                className: `w-full pt-2 pb-2 pl-11 text-sm ${
+                                  validationMessages.mobile
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                }`,
                               }}
                               containerClass="w-full"
                               disableDropdown={false}
                             />
                             {validationMessages.mobile && (
-                              <span className="text-red-500 text-xs">{validationMessages.mobile}</span>
+                              <span className="text-red-500 text-xs">
+                                {validationMessages.mobile}
+                              </span>
                             )}
                           </div>
                         ) : (
-                          <p className="text-sm font-medium">+{tourGuide?.mobile}</p>
+                          <p className="text-sm font-medium">
+                            +{tourGuide?.mobile}
+                          </p>
                         )}
                       </div>
 
@@ -1283,9 +1389,15 @@ export function TourGuideProfileComponent() {
                         {isEditing ? (
                           <Select onValueChange={handleNationalityChange}>
                             <SelectTrigger
-                              className={validationMessages.nationality ? "border-red-500" : ""}
+                              className={
+                                validationMessages.nationality
+                                  ? "border-red-500"
+                                  : ""
+                              }
                             >
-                              <SelectValue placeholder={tourGuide?.nationality.name} />
+                              <SelectValue
+                                placeholder={tourGuide?.nationality.name}
+                              />
                             </SelectTrigger>
                             <SelectContent>
                               {nationalities.map((nat) => (
@@ -1307,12 +1419,11 @@ export function TourGuideProfileComponent() {
                             </SelectContent>
                           </Select>
                         ) : (
-                          <p className="text-sm font-medium">{tourGuide?.nationality.name}</p>
+                          <p className="text-sm font-medium">
+                            {tourGuide?.nationality.name}
+                          </p>
                         )}
-
-
                       </div>
-
                     </div>
                     <Separator />
                     <div className="mt-4">
@@ -1323,9 +1434,6 @@ export function TourGuideProfileComponent() {
                         View Previous Works
                       </button>
                     </div>
-
-
-
                   </div>
                 </div>
               </CardContent>
@@ -1339,7 +1447,9 @@ export function TourGuideProfileComponent() {
                     <Button
                       variant="ghost"
                       className="text-sm text-[#388A94] p-2"
-                      onClick={() => (window.location.href = "/account/notifications")}
+                      onClick={() =>
+                        (window.location.href = "/account/notifications")
+                      }
                     >
                       View All
                     </Button>
@@ -1353,11 +1463,17 @@ export function TourGuideProfileComponent() {
                     // Skeleton Loader for Notifications
                     <div className="space-y-4 p-4">
                       {[...Array(5)].map((_, index) => (
-                        <div key={index} className="flex items-center gap-4 animate-pulse">
-                          <div className="w-8 h-8 bg-gray-200 rounded-full"></div> {/* Placeholder for profile image */}
+                        <div
+                          key={index}
+                          className="flex items-center gap-4 animate-pulse"
+                        >
+                          <div className="w-8 h-8 bg-gray-200 rounded-full"></div>{" "}
+                          {/* Placeholder for profile image */}
                           <div className="flex flex-col gap-2">
-                            <div className="w-40 h-4 bg-gray-200 rounded-md"></div> {/* Placeholder for notification body */}
-                            <div className="w-24 h-3 bg-gray-200 rounded-md"></div> {/* Placeholder for notification timestamp */}
+                            <div className="w-40 h-4 bg-gray-200 rounded-md"></div>{" "}
+                            {/* Placeholder for notification body */}
+                            <div className="w-24 h-3 bg-gray-200 rounded-md"></div>{" "}
+                            {/* Placeholder for notification timestamp */}
                           </div>
                         </div>
                       ))}
@@ -1372,7 +1488,10 @@ export function TourGuideProfileComponent() {
                         <li
                           key={index}
                           className="p-2 hover:bg-gray-50 transition-colors relative cursor-pointer flex flex-col gap-1"
-                          onClick={() => { markNotificationAsSeen(notification._id), navigate("/account/notifications") }}
+                          onClick={() => {
+                            markNotificationAsSeen(notification._id),
+                              navigate("/account/notifications");
+                          }}
                         >
                           {!notification.seen && (
                             <span className="absolute top-2 right-2 bg-[#F88C33] text-white text-xs px-2 py-1 rounded-full">
@@ -1385,7 +1504,9 @@ export function TourGuideProfileComponent() {
                               __html: notification.body.slice(0, 30) + "...", // Show first 30 characters
                             }}
                           ></div>
-                          <p className="text-xs text-gray-500">{formatDate(notification.date)}</p>
+                          <p className="text-xs text-gray-500">
+                            {formatDate(notification.date)}
+                          </p>
                         </li>
                       ))}
                     </ul>
@@ -1403,9 +1524,11 @@ export function TourGuideProfileComponent() {
         onView={handleViewWork}
       /> */}
 
-
             <div className="col-span-6 ">
-              <Comments comments={tourGuide?.comments || []} tourGuide={tourGuide} />
+              <Comments
+                comments={tourGuide?.comments || []}
+                tourGuide={tourGuide}
+              />
             </div>
 
             <Card className="col-span-6  h-full flex flex-col">
@@ -1477,8 +1600,6 @@ export function TourGuideProfileComponent() {
                 </div>
               </CardContent>
             </Card>
-
-
           </div>
 
           {/* Profile Picture Update Modal */}
@@ -1490,10 +1611,17 @@ export function TourGuideProfileComponent() {
                 currentImage={profilePicture?.url || profilePicture}
               />
               <div className="mt-4 flex justify-end space-x-2">
-                <Button onClick={handleFirstSave} className="bg-[#1A3B47] hover:bg-[#142B36] text-white px-4 py-2 rounded">
+                <Button
+                  onClick={handleFirstSave}
+                  className="bg-[#1A3B47] hover:bg-[#142B36] text-white px-4 py-2 rounded"
+                >
                   Save
                 </Button>
-                <Button onClick={closeModal} variant="destructive" className="bg-[#A3A3A3] hover:bg-[#7E7E7E] text-white px-4 py-2 rounded">
+                <Button
+                  onClick={closeModal}
+                  variant="destructive"
+                  className="bg-[#A3A3A3] hover:bg-[#7E7E7E] text-white px-4 py-2 rounded"
+                >
                   Close
                 </Button>
               </div>
@@ -1532,7 +1660,9 @@ export function TourGuideProfileComponent() {
       <Dialog open={showWorkDialog} onOpenChange={setShowWorkDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{currentWorkIndex !== null ? 'Edit Work' : 'Add New Work'}</DialogTitle>
+            <DialogTitle>
+              {currentWorkIndex !== null ? "Edit Work" : "Add New Work"}
+            </DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
@@ -1542,7 +1672,9 @@ export function TourGuideProfileComponent() {
               <Input
                 id="title"
                 value={currentWork.title}
-                onChange={(e) => setCurrentWork({ ...currentWork, title: e.target.value })}
+                onChange={(e) =>
+                  setCurrentWork({ ...currentWork, title: e.target.value })
+                }
                 className="col-span-3"
               />
             </div>
@@ -1553,7 +1685,9 @@ export function TourGuideProfileComponent() {
               <Input
                 id="company"
                 value={currentWork.company}
-                onChange={(e) => setCurrentWork({ ...currentWork, company: e.target.value })}
+                onChange={(e) =>
+                  setCurrentWork({ ...currentWork, company: e.target.value })
+                }
                 className="col-span-3"
               />
             </div>
@@ -1564,7 +1698,9 @@ export function TourGuideProfileComponent() {
               <Input
                 id="duration"
                 value={currentWork.duration}
-                onChange={(e) => setCurrentWork({ ...currentWork, duration: e.target.value })}
+                onChange={(e) =>
+                  setCurrentWork({ ...currentWork, duration: e.target.value })
+                }
                 className="col-span-3"
               />
             </div>
@@ -1575,13 +1711,23 @@ export function TourGuideProfileComponent() {
               <Textarea
                 id="description"
                 value={currentWork.description}
-                onChange={(e) => setCurrentWork({ ...currentWork, description: e.target.value })}
+                onChange={(e) =>
+                  setCurrentWork({
+                    ...currentWork,
+                    description: e.target.value,
+                  })
+                }
                 className="col-span-3"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button className="bg-[#388A94] hover:bg-[#2e6b77]" onClick={handleSaveWork}>Save</Button>
+            <Button
+              className="bg-[#388A94] hover:bg-[#2e6b77]"
+              onClick={handleSaveWork}
+            >
+              Save
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1592,32 +1738,42 @@ export function TourGuideProfileComponent() {
             <DialogTitle>{viewedWork?.title}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <p><strong>Company:</strong> {viewedWork?.company}</p>
-            <p><strong>Duration:</strong> {viewedWork?.duration}</p>
+            <p>
+              <strong>Company:</strong> {viewedWork?.company}
+            </p>
+            <p>
+              <strong>Duration:</strong> {viewedWork?.duration}
+            </p>
             <p>
               <strong>Description:</strong>
               <span
                 className="block"
                 style={{
-                  maxWidth: '100%',
-                  wordWrap: 'break-word',
-                  overflowWrap: 'break-word', // Ensures long words wrap correctly
-                  wordBreak: 'break-word', // For handling words that would overflow
+                  maxWidth: "100%",
+                  wordWrap: "break-word",
+                  overflowWrap: "break-word", // Ensures long words wrap correctly
+                  wordBreak: "break-word", // For handling words that would overflow
                 }}
               >
                 {viewedWork?.description}
               </span>
             </p>
-
           </div>
           <DialogFooter>
-            <Button className="bg-[#388A94] hover:bg-[#2e6b77]" onClick={handleCloseViewWork}>Close</Button>
+            <Button
+              className="bg-[#388A94] hover:bg-[#2e6b77]"
+              onClick={handleCloseViewWork}
+            >
+              Close
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-
-      <Modal show={isPasswordModalOpen} onClose={() => setIsPasswordModalOpen(false)}>
+      <Modal
+        show={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+      >
         <PasswordChanger onSuccess={handlePasswordChangeSuccess} />
       </Modal>
       {isToastOpen && (
@@ -1625,25 +1781,24 @@ export function TourGuideProfileComponent() {
           onOpenChange={setIsToastOpen}
           open={isToastOpen}
           duration={1500}
-          className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+          className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
         >
           <div className="flex items-center">
-            {toastType === 'success' ? (
+            {toastType === "success" ? (
               <CheckCircle className="text-green-500 mr-2" />
             ) : (
               <XCircle className="text-red-500 mr-2" />
             )}
             <div>
-              <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
+              <ToastTitle>
+                {toastType === "success" ? "Success" : "Error"}
+              </ToastTitle>
               <ToastDescription>{toastMessage}</ToastDescription>
             </div>
           </div>
           <ToastClose />
         </Toast>
       )}
-
     </ToastProvider>
-
   );
 }
-

@@ -91,7 +91,7 @@ const CreateProductForm = () => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          `http://localhost:4000/${userRole}/currencies`,
+          `https://trip-genie-apis.vercel.app/${userRole}/currencies`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -158,7 +158,7 @@ const CreateProductForm = () => {
     const token = Cookies.get("jwt");
     try {
       const response = await axios.post(
-        `http://localhost:4000/${userRole}/products`,
+        `https://trip-genie-apis.vercel.app/${userRole}/products`,
         formData,
         {
           headers: {
@@ -197,7 +197,8 @@ const CreateProductForm = () => {
   const containerStyles = "grid grid-cols-1 md:grid-cols-2 gap-6";
   const columnStyles = "flex flex-col space-y-6 h-full";
   const labelStyles = "text-[#003f66]";
-  const buttonStyles = "bg-[#1A3B47] hover:bg-[#1A3B47]/90 text-white px-6 py-3 text-lg";
+  const buttonStyles =
+    "bg-[#1A3B47] hover:bg-[#1A3B47]/90 text-white px-6 py-3 text-lg";
 
   return (
     <ToastProvider>
@@ -212,7 +213,9 @@ const CreateProductForm = () => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className={labelStyles}>Product Name</FormLabel>
+                        <FormLabel className={labelStyles}>
+                          Product Name
+                        </FormLabel>
                         <FormControl>
                           <Input id="name" {...field} className="w-full" />
                         </FormControl>
@@ -228,14 +231,18 @@ const CreateProductForm = () => {
                     name="price"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className={labelStyles}>Price (in USD)</FormLabel>
+                        <FormLabel className={labelStyles}>
+                          Price (in USD)
+                        </FormLabel>
                         <FormControl>
                           <Input
                             id="price"
                             type="number"
                             min="0"
                             {...field}
-                            onChange={(e) => field.onChange(Number(e.target.value))}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
                             className="w-full"
                           />
                         </FormControl>
@@ -251,7 +258,9 @@ const CreateProductForm = () => {
                     name="pictures"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className={labelStyles}>Product Pictures</FormLabel>
+                        <FormLabel className={labelStyles}>
+                          Product Pictures
+                        </FormLabel>
                         <FormControl>
                           <Input
                             id="pictures"
@@ -303,7 +312,9 @@ const CreateProductForm = () => {
                             type="number"
                             min="1"
                             {...field}
-                            onChange={(e) => field.onChange(Number(e.target.value))}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
                             className="w-full"
                           />
                         </FormControl>

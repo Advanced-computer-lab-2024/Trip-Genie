@@ -77,23 +77,29 @@ const AdminGovernorPage = () => {
       const token = Cookies.get("jwt");
 
       if (values.type === "admin") {
-        response = await fetch("http://localhost:4000/admin/admins", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, email, password }),
-        });
+        response = await fetch(
+          "https://trip-genie-apis.vercel.app/admin/admins",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, email, password }),
+          }
+        );
       } else {
-        response = await fetch("http://localhost:4000/admin/governors", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, email, password }),
-        });
+        response = await fetch(
+          "https://trip-genie-apis.vercel.app/admin/governors",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, email, password }),
+          }
+        );
       }
 
       if (!response.ok) {
@@ -145,7 +151,11 @@ const AdminGovernorPage = () => {
                       type="button"
                       variant={field.value === "admin" ? "solid" : "outline"}
                       onClick={() => field.onChange("admin")}
-                      className={`w-full ${field.value === "admin" ? "bg-[#5D9297] text-white" : "bg-gray-300 text-gray-700 hover:bg-gray-400"}`}
+                      className={`w-full ${
+                        field.value === "admin"
+                          ? "bg-[#5D9297] text-white"
+                          : "bg-gray-300 text-gray-700 hover:bg-gray-400"
+                      }`}
                     >
                       Admin
                     </Button>
@@ -153,7 +163,11 @@ const AdminGovernorPage = () => {
                       type="button"
                       variant={field.value === "governor" ? "solid" : "outline"}
                       onClick={() => field.onChange("governor")}
-                      className={`w-full ${field.value === "governor" ? "bg-[#5D9297] text-white" : "bg-gray-300 text-gray-700 hover:bg-gray-400"}`}
+                      className={`w-full ${
+                        field.value === "governor"
+                          ? "bg-[#5D9297] text-white"
+                          : "bg-gray-300 text-gray-700 hover:bg-gray-400"
+                      }`}
                     >
                       Governor
                     </Button>
@@ -169,7 +183,9 @@ const AdminGovernorPage = () => {
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#003f66]">Username *</FormLabel>
+                      <FormLabel className="text-[#003f66]">
+                        Username *
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Enter username"
@@ -212,7 +228,9 @@ const AdminGovernorPage = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#003f66]">Password *</FormLabel>
+                      <FormLabel className="text-[#003f66]">
+                        Password *
+                      </FormLabel>
                       <FormControl>
                         <Input
                           type="password"
@@ -229,9 +247,18 @@ const AdminGovernorPage = () => {
                       <div className="flex items-center mt-2 space-x-2 w-full">
                         <div className="relative flex-grow h-2 bg-gray-200 rounded-full">
                           <div
-                            className={`absolute h-2 rounded-full transition-all duration-300 ${password.length === 0 ? 'bg-gray-300' : getProgressBarColor()}`}
+                            className={`absolute h-2 rounded-full transition-all duration-300 ${
+                              password.length === 0
+                                ? "bg-gray-300"
+                                : getProgressBarColor()
+                            }`}
                             style={{
-                              width: `${password.length === 0 ? 0 : Math.max((strength.fulfilled / 3), 1 / 3) * 100}%`
+                              width: `${
+                                password.length === 0
+                                  ? 0
+                                  : Math.max(strength.fulfilled / 3, 1 / 3) *
+                                    100
+                              }%`,
                             }}
                           ></div>
                         </div>
@@ -246,30 +273,48 @@ const AdminGovernorPage = () => {
                 />
                 <ul className="text-sm mt-4 space-y-1">
                   <li
-                    className={`flex items-center ${strength.length ? "text-[#388A94]" : "text-gray-500"}`}
+                    className={`flex items-center ${
+                      strength.length ? "text-[#388A94]" : "text-gray-500"
+                    }`}
                   >
                     <span
-                      className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${strength.length ? "bg-[#388A94] text-white" : "border-gray-500"}`}
+                      className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${
+                        strength.length
+                          ? "bg-[#388A94] text-white"
+                          : "border-gray-500"
+                      }`}
                     >
                       ✓
                     </span>
                     At least 8 characters
                   </li>
                   <li
-                    className={`flex items-center ${strength.uppercase ? "text-[#388A94]" : "text-gray-500"}`}
+                    className={`flex items-center ${
+                      strength.uppercase ? "text-[#388A94]" : "text-gray-500"
+                    }`}
                   >
                     <span
-                      className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${strength.uppercase ? "bg-[#388A94] text-white" : "border-gray-500"}`}
+                      className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${
+                        strength.uppercase
+                          ? "bg-[#388A94] text-white"
+                          : "border-gray-500"
+                      }`}
                     >
                       ✓
                     </span>
                     At least one uppercase letter
                   </li>
                   <li
-                    className={`flex items-center ${strength.number ? "text-[#388A94]" : "text-gray-500"}`}
+                    className={`flex items-center ${
+                      strength.number ? "text-[#388A94]" : "text-gray-500"
+                    }`}
                   >
                     <span
-                      className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${strength.number ? "bg-[#388A94] text-white" : "border-gray-500"}`}
+                      className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${
+                        strength.number
+                          ? "bg-[#388A94] text-white"
+                          : "border-gray-500"
+                      }`}
                     >
                       ✓
                     </span>

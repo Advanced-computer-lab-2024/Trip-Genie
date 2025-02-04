@@ -18,7 +18,7 @@
 //       if (token) {
 //         // Fetch visited pages from backend for logged-in users
 //         const response = await axios.get(
-//           "http://localhost:4000/tourist/visited-pages",
+//           "https://trip-genie-apis.vercel.app/tourist/visited-pages",
 //           {
 //             headers: { Authorization: `Bearer ${token}` },
 //           }
@@ -46,7 +46,7 @@
 //         if (token) {
 //           // Update visited pages in backend for logged-in users
 //           axios
-//             .post(`http://localhost:4000/tourist/visited-pages`, {
+//             .post(`https://trip-genie-apis.vercel.app/tourist/visited-pages`, {
 //               visitedPages: updatedPages,
 //             })
 //             .catch((error) =>

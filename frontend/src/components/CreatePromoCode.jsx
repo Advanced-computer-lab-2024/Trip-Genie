@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { CalendarIcon, Plus, CheckCircle, XCircle } from 'lucide-react';
+import { CalendarIcon, Plus, CheckCircle, XCircle } from "lucide-react";
 import { format } from "date-fns";
 
 import { cn } from "@/lib/utils";
@@ -54,12 +54,18 @@ const formSchema = z.object({
   usage_limit: z.number().min(1),
   dateRange: z
     .object({
-      start: z.date().nullable().refine((date) => date !== null, {
-        message: "Please select a start date.",
-      }),
-      end: z.date().nullable().refine((date) => date !== null, {
-        message: "Please select an end date.",
-      }),
+      start: z
+        .date()
+        .nullable()
+        .refine((date) => date !== null, {
+          message: "Please select a start date.",
+        }),
+      end: z
+        .date()
+        .nullable()
+        .refine((date) => date !== null, {
+          message: "Please select an end date.",
+        }),
     })
     .refine((data) => data.end > data.start, {
       message: "End date must be after the start date.",
@@ -89,10 +95,8 @@ export function CreatePromoCode() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function onSubmit(values) {
-   
     setIsSubmitting(true);
     try {
-    
       const token = Cookies.get("jwt");
       const formattedValues = {
         ...values,
@@ -101,14 +105,17 @@ export function CreatePromoCode() {
           end: values.dateRange.end.toISOString(),
         },
       };
-      const response = await fetch("http://localhost:4000/admin/promo-code", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formattedValues),
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/admin/promo-code",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formattedValues),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -144,7 +151,11 @@ export function CreatePromoCode() {
                   <FormItem>
                     <FormLabel className="text-[#003f66]">Promo Code</FormLabel>
                     <FormControl>
-                      <Input placeholder="HADWA20" {...field} className="w-full" />
+                      <Input
+                        placeholder="HADWA20"
+                        {...field}
+                        className="w-full"
+                      />
                     </FormControl>
                     <FormDescription>
                       Enter a unique promo code (min 3 characters).
@@ -159,7 +170,10 @@ export function CreatePromoCode() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-[#003f66]">Status</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a status" />
@@ -181,7 +195,9 @@ export function CreatePromoCode() {
                 name="percentOff"
                 render={({ field, fieldState }) => (
                   <FormItem>
-                    <FormLabel className="text-[#003f66]">Percent Off</FormLabel>
+                    <FormLabel className="text-[#003f66]">
+                      Percent Off
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -225,7 +241,9 @@ export function CreatePromoCode() {
                 name="usage_limit"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#003f66]">Usage Limit</FormLabel>
+                    <FormLabel className="text-[#003f66]">
+                      Usage Limit
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -245,106 +263,102 @@ export function CreatePromoCode() {
               />
             </div>
             <FormField
-  control={form.control}
-  name="dateRange"
-  render={({ field, fieldState }) => (
-    <FormItem className="flex flex-col">
-      <FormLabel className="text-[#003f66]">Date Range</FormLabel>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full">
-        <Popover>
-          <PopoverTrigger asChild>
-            <FormControl>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-full sm:w-[272px] pl-3 text-left font-normal", // Adjust width here
-                  !field.value.start && "text-muted-foreground"
-                )}
-              >
-                {field.value.start
-                  ? format(field.value.start, "PPP")
-                  : "Pick a start date"}
-                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-              </Button>
-            </FormControl>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={field.value.start}
-              onSelect={(date) =>
-                field.onChange({ ...field.value, start: date })
-              }
-              initialFocus
-              disabled={(date) =>
-                date < new Date().setHours(0, 0, 0, 0) ||
-                (field.value.end && date > field.value.end)
-              }
+              control={form.control}
+              name="dateRange"
+              render={({ field, fieldState }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel className="text-[#003f66]">Date Range</FormLabel>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full sm:w-[272px] pl-3 text-left font-normal", // Adjust width here
+                              !field.value.start && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value.start
+                              ? format(field.value.start, "PPP")
+                              : "Pick a start date"}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value.start}
+                          onSelect={(date) =>
+                            field.onChange({ ...field.value, start: date })
+                          }
+                          initialFocus
+                          disabled={(date) =>
+                            date < new Date().setHours(0, 0, 0, 0) ||
+                            (field.value.end && date > field.value.end)
+                          }
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <span className="text-center">to</span>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full sm:w-[272px] pl-3 text-left font-normal", // Adjust width here
+                              !field.value.end && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value.end
+                              ? format(field.value.end, "PPP")
+                              : "Pick an end date"}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value.end}
+                          onSelect={(date) =>
+                            field.onChange({ ...field.value, end: date })
+                          }
+                          initialFocus
+                          disabled={(date) =>
+                            date < new Date().setHours(0, 0, 0, 0) ||
+                            (field.value.start && date <= field.value.start)
+                          }
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <FormDescription>
+                    Select the start and end dates for the promo code validity.
+                  </FormDescription>
+                  {fieldState.error && (
+                    <p className="text-red-500 text-sm font-medium text-destructive">
+                      {"Start and end dates must be selected"}
+                    </p>
+                  )}
+                </FormItem>
+              )}
             />
-          </PopoverContent>
-        </Popover>
-        <span className="text-center">to</span>
-        <Popover>
-          <PopoverTrigger asChild>
-            <FormControl>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-full sm:w-[272px] pl-3 text-left font-normal", // Adjust width here
-                  !field.value.end && "text-muted-foreground"
-                )}
-              >
-                {field.value.end
-                  ? format(field.value.end, "PPP")
-                  : "Pick an end date"}
-                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-              </Button>
-            </FormControl>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={field.value.end}
-              onSelect={(date) =>
-                field.onChange({ ...field.value, end: date })
-              }
-              initialFocus
-              disabled={(date) =>
-                date < new Date().setHours(0, 0, 0, 0) ||
-                (field.value.start && date <= field.value.start)
-              }
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
-      <FormDescription>
-        Select the start and end dates for the promo code validity.
-      </FormDescription>
-      {fieldState.error && (
-        <p className="text-red-500 text-sm font-medium text-destructive">
-          {"Start and end dates must be selected"}
-        </p>
-      )}
-    </FormItem>
-  )}
-/>
 
-            
             <div className="flex justify-end mb-6 mr-6">
-        <Button
-  type="submit"
-  disabled={isSubmitting}
-  className="bg-[#1A3B47] hover:bg-[#1A3B47]/90 text-white px-8 py-4 text-xl -mt-28" // Reduce or remove `mt`
->
-  <Plus className="mr-2 h-6 w-6" />
-  {isSubmitting ? "Creating..." : "Create Promo Code"}
-</Button>
-
-        </div>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="bg-[#1A3B47] hover:bg-[#1A3B47]/90 text-white px-8 py-4 text-xl -mt-28" // Reduce or remove `mt`
+              >
+                <Plus className="mr-2 h-6 w-6" />
+                {isSubmitting ? "Creating..." : "Create Promo Code"}
+              </Button>
+            </div>
           </form>
-          
         </Form>
-        
       </>
 
       <ToastViewport />
@@ -374,4 +388,3 @@ export function CreatePromoCode() {
     </ToastProvider>
   );
 }
-

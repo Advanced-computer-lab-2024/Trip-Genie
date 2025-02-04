@@ -23,7 +23,15 @@ import {
   ToastDescription,
   ToastClose,
 } from "@/components/ui/toast";
-import { Check, X, Mail, User, UserX, XCircle, CheckCircle } from 'lucide-react';
+import {
+  Check,
+  X,
+  Mail,
+  User,
+  UserX,
+  XCircle,
+  CheckCircle,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import DeleteConfirmation from "@/components/ui/deletionConfirmation";
 import ApprovalConfirmation from "@/components/ui/approvalConfirmation";
@@ -58,11 +66,7 @@ export default function UserApproval() {
 
   const filteredUsers = (role) => {
     if (role === "all") {
-      return [
-        ...advertisers,
-        ...sellers,
-        ...tourGuides
-      ];
+      return [...advertisers, ...sellers, ...tourGuides];
     }
     if (role === "advertiser") {
       return advertisers;
@@ -105,7 +109,7 @@ export default function UserApproval() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/admin/files/${filename}`,
+        `https://trip-genie-apis.vercel.app/admin/files/${filename}`,
         {
           headers: { Authorization: `Bearer ${token}` },
           responseType: "blob",
@@ -123,7 +127,7 @@ export default function UserApproval() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/admin/unaccepted-advertiser",
+        "https://trip-genie-apis.vercel.app/admin/unaccepted-advertiser",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -141,7 +145,7 @@ export default function UserApproval() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/admin/unaccepted-seller",
+        "https://trip-genie-apis.vercel.app/admin/unaccepted-seller",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -159,12 +163,12 @@ export default function UserApproval() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/admin/unaccepted-tourguide",
+        "https://trip-genie-apis.vercel.app/admin/unaccepted-tourguide",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      
+
       setTourGuides(Array.isArray(response.data) ? response.data : []);
       setIsLoading(false);
     } catch (err) {
@@ -193,7 +197,7 @@ export default function UserApproval() {
     try {
       const token = Cookies.get("jwt");
       await axios.put(
-        `http://localhost:4000/admin/approve-${role}/${userId}`,
+        `https://trip-genie-apis.vercel.app/admin/approve-${role}/${userId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -214,7 +218,7 @@ export default function UserApproval() {
     try {
       const token = Cookies.get("jwt");
       await axios.delete(
-        `http://localhost:4000/admin/reject/${role}s/${user._id}`,
+        `https://trip-genie-apis.vercel.app/admin/reject/${role}s/${user._id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -252,15 +256,14 @@ export default function UserApproval() {
       <>
         {/* Category Skeletons */}
         <div className="grid grid-cols-4 gap-0 mb-6">
-          {["All Users", "Advertiser", "Seller", "Tour Guides"].map((category, index) => (
-            <div
-              key={`category-${index}`}
-              className="bg-gray-200  shadow-md p-3 flex flex-col justify-center items-center animate-pulse"
-            >
-              
-              
-            </div>
-          ))}
+          {["All Users", "Advertiser", "Seller", "Tour Guides"].map(
+            (category, index) => (
+              <div
+                key={`category-${index}`}
+                className="bg-gray-200  shadow-md p-3 flex flex-col justify-center items-center animate-pulse"
+              ></div>
+            )
+          )}
         </div>
 
         {/* Skeleton User Cards */}
@@ -276,18 +279,16 @@ export default function UserApproval() {
               >
                 <Card className="bg-gray-200 shadow-md animate-pulse rounded-lg">
                   <CardContent className="p-6 space-y-3">
-                  <div className="flex items-center justify-between">
-  {/* Large Circle on the Left */}
-  <div className="h-16 w-16 rounded-full bg-gray-300"></div>
+                    <div className="flex items-center justify-between">
+                      {/* Large Circle on the Left */}
+                      <div className="h-16 w-16 rounded-full bg-gray-300"></div>
 
-  {/* Smaller Circles on the Right */}
-  <div className="flex space-x-2 relative -top-3">
-    <div className="h-8 w-8 rounded-full bg-gray-300"></div>
-    <div className="h-8 w-8 rounded-full bg-gray-300"></div>
-  </div>
-</div>
-
-
+                      {/* Smaller Circles on the Right */}
+                      <div className="flex space-x-2 relative -top-3">
+                        <div className="h-8 w-8 rounded-full bg-gray-300"></div>
+                        <div className="h-8 w-8 rounded-full bg-gray-300"></div>
+                      </div>
+                    </div>
 
                     <div className="h-4 w-3/4 bg-gray-300 rounded-md ml-0"></div>
                     <div className="h-4 w-1/2 bg-gray-300 rounded-md ml-0"></div>
@@ -301,13 +302,14 @@ export default function UserApproval() {
       </>
     );
   }
-  
+
   const renderUserCards = (users) =>
     users.map((user) => {
-      const userRole = 
-        advertisers.some(a => a._id === user._id) ? "advertiser" :
-        sellers.some(s => s._id === user._id) ? "seller" :
-        "tourGuide";
+      const userRole = advertisers.some((a) => a._id === user._id)
+        ? "advertiser"
+        : sellers.some((s) => s._id === user._id)
+        ? "seller"
+        : "tourGuide";
 
       return (
         <motion.div
@@ -495,4 +497,3 @@ export default function UserApproval() {
     </ToastProvider>
   );
 }
-

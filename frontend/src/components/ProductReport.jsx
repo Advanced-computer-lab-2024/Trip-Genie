@@ -24,7 +24,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Calendar, ChevronDown, TrendingUp, TrendingDown } from 'lucide-react';
+import { Calendar, ChevronDown, TrendingUp, TrendingDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import {
@@ -59,14 +59,15 @@ const ProductReport = () => {
   const [filteredSales, setFilteredSales] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [selectedPeriodRevenue, setSelectedPeriodRevenue] = useState(0);
-  const [initialSelectedPeriodRevenue, setInitialSelectedPeriodRevenue] = useState(null);
+  const [initialSelectedPeriodRevenue, setInitialSelectedPeriodRevenue] =
+    useState(null);
   const [initialTotalRevenue, setInitialTotalRevenue] = useState(null);
   const [isFiltering, setIsFiltering] = useState(false);
   const [error, setError] = useState(null);
   const [thisMonthSales, setThisMonthSales] = useState(0);
   const [lastMonthSales, setLastMonthSales] = useState(0);
   const initialGraphDataRef = useRef(null);
-  const [isloading,setisLoading]=useState(false);
+  const [isloading, setisLoading] = useState(false);
 
   const getUserRole = () => {
     let role = Cookies.get("role");
@@ -82,7 +83,9 @@ const ProductReport = () => {
       const currentYear = new Date().getFullYear();
       const monthlyDataPromises = Array.from({ length: 12 }, (_, i) => {
         const month = i + 1;
-        const url = new URL(`http://localhost:4000/${role}/sales-report`);
+        const url = new URL(
+          `https://trip-genie-apis.vercel.app/${role}/sales-report`
+        );
         url.searchParams.append("year", currentYear);
         url.searchParams.append("month", month);
         return axios.get(url.toString(), {
@@ -93,7 +96,9 @@ const ProductReport = () => {
       });
 
       const monthlyDataResponses = await Promise.all(monthlyDataPromises);
-      const monthlySalesData = monthlyDataResponses.map((response) => response.data.adminProductsSales).flat();
+      const monthlySalesData = monthlyDataResponses
+        .map((response) => response.data.adminProductsSales)
+        .flat();
 
       if (monthlySalesData.length > 0) {
         setSalesReport({ adminProductsSales: monthlySalesData });
@@ -107,13 +112,19 @@ const ProductReport = () => {
         ];
         setProductNames(uniqueProductNames);
 
-        const totalRevenue = monthlyDataResponses.reduce((sum, response) => sum + (response.data.totalAdminSalesRevenue || 0), 0);
+        const totalRevenue = monthlyDataResponses.reduce(
+          (sum, response) => sum + (response.data.totalAdminSalesRevenue || 0),
+          0
+        );
         setTotalRevenue(totalRevenue);
 
         setFilteredSales(monthlySalesData);
 
         // Calculate this month and last month sales
-        const thisMonthSales = calculatePeriodRevenue(monthlySalesData, "month");
+        const thisMonthSales = calculatePeriodRevenue(
+          monthlySalesData,
+          "month"
+        );
         const lastMonthSales = calculateLastMonthSales(monthlySalesData);
         setThisMonthSales(thisMonthSales);
         setLastMonthSales(lastMonthSales);
@@ -125,7 +136,7 @@ const ProductReport = () => {
           "Invalid data structure received from the server: adminProductsSales missing"
         );
       }
-     setisLoading(false);
+      setisLoading(false);
     } catch (error) {
       console.error("Error fetching sales report:", error);
       setError("Failed to fetch sales report. Please try again later.");
@@ -137,7 +148,9 @@ const ProductReport = () => {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const url = new URL(`http://localhost:4000/${role}/sales-report`);
+      const url = new URL(
+        `https://trip-genie-apis.vercel.app/${role}/sales-report`
+      );
       if (newFilters.day) url.searchParams.append("day", newFilters.day);
       if (newFilters.month) url.searchParams.append("month", newFilters.month);
       if (newFilters.year) url.searchParams.append("year", newFilters.year);
@@ -151,19 +164,23 @@ const ProductReport = () => {
       if (response.data && response.data.adminProductsSales) {
         setSalesReport(response.data);
         let filteredData = response.data.adminProductsSales;
-        
+
         // Apply product filter in the front-end
         if (newFilters.product) {
           filteredData = filteredData.filter(
             (item) => item.product && item.product.name === newFilters.product
           );
         }
-        
+
         setFilteredSales(filteredData);
         setTotalRevenue(response.data.totalAdminSalesRevenue);
-        setSelectedPeriodRevenue(calculatePeriodRevenue(filteredData, selectedPeriod));
+        setSelectedPeriodRevenue(
+          calculatePeriodRevenue(filteredData, selectedPeriod)
+        );
       } else {
-        setError("Invalid data structure received from the server: adminProductsSales missing");
+        setError(
+          "Invalid data structure received from the server: adminProductsSales missing"
+        );
       }
       setisLoading(false);
     } catch (error) {
@@ -178,7 +195,9 @@ const ProductReport = () => {
 
   useEffect(() => {
     if (initialSelectedPeriodRevenue === null && salesReport) {
-      setInitialSelectedPeriodRevenue(calculatePeriodRevenue(salesReport.adminProductsSales, selectedPeriod));
+      setInitialSelectedPeriodRevenue(
+        calculatePeriodRevenue(salesReport.adminProductsSales, selectedPeriod)
+      );
     }
     if (initialTotalRevenue === null && totalRevenue !== 0) {
       setInitialTotalRevenue(totalRevenue);
@@ -314,7 +333,8 @@ const ProductReport = () => {
   if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
   //if (!salesReport) return <div className="p-6 text-center">Loading...</div>;
 
-  const fillPercentage = (initialSelectedPeriodRevenue / initialTotalRevenue) * 100;
+  const fillPercentage =
+    (initialSelectedPeriodRevenue / initialTotalRevenue) * 100;
 
   const thisMonthChange =
     lastMonthSales === 0
@@ -324,7 +344,6 @@ const ProductReport = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="">
-      
         <Card>
           <CardHeader className="p-4">
             <div className="flex justify-between items-center">
@@ -343,9 +362,7 @@ const ProductReport = () => {
             <div className="flex flex-wrap gap-4 mb-4">
               <Select
                 value={filters.product}
-                onValueChange={(value) =>
-                  handleFilterChange("product", value)
-                }
+                onValueChange={(value) => handleFilterChange("product", value)}
               >
                 <SelectTrigger className="w-full sm:w-[200px]">
                   <SelectValue placeholder="Select product" />
@@ -360,9 +377,7 @@ const ProductReport = () => {
               </Select>
               <Select
                 value={filters.year}
-                onValueChange={(value) =>
-                  handleFilterChange("year", value)
-                }
+                onValueChange={(value) => handleFilterChange("year", value)}
               >
                 <SelectTrigger className="w-full sm:w-[200px]">
                   <SelectValue placeholder="Select year" />
@@ -380,9 +395,7 @@ const ProductReport = () => {
               </Select>
               <Select
                 value={filters.month}
-                onValueChange={(value) =>
-                  handleFilterChange("month", value)
-                }
+                onValueChange={(value) => handleFilterChange("month", value)}
                 disabled={!filters.year}
               >
                 <SelectTrigger className="w-full sm:w-[200px]">
@@ -398,9 +411,7 @@ const ProductReport = () => {
               </Select>
               <Select
                 value={filters.day}
-                onValueChange={(value) =>
-                  handleFilterChange("day", value)
-                }
+                onValueChange={(value) => handleFilterChange("day", value)}
                 disabled={!filters.year || !filters.month}
               >
                 <SelectTrigger className="w-full sm:w-[200px]">
@@ -444,54 +455,52 @@ const ProductReport = () => {
                   </tr>
                 </thead>
                 {isloading ? (
-  <thead className="bg-gray-50">
-    
-
-    {/* 6 more rows of pulsing lines with more space and bigger size */}
-    {[...Array(6)].map((_, rowIndex) => (
-      <tr key={rowIndex}>
-        {[1, 2, 3].map((i) => (
-          <th key={i} className="px-6 py-3">
-            <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
-          </th>
-        ))}
-      </tr>
-    ))}
-  </thead>
-) : (
-                <AnimatePresence mode="wait">
-                  {!isFiltering && (
-                    <motion.tbody
-                      key="table-body"
-                      className="bg-white divide-y divide-gray-200"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {filteredSales.map((item, index) => (
-                        <motion.tr
-                          key={index}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -20 }}
-                          transition={{ duration: 0.2, delay: index * 0.05 }}
-                        >
-                          <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {item.product.name}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {item.sales}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            ${item.revenue.toFixed(2)}
-                          </td>
-                        </motion.tr>
-                      ))}
-                    </motion.tbody>
-                  )}
-                </AnimatePresence>
-)}
+                  <thead className="bg-gray-50">
+                    {/* 6 more rows of pulsing lines with more space and bigger size */}
+                    {[...Array(6)].map((_, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {[1, 2, 3].map((i) => (
+                          <th key={i} className="px-6 py-3">
+                            <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                ) : (
+                  <AnimatePresence mode="wait">
+                    {!isFiltering && (
+                      <motion.tbody
+                        key="table-body"
+                        className="bg-white divide-y divide-gray-200"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {filteredSales.map((item, index) => (
+                          <motion.tr
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.2, delay: index * 0.05 }}
+                          >
+                            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {item.product.name}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {item.sales}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              ${item.revenue.toFixed(2)}
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </motion.tbody>
+                    )}
+                  </AnimatePresence>
+                )}
               </table>
             </div>
           </CardContent>
@@ -502,4 +511,3 @@ const ProductReport = () => {
 };
 
 export default ProductReport;
-

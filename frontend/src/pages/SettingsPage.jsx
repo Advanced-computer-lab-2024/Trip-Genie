@@ -66,7 +66,7 @@ export default function SettingsPage() {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/${role}/password`,
+        `https://trip-genie-apis.vercel.app/${role}/password`,
         {
           oldPassword,
           newPassword,
@@ -146,7 +146,7 @@ export default function SettingsPage() {
               <p className="text-gray-600 mb-6">
                 Manage your account preferences and general settings here.
               </p>
-              <TravelPreferences  />
+              <TravelPreferences />
             </TabsContent>
             <TabsContent value="security">
               <h3 className="text-xl font-semibold mb-4">Security Settings</h3>

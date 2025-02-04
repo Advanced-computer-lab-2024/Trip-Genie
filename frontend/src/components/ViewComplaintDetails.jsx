@@ -6,7 +6,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { AlertCircle, Calendar, CheckCircle, ChevronLeft, Clock, Flag, Mail, MessageSquare, Phone, Send, User } from 'lucide-react';
+import {
+  AlertCircle,
+  Calendar,
+  CheckCircle,
+  ChevronLeft,
+  Clock,
+  Flag,
+  Mail,
+  MessageSquare,
+  Phone,
+  Send,
+  User,
+} from "lucide-react";
 
 export const ViewComplaintDetails = ({ complaintId, onBack }) => {
   const [complaint, setComplaint] = useState(null);
@@ -18,7 +30,7 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
     try {
       const token = Cookies.get("jwt");
       let role = Cookies.get("role") || "guest";
-      const api = `http://localhost:4000/${role}/complaint/${complaintId}`;
+      const api = `https://trip-genie-apis.vercel.app/${role}/complaint/${complaintId}`;
       const response = await axios.get(api, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -42,14 +54,17 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
         return;
       }
       await axios.post(
-        `http://localhost:4000/admin/complaint/${complaintId}/reply`,
+        `https://trip-genie-apis.vercel.app/admin/complaint/${complaintId}/reply`,
         { content: replyContent },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setReplyContent("");
       await fetchComplaintDetails();
     } catch (error) {
-      console.error("Failed to add reply", error.response ? error.response.data : error.message);
+      console.error(
+        "Failed to add reply",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
@@ -57,7 +72,7 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
     try {
       const token = Cookies.get("jwt");
       await axios.put(
-        `http://localhost:4000/admin/complaint/${complaintId}/status`,
+        `https://trip-genie-apis.vercel.app/admin/complaint/${complaintId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -109,7 +124,10 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
   return (
     <div className="min-h-screen">
       <div className="">
-        <Button onClick={onBack} className="mb-3 bg-[#5D9297] text-white text-sm flex items-center">
+        <Button
+          onClick={onBack}
+          className="mb-3 bg-[#5D9297] text-white text-sm flex items-center"
+        >
           <ChevronLeft className="w-4 h-4 mr-2" />
           Back to Complaints
         </Button>
@@ -162,7 +180,9 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
                         className="p-3 bg-[#E6DCCF] bg-opacity-30 rounded-lg shadow-sm border border-[#B5D3D1] 
                         hover:shadow-md transition-shadow duration-200 mb-2"
                       >
-                        <p className="text-[#1A3B47] text-sm mb-1">{reply.content}</p>
+                        <p className="text-[#1A3B47] text-sm mb-1">
+                          {reply.content}
+                        </p>
                         <span className="text-xs text-[#5D9297] flex items-center">
                           <Clock className="w-3 h-3 mr-1" />
                           {new Date(reply.createdAt).toLocaleString()}
@@ -170,7 +190,9 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
                       </div>
                     ))
                   ) : (
-                    <p className="text-[#5D9297] italic text-sm p-3">No replies yet</p>
+                    <p className="text-[#5D9297] italic text-sm p-3">
+                      No replies yet
+                    </p>
                   )}
                 </ScrollArea>
               </div>
@@ -186,9 +208,11 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
                   onClick={handleReply}
                   className={`absolute right-2 bottom-2 p-2 rounded-full text-white 
                   focus:outline-none focus:ring-2 focus:ring-[#1A3B47] transition-colors duration-200
-                  ${replyContent.trim() 
-                    ? 'bg-[#1A3B47] hover:bg-[#388A94]' 
-                    : 'bg-[#B5D3D1] cursor-not-allowed'}`}
+                  ${
+                    replyContent.trim()
+                      ? "bg-[#1A3B47] hover:bg-[#388A94]"
+                      : "bg-[#B5D3D1] cursor-not-allowed"
+                  }`}
                   disabled={!replyContent.trim()}
                 >
                   <Send className="w-4 h-4" />
@@ -232,10 +256,13 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-2 text-[#5D9297]" />
                     <span className="text-[#1A3B47] text-sm">
-                      {new Date(complaint.tourist.dateOfBirth).toLocaleDateString(
-                        undefined,
-                        { year: "numeric", month: "long", day: "numeric" }
-                      )}
+                      {new Date(
+                        complaint.tourist.dateOfBirth
+                      ).toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
                     </span>
                   </div>
                   <div className="flex items-center">
@@ -279,4 +306,3 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
     </div>
   );
 };
-

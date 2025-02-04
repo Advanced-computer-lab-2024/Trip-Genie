@@ -22,7 +22,7 @@ export function HistoricalPlaces() {
           role != "guest"
         )
           return;
-        const api = `http://localhost:4000/${role}/historical-places`;
+        const api = `https://trip-genie-apis.vercel.app/${role}/historical-places`;
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,

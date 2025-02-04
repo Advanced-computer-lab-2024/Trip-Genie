@@ -2,7 +2,18 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { Star, Clock, MapPin,Accessibility, Calendar, Bookmark, Users, Globe, CheckCircle, XCircle } from "lucide-react";
+import {
+  Star,
+  Clock,
+  MapPin,
+  Accessibility,
+  Calendar,
+  Bookmark,
+  Users,
+  Globe,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Loader from "@/components/Loader";
@@ -16,7 +27,14 @@ import {
   ToastViewport,
 } from "@/components/ui/toast";
 
-const ItineraryCard = ({ itinerary, onSelect, onItineraryUnsaved, userInfo, exchangeRates,showToast }) => {
+const ItineraryCard = ({
+  itinerary,
+  onSelect,
+  onItineraryUnsaved,
+  userInfo,
+  exchangeRates,
+  showToast,
+}) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
   const handleUnsave = async (e) => {
@@ -24,7 +42,7 @@ const ItineraryCard = ({ itinerary, onSelect, onItineraryUnsaved, userInfo, exch
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        `http://localhost:4000/tourist/save-itinerary/${itinerary._id}`,
+        `https://trip-genie-apis.vercel.app/tourist/save-itinerary/${itinerary._id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -32,7 +50,10 @@ const ItineraryCard = ({ itinerary, onSelect, onItineraryUnsaved, userInfo, exch
         onItineraryUnsaved(itinerary._id);
       }
     } catch (error) {
-      showToast('error', "An error occurred while unsaving your itinerary. Please try again.");
+      showToast(
+        "error",
+        "An error occurred while unsaving your itinerary. Please try again."
+      );
     }
   };
 
@@ -86,32 +107,39 @@ const ItineraryCard = ({ itinerary, onSelect, onItineraryUnsaved, userInfo, exch
           </div>
           <div className="flex items-center gap-1 text-base">
             <Star className="h-6 w-6 fill-[#F88C33] text-[#F88C33]" />
-            <span className="text-[#F88C33]">{itinerary.rating?.toFixed(1) || "0.0"}</span>
+            <span className="text-[#F88C33]">
+              {itinerary.rating?.toFixed(1) || "0.0"}
+            </span>
           </div>
         </div>
 
         {/* Additional Information: Pick-up Location, Drop-off Location, Language, Accessibility */}
         <div className="flex flex-col gap-2 text-sm text-[#5D9297]">
-  <div className="flex items-center gap-1 mt-2">
-    <Globe className="h-4 w-4 text-[#5D9297]" />
-    <span>{itinerary.language || "Language not specified"}</span>
-    
-    {/* Accessibility */}
-    {itinerary.accessibility !== undefined && (
-      <div className="flex items-center  ml-4">
-        <Accessibility className="h-4 w-4 mr-1 text-[#5D9297]" />
-        <span>{itinerary.accessibility === true ? "Accessible" : "Not Accessible"}</span>
-      </div>
-    )}
-  </div>
-  
-  {/* Pick-up Location */}
-  <div className="flex items-center mt-2">
-    <MapPin className="h-4 w-4 mr-1 text-[#5D9297]" />
-    <span className="font-semibold">{itinerary.pickUpLocation || "Pick-up Location not specified"}</span>
-  </div>
-</div>
+          <div className="flex items-center gap-1 mt-2">
+            <Globe className="h-4 w-4 text-[#5D9297]" />
+            <span>{itinerary.language || "Language not specified"}</span>
 
+            {/* Accessibility */}
+            {itinerary.accessibility !== undefined && (
+              <div className="flex items-center  ml-4">
+                <Accessibility className="h-4 w-4 mr-1 text-[#5D9297]" />
+                <span>
+                  {itinerary.accessibility === true
+                    ? "Accessible"
+                    : "Not Accessible"}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Pick-up Location */}
+          <div className="flex items-center mt-2">
+            <MapPin className="h-4 w-4 mr-1 text-[#5D9297]" />
+            <span className="font-semibold">
+              {itinerary.pickUpLocation || "Pick-up Location not specified"}
+            </span>
+          </div>
+        </div>
 
         {/* Price Section */}
         <div className="mt-2 flex items-center justify-between">
@@ -149,26 +177,33 @@ const SkeletonCard = () => {
   return (
     <Card className="group relative flex items-center gap-4 p-2 transition-all hover:shadow-lg cursor-pointer">
       <div className="relative h-36 w-36 shrink-0 rounded-sm bg-gray-300 animate-pulse" />
-      <div className="flex flex-1 flex-col gap-2"> {/* Reduced gap between elements */}
+      <div className="flex flex-1 flex-col gap-2">
+        {" "}
+        {/* Reduced gap between elements */}
         <div className="flex items-start justify-between">
-          <div className="w-3/4 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" /> {/* Increased width for title */}
-          <div className="w-1/3 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" /> {/* Increased width for other small section */}
+          <div className="w-3/4 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" />{" "}
+          {/* Increased width for title */}
+          <div className="w-1/3 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" />{" "}
+          {/* Increased width for other small section */}
         </div>
-
         <div className="flex items-center gap-2 text-sm text-[#5D9297]">
           {/* Increased gap between elements */}
           <div className="flex items-center gap-2">
             <div className="h-4 w-4 p-2 bg-gray-300 rounded-full animate-pulse" />
-            <div className="w-4/5 pl-11 pr-11 pt-1 pb-1 h-5 bg-gray-300 rounded-sm animate-pulse" /> {/* Increased width */}
+            <div className="w-4/5 pl-11 pr-11 pt-1 pb-1 h-5 bg-gray-300 rounded-sm animate-pulse" />{" "}
+            {/* Increased width */}
           </div>
           <div className="flex items-center gap-2">
             <div className="h-4 w-4 p-2 bg-gray-300 rounded-full animate-pulse" />
-            <div className="w-4/5 h-5 pl-11 pr-11 pt-1 pb-1 bg-gray-300 rounded-sm animate-pulse" /> {/* Increased width */}
+            <div className="w-4/5 h-5 pl-11 pr-11 pt-1 pb-1 bg-gray-300 rounded-sm animate-pulse" />{" "}
+            {/* Increased width */}
           </div>
         </div>
-
-        <div className="mt-2 flex items-center justify-between"> {/* Adjusted margin-top */}
-          <div className="w-3/4 h-6 bg-gray-300 rounded-sm mr-2 animate-pulse" /> {/* Increased width */}
+        <div className="mt-2 flex items-center justify-between">
+          {" "}
+          {/* Adjusted margin-top */}
+          <div className="w-3/4 h-6 bg-gray-300 rounded-sm mr-2 animate-pulse" />{" "}
+          {/* Increased width */}
           <div className="flex gap-2">
             <Button
               size="sm"
@@ -200,8 +235,8 @@ export default function SavedItineraries() {
   const [exchangeRates, setExchangeRates] = useState({});
   const navigate = useNavigate();
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastType, setToastType] = useState('success');
-  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState("success");
+  const [toastMessage, setToastMessage] = useState("");
 
   const showToast = (type, message) => {
     setToastType(type);
@@ -209,10 +244,11 @@ export default function SavedItineraries() {
     setIsToastOpen(true);
   };
 
-
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:4000/rates");
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/rates"
+      );
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -225,13 +261,16 @@ export default function SavedItineraries() {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -266,15 +305,17 @@ export default function SavedItineraries() {
   const fetchSavedItineraries = useCallback(async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await axios.get("http://localhost:4000/tourist/saved-itineraries", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/tourist/saved-itineraries",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setSavedItineraries(response.data);
-      setTimeout(() => setIsLoading(false), 1000);  
-    
+      setTimeout(() => setIsLoading(false), 1000);
     } catch (error) {
       console.error("Error fetching saved itineraries:", error);
-      setTimeout(() => setIsLoading(false), 1000);  
+      setTimeout(() => setIsLoading(false), 1000);
     }
   }, []);
 
@@ -287,80 +328,79 @@ export default function SavedItineraries() {
   };
 
   const handleItineraryUnsaved = (itineraryId) => {
-    setSavedItineraries((prev) => prev.filter((itinerary) => itinerary._id !== itineraryId));
-    showToast(
-      "success",
-     "Itinerary removed from saved list successfully!",
-   );
+    setSavedItineraries((prev) =>
+      prev.filter((itinerary) => itinerary._id !== itineraryId)
+    );
+    showToast("success", "Itinerary removed from saved list successfully!");
     setTimeout(() => setAlertMessage(null), 3000);
   };
 
   return (
     <ToastProvider>
-    <div className="bg-gray-100 min-h-screen">
-             {/* <h1 className="text-3xl font-bold mb-2">Saved Itineraries</h1>
+      <div className="bg-gray-100 min-h-screen">
+        {/* <h1 className="text-3xl font-bold mb-2">Saved Itineraries</h1>
     <p className="text-sm text-gray-500 mb-2">Itineraries / Saved</p>
      */}
-      <div className="container mx-auto px-4 py-8">
-        {isLoading ? (
-          <div className="grid gap-4 md:grid-cols-2">
-            {/* Render Skeletons for Cards */}
-            {[...Array(4)].map((_, idx) => (
-              <SkeletonCard key={idx} />
-            ))}
-          </div>
-        ) : savedItineraries.length === 0 ? (
-          <div className="text-center space-y-4 py-12">
-            <h2 className="text-2xl font-semibold text-gray-600">
-              No itineraries saved yet
-            </h2>
-            <p className="text-gray-500">
-              Start exploring and save itineraries to your list!
-            </p>
-            <Button
-              size="lg"
-              variant="default"
-              className="mt-4 bg-[#388A94] text-white"
-              onClick={() => navigate("/all-itineraries")}
-            >
-              Explore Itineraries
-            </Button>
-          </div>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2">
-            {savedItineraries.map((itinerary) => (
-              <ItineraryCard
-                key={itinerary._id}
-                itinerary={itinerary}
-                onSelect={handleItinerarySelect}
-                onItineraryUnsaved={handleItineraryUnsaved}
-                userInfo={userInfo}
-                exchangeRates={exchangeRates}
-                showToast={showToast}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-      <ToastViewport className="fixed top-0 right-0 p-4" />
+        <div className="container mx-auto px-4 py-8">
+          {isLoading ? (
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* Render Skeletons for Cards */}
+              {[...Array(4)].map((_, idx) => (
+                <SkeletonCard key={idx} />
+              ))}
+            </div>
+          ) : savedItineraries.length === 0 ? (
+            <div className="text-center space-y-4 py-12">
+              <h2 className="text-2xl font-semibold text-gray-600">
+                No itineraries saved yet
+              </h2>
+              <p className="text-gray-500">
+                Start exploring and save itineraries to your list!
+              </p>
+              <Button
+                size="lg"
+                variant="default"
+                className="mt-4 bg-[#388A94] text-white"
+                onClick={() => navigate("/all-itineraries")}
+              >
+                Explore Itineraries
+              </Button>
+            </div>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2">
+              {savedItineraries.map((itinerary) => (
+                <ItineraryCard
+                  key={itinerary._id}
+                  itinerary={itinerary}
+                  onSelect={handleItinerarySelect}
+                  onItineraryUnsaved={handleItineraryUnsaved}
+                  userInfo={userInfo}
+                  exchangeRates={exchangeRates}
+                  showToast={showToast}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <ToastViewport className="fixed top-0 right-0 p-4" />
         {isToastOpen && (
           <Toast
             onOpenChange={setIsToastOpen}
             open={isToastOpen}
             duration={5000}
-            className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+            className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
           >
             <div className="flex items-center">
-              {toastType === 'success' ? (
+              {toastType === "success" ? (
                 <CheckCircle className="text-green-500 mr-2" />
               ) : (
                 <XCircle className="text-red-500 mr-2" />
               )}
               <div>
-                <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
-                <ToastDescription>
-                  {toastMessage}
-                </ToastDescription>
+                <ToastTitle>
+                  {toastType === "success" ? "Success" : "Error"}
+                </ToastTitle>
+                <ToastDescription>{toastMessage}</ToastDescription>
               </div>
             </div>
             <ToastClose />
@@ -368,7 +408,5 @@ export default function SavedItineraries() {
         )}
       </div>
     </ToastProvider>
-    
   );
 }
-

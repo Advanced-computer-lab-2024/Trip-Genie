@@ -56,7 +56,7 @@ export default function ShippingAddresses({
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/tourist/shippingAdds",
+        "https://trip-genie-apis.vercel.app/tourist/shippingAdds",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -108,7 +108,7 @@ export default function ShippingAddresses({
       if (currentAddressId) {
         // Update address
         await axios.put(
-          `http://localhost:4000/tourist/update-shippingAdd/${currentAddressId}`,
+          `https://trip-genie-apis.vercel.app/tourist/update-shippingAdd/${currentAddressId}`,
           addressDetails,
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -116,7 +116,7 @@ export default function ShippingAddresses({
       } else {
         // Add new address
         await axios.put(
-          "http://localhost:4000/tourist/add-shippingAdd",
+          "https://trip-genie-apis.vercel.app/tourist/add-shippingAdd",
           addressDetails,
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -137,7 +137,7 @@ export default function ShippingAddresses({
     try {
       const token = Cookies.get("jwt");
       await axios.put(
-        `http://localhost:4000/tourist/add-default-shippingAdds/${addressId}`,
+        `https://trip-genie-apis.vercel.app/tourist/add-default-shippingAdds/${addressId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -162,7 +162,7 @@ export default function ShippingAddresses({
     try {
       const token = Cookies.get("jwt");
       await axios.delete(
-        `http://localhost:4000/tourist/shippingAdds/${addressToDelete}`,
+        `https://trip-genie-apis.vercel.app/tourist/shippingAdds/${addressToDelete}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       fetchAddresses();

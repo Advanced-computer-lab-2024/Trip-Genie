@@ -12,7 +12,13 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Bed, Calendar, ArrowUpDown, AlertCircle, ArrowRight } from "lucide-react";
+import {
+  Bed,
+  Calendar,
+  ArrowUpDown,
+  AlertCircle,
+  ArrowRight,
+} from "lucide-react";
 import {
   Pagination,
   PaginationContent,
@@ -33,193 +39,197 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import Cookies from "js-cookie";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from "react-router-dom";
 
 const cities = [
-  { code: 'CAI', name: 'Cairo', region: 'Egypt' },
-  { code: 'PAR', name: 'Paris', region: 'France' },
-  { code: 'DXB', name: 'Dubai', region: 'United Arab Emirates' },
-  { code: 'NYC', name: 'New York', region: 'USA' },
-  { code: 'LON', name: 'London', region: 'UK' },
-  { code: 'TKY', name: 'Tokyo', region: 'Japan' },
-  { code: 'PEK', name: 'Beijing', region: 'China' },
-  { code: 'SYD', name: 'Sydney', region: 'Australia' },
-  { code: 'BER', name: 'Berlin', region: 'Germany' },
-  { code: 'SIN', name: 'Singapore', region: 'Singapore' },
-  { code: 'AMS', name: 'Amsterdam', region: 'Netherlands' },
-  { code: 'CHI', name: 'Chicago', region: 'USA' },
-  { code: 'MEX', name: 'Mexico City', region: 'Mexico' },
-  { code: 'SAO', name: 'São Paulo', region: 'Brazil' },
-  { code: 'HKG', name: 'Hong Kong', region: 'Hong Kong' },
-  { code: 'SEL', name: 'Seoul', region: 'South Korea' },
-  { code: 'JNB', name: 'Johannesburg', region: 'South Africa' },
-  { code: 'TOR', name: 'Toronto', region: 'Canada' },
-  { code: 'MAD', name: 'Madrid', region: 'Spain' },
-  { code: 'MOW', name: 'Moscow', region: 'Russia' },
-  { code: 'LAX', name: 'Los Angeles', region: 'USA' },
-  { code: 'IST', name: 'Istanbul', region: 'Turkey' },
-  { code: 'BCN', name: 'Barcelona', region: 'Spain' },
-  { code: 'MUM', name: 'Mumbai', region: 'India' },
-  { code: 'ATL', name: 'Atlanta', region: 'USA' },
-  { code: 'MUN', name: 'Munich', region: 'Germany' },
-  { code: 'ROM', name: 'Rome', region: 'Italy' },
-  { code: 'DME', name: 'Moscow (Domodedovo)', region: 'Russia' },
-];  
+  { code: "CAI", name: "Cairo", region: "Egypt" },
+  { code: "PAR", name: "Paris", region: "France" },
+  { code: "DXB", name: "Dubai", region: "United Arab Emirates" },
+  { code: "NYC", name: "New York", region: "USA" },
+  { code: "LON", name: "London", region: "UK" },
+  { code: "TKY", name: "Tokyo", region: "Japan" },
+  { code: "PEK", name: "Beijing", region: "China" },
+  { code: "SYD", name: "Sydney", region: "Australia" },
+  { code: "BER", name: "Berlin", region: "Germany" },
+  { code: "SIN", name: "Singapore", region: "Singapore" },
+  { code: "AMS", name: "Amsterdam", region: "Netherlands" },
+  { code: "CHI", name: "Chicago", region: "USA" },
+  { code: "MEX", name: "Mexico City", region: "Mexico" },
+  { code: "SAO", name: "São Paulo", region: "Brazil" },
+  { code: "HKG", name: "Hong Kong", region: "Hong Kong" },
+  { code: "SEL", name: "Seoul", region: "South Korea" },
+  { code: "JNB", name: "Johannesburg", region: "South Africa" },
+  { code: "TOR", name: "Toronto", region: "Canada" },
+  { code: "MAD", name: "Madrid", region: "Spain" },
+  { code: "MOW", name: "Moscow", region: "Russia" },
+  { code: "LAX", name: "Los Angeles", region: "USA" },
+  { code: "IST", name: "Istanbul", region: "Turkey" },
+  { code: "BCN", name: "Barcelona", region: "Spain" },
+  { code: "MUM", name: "Mumbai", region: "India" },
+  { code: "ATL", name: "Atlanta", region: "USA" },
+  { code: "MUN", name: "Munich", region: "Germany" },
+  { code: "ROM", name: "Rome", region: "Italy" },
+  { code: "DME", name: "Moscow (Domodedovo)", region: "Russia" },
+];
 
 const styles = {
   container: {
-    fontFamily: 'Arial, sans-serif',
-    maxWidth: '100%',
-    margin: '0 auto',
-    backgroundColor: '#1A3B47',
-    borderRadius: '8px',
-    overflow: 'hidden',
+    fontFamily: "Arial, sans-serif",
+    maxWidth: "100%",
+    margin: "0 auto",
+    backgroundColor: "#1A3B47",
+    borderRadius: "8px",
+    overflow: "hidden",
   },
   tabsContainer: {
-    display: 'flex',
-    backgroundColor: '#388A94',
-    padding: '10px 10px 0',
+    display: "flex",
+    backgroundColor: "#388A94",
+    padding: "10px 10px 0",
   },
   tab: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    padding: '12px 16px',
-    cursor: 'pointer',
-    border: 'none',
-    borderTopLeftRadius: '8px',
-    borderTopRightRadius: '8px',
-    color: '#E6DCCF',
-    backgroundColor: 'transparent',
-    fontSize: '14px',
-    marginRight: '4px',
-    transition: 'background-color 0.3s, color 0.3s',
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    padding: "12px 16px",
+    cursor: "pointer",
+    border: "none",
+    borderTopLeftRadius: "8px",
+    borderTopRightRadius: "8px",
+    color: "#E6DCCF",
+    backgroundColor: "transparent",
+    fontSize: "14px",
+    marginRight: "4px",
+    transition: "background-color 0.3s, color 0.3s",
   },
   closeButton: {
-      position: 'absolute',
-      top: '10px',
-      right: '10px',
-      fontSize: '20px',
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      color: '#888',
-    },
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    fontSize: "20px",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    color: "#888",
+  },
   activeTab: {
-    backgroundColor: 'white',
-    color: '#388A94',
+    backgroundColor: "white",
+    color: "#388A94",
   },
   formContainer: {
-    backgroundColor: 'white',
-    borderRadius: '8px',
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-    padding: '20px',
-    transition: 'opacity 0.3s',
+    backgroundColor: "white",
+    borderRadius: "8px",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    padding: "20px",
+    transition: "opacity 0.3s",
   },
   form: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '15px',
+    display: "flex",
+    alignItems: "flex-start",
+    gap: "15px",
   },
   fieldGroup: {
     flex: 1,
-    minWidth: '150px',
-    display: 'flex',
-    flexDirection: 'column',
+    minWidth: "150px",
+    display: "flex",
+    flexDirection: "column",
   },
   label: {
-    fontSize: '12px',
-    color: '#666',
-    marginBottom: '4px',
+    fontSize: "12px",
+    color: "#666",
+    marginBottom: "4px",
   },
   select: {
-    width: '100%',
-    padding: '8px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '14px',
-    backgroundColor: 'white',
+    width: "100%",
+    padding: "8px",
+    border: "1px solid #ddd",
+    borderRadius: "4px",
+    fontSize: "14px",
+    backgroundColor: "white",
   },
   input: {
-    width: '100%',
-    padding: '8px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '14px',
+    width: "100%",
+    padding: "8px",
+    border: "1px solid #ddd",
+    borderRadius: "4px",
+    fontSize: "14px",
   },
   locationDisplay: {
-    fontSize: '16px',
-    fontWeight: 'bold',
-    marginTop: '4px',
+    fontSize: "16px",
+    fontWeight: "bold",
+    marginTop: "4px",
   },
   locationSubtext: {
-    fontSize: '12px',
-    color: '#666',
+    fontSize: "12px",
+    color: "#666",
   },
   button: {
-    padding: '12px 24px',
-    backgroundColor: '#1A3B47',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '14px',
-    fontWeight: 'bold',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    alignSelf: 'flex-end',
-    marginTop: '24px',
+    padding: "12px 24px",
+    backgroundColor: "#1A3B47",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    fontSize: "14px",
+    fontWeight: "bold",
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    alignSelf: "flex-end",
+    marginTop: "24px",
   },
   modal: {
-    position: 'fixed',
+    position: "fixed",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-},
-modalContent: {
-    backgroundColor: 'white',
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: '10px', // Rounded edges
-    overflow: 'hidden', // Ensures rounded corners display correctly
-    padding: '20px',
-    maxWidth: '380px',
-    width: '100%',
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-    position: 'relative', // For positioning the close button if needed
-},
-modalButtons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    gap: '10px',
-},
-}
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    display: "flex",
+    flexDirection: "column",
+    borderRadius: "10px", // Rounded edges
+    overflow: "hidden", // Ensures rounded corners display correctly
+    padding: "20px",
+    maxWidth: "380px",
+    width: "100%",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+    position: "relative", // For positioning the close button if needed
+  },
+  modalButtons: {
+    display: "flex",
+    justifyContent: "flex-end",
+    gap: "10px",
+  },
+};
 
 // const formatDate = (date) => {
 //   return date.toISOString().split('T')[0];
 // };
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 
 export default function HotelBookingPage() {
   const [searchParams] = useSearchParams();
-  const [city, setCity] = useState(searchParams.get('city') || 'CAI');
-  const [checkInDate, setCheckInDate] = useState(searchParams.get('checkIn') || formatDate(new Date()));
-  const [checkOutDate, setCheckOutDate] = useState(searchParams.get('checkOut') || formatDate(new Date(Date.now() + 86400000)));
-  const [activeTab, setActiveTab] = useState('hotels');
-  const [adults, setAdults] = useState(searchParams.get('adults') || '1');
+  const [city, setCity] = useState(searchParams.get("city") || "CAI");
+  const [checkInDate, setCheckInDate] = useState(
+    searchParams.get("checkIn") || formatDate(new Date())
+  );
+  const [checkOutDate, setCheckOutDate] = useState(
+    searchParams.get("checkOut") || formatDate(new Date(Date.now() + 86400000))
+  );
+  const [activeTab, setActiveTab] = useState("hotels");
+  const [adults, setAdults] = useState(searchParams.get("adults") || "1");
   const [hotels, setHotels] = useState([]);
   const [accessToken, setAccessToken] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -229,7 +239,8 @@ export default function HotelBookingPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [currencyCode, setCurrencyCode] = useState("USD");
-  const [isBookingConfirmationOpen, setIsBookingConfirmationOpen] = useState(false);
+  const [isBookingConfirmationOpen, setIsBookingConfirmationOpen] =
+    useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [hotelOffers, setHotelOffers] = useState(null);
   const [dialogError, setDialogError] = useState("");
@@ -281,7 +292,7 @@ export default function HotelBookingPage() {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        "http://localhost:4000/tourist/currencies/code",
+        "https://trip-genie-apis.vercel.app/tourist/currencies/code",
         {
           method: "GET",
           headers: {
@@ -303,7 +314,7 @@ export default function HotelBookingPage() {
 
   const getExchangeRates = useCallback(async () => {
     try {
-      const response = await fetch("http://localhost:4000/rates");
+      const response = await fetch("https://trip-genie-apis.vercel.app/rates");
       if (!response.ok) {
         throw new Error("Failed to fetch exchange rates");
       }
@@ -323,7 +334,9 @@ export default function HotelBookingPage() {
   useEffect(() => {
     // Ensure check-out date is after check-in date
     if (new Date(checkOutDate) <= new Date(checkInDate)) {
-        setCheckOutDate(formatDate(new Date(new Date(prev.checkIn).getTime() + 86400000)));
+      setCheckOutDate(
+        formatDate(new Date(new Date(prev.checkIn).getTime() + 86400000))
+      );
     }
   }, [checkInDate, checkOutDate]);
 
@@ -364,11 +377,13 @@ export default function HotelBookingPage() {
         setError("No hotels found for your search criteria.");
         setHotels([]);
       } else {
-        const hotelIds = data.data.map(hotel => hotel.hotelId);
+        const hotelIds = data.data.map((hotel) => hotel.hotelId);
         const fetchHotelOffers = async (ids) => {
           try {
             const response = await fetch(
-              `https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=${ids.join(',')}&adults=${adults}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&currency=USD`,
+              `https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=${ids.join(
+                ","
+              )}&adults=${adults}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&currency=USD`,
               {
                 headers: {
                   Authorization: `Bearer ${accessToken}`,
@@ -379,7 +394,9 @@ export default function HotelBookingPage() {
             if (response.ok) {
               return await response.json();
             } else {
-              console.warn(`Failed to fetch offers for hotels: ${ids.join(', ')}`);
+              console.warn(
+                `Failed to fetch offers for hotels: ${ids.join(", ")}`
+              );
               return { data: [] };
             }
           } catch (error) {
@@ -391,16 +408,17 @@ export default function HotelBookingPage() {
         for (let i = 0; i < hotelIds.length; i += 20) {
           const chunk = hotelIds.slice(i, i + 20);
           const offersData = await fetchHotelOffers(chunk);
-          const validHotels = offersData.data.filter(hotel => 
-            hotel.offers && 
-            hotel.offers[0] && 
-            hotel.offers[0].price && 
-            !isNaN(parseFloat(hotel.offers[0].price.total))
+          const validHotels = offersData.data.filter(
+            (hotel) =>
+              hotel.offers &&
+              hotel.offers[0] &&
+              hotel.offers[0].price &&
+              !isNaN(parseFloat(hotel.offers[0].price.total))
           );
-          setHotels(prevHotels => [...prevHotels, ...validHotels]);
-          
+          setHotels((prevHotels) => [...prevHotels, ...validHotels]);
+
           if (i + 20 < hotelIds.length) {
-            await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // 1 second delay
           }
         }
 
@@ -421,12 +439,36 @@ export default function HotelBookingPage() {
       let aValue, bValue;
       switch (sortBy) {
         case "price":
-          aValue = parseFloat(convertCurrency(a.offers[0].price.total, a.offers[0].price.currency, currencyCode) || 0);
-          bValue = parseFloat(convertCurrency(b.offers[0].price.total, b.offers[0].price.currency, currencyCode) || 0);
+          aValue = parseFloat(
+            convertCurrency(
+              a.offers[0].price.total,
+              a.offers[0].price.currency,
+              currencyCode
+            ) || 0
+          );
+          bValue = parseFloat(
+            convertCurrency(
+              b.offers[0].price.total,
+              b.offers[0].price.currency,
+              currencyCode
+            ) || 0
+          );
           break;
         default:
-          aValue = parseFloat(convertCurrency(a.offers[0].price.total, a.offers[0].price.currency, currencyCode) || 0);
-          bValue = parseFloat(convertCurrency(b.offers[0].price.total, b.offers[0].price.currency, currencyCode) || 0);
+          aValue = parseFloat(
+            convertCurrency(
+              a.offers[0].price.total,
+              a.offers[0].price.currency,
+              currencyCode
+            ) || 0
+          );
+          bValue = parseFloat(
+            convertCurrency(
+              b.offers[0].price.total,
+              b.offers[0].price.currency,
+              currencyCode
+            ) || 0
+          );
       }
       return sortOrder === "asc" ? aValue - bValue : bValue - aValue;
     });
@@ -508,7 +550,10 @@ export default function HotelBookingPage() {
     if (!firstName || !lastName || !phone || !email || !paymentMethod) {
       return false;
     }
-    if (paymentMethod === "card" && (!cardNumber || !expiryDate || !holderName || !cvv)) {
+    if (
+      paymentMethod === "card" &&
+      (!cardNumber || !expiryDate || !holderName || !cvv)
+    ) {
       return false;
     }
     return true;
@@ -518,11 +563,13 @@ export default function HotelBookingPage() {
 
   const renderLocationDisplay = (code) => {
     const list = cities;
-    const location = list.find(item => item.code === code);
+    const location = list.find((item) => item.code === code);
     return location ? (
       <>
         <div style={styles.locationDisplay}>{location.name}</div>
-        <div style={styles.locationSubtext}>{location.code}, {location.region}</div>
+        <div style={styles.locationSubtext}>
+          {location.code}, {location.region}
+        </div>
       </>
     ) : null;
   };
@@ -549,377 +596,426 @@ export default function HotelBookingPage() {
     } else if (current >= total - halfVisible) {
       start = total - maxVisible + 2;
     }
-    if (start > 2) pages.push('ellipsis');
+    if (start > 2) pages.push("ellipsis");
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
-    if (end < total - 1) pages.push('ellipsis');
+    if (end < total - 1) pages.push("ellipsis");
     pages.push(total);
     return pages;
   };
 
   return (
     <div className="bg-[#E6DCCF]">
-    {/* Navbar */}
-    <div className="w-full bg-[#1A3B47] py-8 top-0 z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Navbar */}
+      <div className="w-full bg-[#1A3B47] py-8 top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"></div>
       </div>
-    </div>
-    <div className="h-16"></div>
-    <div className="bg-[#E6DCCF] min-h-screen mx-auto px-24">
-      <h1 className="text-5xl font-bold text-[#1A3B47]">
-        Hotel Booking
-      </h1>
-      <div className="h-10"></div>
+      <div className="h-16"></div>
+      <div className="bg-[#E6DCCF] min-h-screen mx-auto px-24">
+        <h1 className="text-5xl font-bold text-[#1A3B47]">Hotel Booking</h1>
+        <div className="h-10"></div>
 
-      <div className="mx-auto mb-12">
-      <div style={{
-        ...styles.formContainer,
-        opacity: activeTab === 'hotels' ? 1 : 0,
-        position: activeTab === 'hotels' ? 'static' : 'absolute',
-        pointerEvents: activeTab === 'hotels' ? 'auto' : 'none',
-      }}>
-        <form style={styles.form}>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>CITY</label>
-            <select
-              style={styles.select}
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              required
-            >
-              {cities.map((city) => (
-                <option key={city.code} value={city.code}>
-                  {city.name} ({city.code}) - {city.region}
-                </option>
-              ))}
-            </select>
-            {renderLocationDisplay(city)}
-          </div>
-
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>CHECK IN</label>
-            <div style={{ position: 'relative' }}>
-              <Input
-                id="checkInDate"
-                type="date"
-                value={checkInDate}
-                onChange={handleCheckInDateChange}
-                min={today}
-                style={styles.input}
-                required
-              />
-              {/* <Calendar size={16} style={{ position: 'absolute', right: '8px', top: '8px', pointerEvents: 'none' }} /> */}
-            </div>
-            <div style={styles.locationDisplay}>
-              {new Date(checkInDate).toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short' })}
-            </div>
-          </div>
-
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>CHECK OUT</label>
-            <div style={{ position: 'relative' }}>
-              <Input
-                id="checkOutDate"
-                type="date"
-                value={checkOutDate}
-                onChange={(e) => setCheckOutDate(e.target.value)}
-                min={checkInDate}
-                style={styles.input}
-                required
-              />
-              {/* <Calendar size={16} style={{ position: 'absolute',   right: '8px', top: '8px', pointerEvents: 'none' }} /> */}
-            </div>
-            <div style={styles.locationDisplay}>
-              {new Date(checkOutDate).toLocaleDateString('en-US', { weekday: 'short', day: '2-digit', month: 'short' })}
-            </div>
-          </div>
-
-          <div style={styles.fieldGroup}>
-            <label style={styles.label}>ADULTS</label>
-            <Select
-              style={styles.select}
-              value={adults}
-              onValueChange={setAdults}
-              required
-            >
-              <SelectTrigger id="adults">
-                  <SelectValue placeholder="Select number of adults" />
-                </SelectTrigger>
-                <SelectContent>
-                  {[...Array(8)].map((_, i) => (
-                    <SelectItem key={i + 1} value={(i + 1).toString()}>
-                      {i + 1}
-                    </SelectItem>
+        <div className="mx-auto mb-12">
+          <div
+            style={{
+              ...styles.formContainer,
+              opacity: activeTab === "hotels" ? 1 : 0,
+              position: activeTab === "hotels" ? "static" : "absolute",
+              pointerEvents: activeTab === "hotels" ? "auto" : "none",
+            }}
+          >
+            <form style={styles.form}>
+              <div style={styles.fieldGroup}>
+                <label style={styles.label}>CITY</label>
+                <select
+                  style={styles.select}
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  required
+                >
+                  {cities.map((city) => (
+                    <option key={city.code} value={city.code}>
+                      {city.name} ({city.code}) - {city.region}
+                    </option>
                   ))}
-                </SelectContent>
-            </Select>
-          </div>
-          {/* <Button type="submit" style={styles.button} onClick={handleSearch}>
+                </select>
+                {renderLocationDisplay(city)}
+              </div>
+
+              <div style={styles.fieldGroup}>
+                <label style={styles.label}>CHECK IN</label>
+                <div style={{ position: "relative" }}>
+                  <Input
+                    id="checkInDate"
+                    type="date"
+                    value={checkInDate}
+                    onChange={handleCheckInDateChange}
+                    min={today}
+                    style={styles.input}
+                    required
+                  />
+                  {/* <Calendar size={16} style={{ position: 'absolute', right: '8px', top: '8px', pointerEvents: 'none' }} /> */}
+                </div>
+                <div style={styles.locationDisplay}>
+                  {new Date(checkInDate).toLocaleDateString("en-US", {
+                    weekday: "short",
+                    day: "2-digit",
+                    month: "short",
+                  })}
+                </div>
+              </div>
+
+              <div style={styles.fieldGroup}>
+                <label style={styles.label}>CHECK OUT</label>
+                <div style={{ position: "relative" }}>
+                  <Input
+                    id="checkOutDate"
+                    type="date"
+                    value={checkOutDate}
+                    onChange={(e) => setCheckOutDate(e.target.value)}
+                    min={checkInDate}
+                    style={styles.input}
+                    required
+                  />
+                  {/* <Calendar size={16} style={{ position: 'absolute',   right: '8px', top: '8px', pointerEvents: 'none' }} /> */}
+                </div>
+                <div style={styles.locationDisplay}>
+                  {new Date(checkOutDate).toLocaleDateString("en-US", {
+                    weekday: "short",
+                    day: "2-digit",
+                    month: "short",
+                  })}
+                </div>
+              </div>
+
+              <div style={styles.fieldGroup}>
+                <label style={styles.label}>ADULTS</label>
+                <Select
+                  style={styles.select}
+                  value={adults}
+                  onValueChange={setAdults}
+                  required
+                >
+                  <SelectTrigger id="adults">
+                    <SelectValue placeholder="Select number of adults" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[...Array(8)].map((_, i) => (
+                      <SelectItem key={i + 1} value={(i + 1).toString()}>
+                        {i + 1}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              {/* <Button type="submit" style={styles.button} onClick={handleSearch}>
           {isLoading ? "Searching..." : "Search Hotels"}
           </Button> */}
-          
-        </form>
-        <div className="mt-8 mr-2 ml-2">
-          <Button
-            onClick={handleSearch}
-            className="bg-[#1A3B47] hover:bg-[#388A94] text-white font-semibold px-8 w-full"
-          >
-            {isLoading ? "Searching..." : "Search Hotels"}
-          </Button>
-          </div>
-      </div>
-      </div>
-
-      
-       
-
-      {error && (
-        <Alert variant="destructive" className="bg-red-50 border-red-200">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-
-      {hotels.length > 0 && (
-        <div className="space-y-4 mt-3">
-          <div className="flex flex-wrap gap-3 justify-between items-center">
-            <div className="flex gap-3">
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-[160px] border-amber-400">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="price">Price</SelectItem>
-                </SelectContent>
-              </Select>
+            </form>
+            <div className="mt-8 mr-2 ml-2">
               <Button
-                variant="outline"
-                onClick={() => setSortOrder((order) => (order === "asc" ? "desc" : "asc"))}
-                className="flex gap-2 border-amber-400"
+                onClick={handleSearch}
+                className="bg-[#1A3B47] hover:bg-[#388A94] text-white font-semibold px-8 w-full"
               >
-                <ArrowUpDown className="h-4 w-4" />
-                {sortOrder.toUpperCase()}
+                {isLoading ? "Searching..." : "Search Hotels"}
               </Button>
             </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {paginatedHotels.map((hotel, index) => (
-              <Card key={index} className="overflow-hidden">
-                <CardContent className="p-3">
-                  <div className="flex flex-col h-full">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 bg-[#1A3B47] text-white rounded">
-                        <Bed className="h-5 w-5" />
-                      </div>
-                      <h3 className="text-base font-semibold">
-                        {hotel.hotel.name}
-                      </h3>
-                    </div>
-                    <div className="text-sm text-muted-foreground space-y-1">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-[#B5D3D1]" />
-                        <span>Check-in: {formatDate(hotel.offers[0].checkInDate)}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-[#5D9297]" />
-                        <span>Check-out: {formatDate(hotel.offers[0].checkOutDate)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 font-semibold text-lg text-[#F88C33]">
-                        <span> {convertCurrency(hotel.offers[0].price.total, hotel.offers[0].price.currency, currencyCode).toFixed(2)} {currencyCode}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-auto pt-3 flex items-center justify-between">
-                      <Button
-                        className="bg-[#388A94] hover:bg-[#1A3B47] text-white"
-                        onClick={() => handleOpenDialog(hotel)}
-                      >
-                        See Details
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
-                />
-              </PaginationItem>
-              {getPageNumbers(currentPage, totalPages, 5).map((page, index) => (
-                <PaginationItem key={index}>
-                  {page === 'ellipsis' ? (
-                    <PaginationEllipsis />
-                  ) : (
-                    <PaginationLink
-                      onClick={() => setCurrentPage(page)}
-                      isActive={currentPage === page}
-                      className={currentPage === page ? "pointer-events-none" : ""}
-                    >
-                      {page}
-                    </PaginationLink>
-                  )}
-                </PaginationItem>
-              ))}
-              <PaginationItem>
-                <PaginationNext
-                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                  className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
         </div>
-      )}
 
-      <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
-        <DialogContent className="sm:max-w-[425px] bg-white max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Hotel Details</DialogTitle>
-            <DialogDescription>
-              Complete information about the selected hotel.
-            </DialogDescription>
-          </DialogHeader>
-          {dialogError && (
-            <Alert variant="destructive" className="mt-4">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{dialogError}</AlertDescription>
-            </Alert>
-          )}
+        {error && (
+          <Alert variant="destructive" className="bg-red-50 border-red-200">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
 
-          {selectedHotel && hotelOffers && !dialogError && (
-            <div className="mt-4 space-y-4">
-              <h4 className="font-semibold mb-2">{hotelOffers.hotel.name}</h4>
-              <p>Check-in: {formatDate(hotelOffers.offers[0].checkInDate)}</p>
-              <p>Check-out: {formatDate(hotelOffers.offers[0].checkOutDate)}</p>
-              <p>Room Type: {hotelOffers.offers[0].room.type}</p>
-              <p>
-                Price: {convertCurrency(hotelOffers.offers[0].price.total, hotelOffers.offers[0].price.currency, currencyCode).toFixed(2)} {currencyCode}
-              </p>
-              <p>Adults: {adults}</p>
-              <div>
-                <h5 className="font-semibold mt-4 mb-2">Description:</h5>
-                <ul className="list-disc pl-5 space-y-1">
-                  {hotelOffers.offers[0].room.description.text.split('-').map((item, index) => (
-                    <li key={index}>{item.trim()}</li>
-                  ))}
-                </ul>
+        {hotels.length > 0 && (
+          <div className="space-y-4 mt-3">
+            <div className="flex flex-wrap gap-3 justify-between items-center">
+              <div className="flex gap-3">
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="w-[160px] border-amber-400">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="price">Price</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button
+                  variant="outline"
+                  onClick={() =>
+                    setSortOrder((order) => (order === "asc" ? "desc" : "asc"))
+                  }
+                  className="flex gap-2 border-amber-400"
+                >
+                  <ArrowUpDown className="h-4 w-4" />
+                  {sortOrder.toUpperCase()}
+                </Button>
               </div>
-              <div>
-                <h5 className="font-semibold mt-4 mb-2">Amenities:</h5>
-                <ul className="list-disc pl-5 space-y-1">
-                  {hotelOffers.hotel.amenities.map((amenity, index) => (
-                    <li key={index}>
-                      {amenity.split('_').map(word => word.charAt(0) + word.slice(1).toLowerCase()).join(' ')}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="space-y-4">
-                <Input
-                  placeholder="First Name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-                <Input
-                  placeholder="Last Name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-                <Input
-                  placeholder="Phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-                <Input
-                  placeholder="Email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-
-                <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="wallet" id="wallet" />
-                    <Label htmlFor="wallet">Wallet</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="card" id="card" />
-                    <Label htmlFor="card">Credit/Debit Card</Label>
-                  </div>
-                </RadioGroup>
-
-                {paymentMethod === "card" && (
-                  <div className="space-y-4">
-                    <Input
-                      placeholder="Card Number"
-                      value={cardNumber}
-                      onChange={(e) => setCardNumber(e.target.value)}
-                    />
-                    <Input
-                      placeholder="Expiry Date (YYYY-MM)"
-                      value={expiryDate}
-                      onChange={(e) => setExpiryDate(e.target.value)}
-                    />
-                    <Input
-                      placeholder="Card Holder Name"
-                      value={holderName}
-                      onChange={(e) => setHolderName(e.target.value)}
-                    />
-                    <Input
-                      placeholder="CVV"
-                      value={cvv}
-                      onChange={(e) => setCvv(e.target.value)}
-                    />
-                  </div>
-                )}
-              </div>
-
-              <Button
-                className="mt-4 w-full bg-[#388A94] hover:bg-[#1A3B47] text-white"
-                onClick={handleBookNow}
-                disabled={!isBookingFormValid()}
-              >
-                Book Now
-              </Button>
             </div>
-          )}
-        </DialogContent>
-      </Dialog>
 
-      <Dialog
-        open={isBookingConfirmationOpen}
-        onOpenChange={setIsBookingConfirmationOpen}
-      >
-        <DialogContent className="bg-white">
-          <DialogHeader>
-            <DialogTitle>Booking Confirmed</DialogTitle>
-            <DialogDescription>
-              Your hotel has been booked successfully. You will receive a
-              confirmation email shortly.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogClose asChild>
-            <Button
-              onClick={handleCloseAllPopups}
-              className="mt-4 w-full bg-[#388A94] hover:bg-[#1A3B47] text-white"
-            >
-              Close
-            </Button>
-          </DialogClose>
-        </DialogContent>
-      </Dialog>
-    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {paginatedHotels.map((hotel, index) => (
+                <Card key={index} className="overflow-hidden">
+                  <CardContent className="p-3">
+                    <div className="flex flex-col h-full">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="p-2 bg-[#1A3B47] text-white rounded">
+                          <Bed className="h-5 w-5" />
+                        </div>
+                        <h3 className="text-base font-semibold">
+                          {hotel.hotel.name}
+                        </h3>
+                      </div>
+                      <div className="text-sm text-muted-foreground space-y-1">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-[#B5D3D1]" />
+                          <span>
+                            Check-in: {formatDate(hotel.offers[0].checkInDate)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-[#5D9297]" />
+                          <span>
+                            Check-out:{" "}
+                            {formatDate(hotel.offers[0].checkOutDate)}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 font-semibold text-lg text-[#F88C33]">
+                          <span>
+                            {" "}
+                            {convertCurrency(
+                              hotel.offers[0].price.total,
+                              hotel.offers[0].price.currency,
+                              currencyCode
+                            ).toFixed(2)}{" "}
+                            {currencyCode}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="mt-auto pt-3 flex items-center justify-between">
+                        <Button
+                          className="bg-[#388A94] hover:bg-[#1A3B47] text-white"
+                          onClick={() => handleOpenDialog(hotel)}
+                        >
+                          See Details
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    className={
+                      currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                    }
+                  />
+                </PaginationItem>
+                {getPageNumbers(currentPage, totalPages, 5).map(
+                  (page, index) => (
+                    <PaginationItem key={index}>
+                      {page === "ellipsis" ? (
+                        <PaginationEllipsis />
+                      ) : (
+                        <PaginationLink
+                          onClick={() => setCurrentPage(page)}
+                          isActive={currentPage === page}
+                          className={
+                            currentPage === page ? "pointer-events-none" : ""
+                          }
+                        >
+                          {page}
+                        </PaginationLink>
+                      )}
+                    </PaginationItem>
+                  )
+                )}
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() =>
+                      setCurrentPage((p) => Math.min(totalPages, p + 1))
+                    }
+                    className={
+                      currentPage === totalPages
+                        ? "pointer-events-none opacity-50"
+                        : ""
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
+
+        <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
+          <DialogContent className="sm:max-w-[425px] bg-white max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Hotel Details</DialogTitle>
+              <DialogDescription>
+                Complete information about the selected hotel.
+              </DialogDescription>
+            </DialogHeader>
+            {dialogError && (
+              <Alert variant="destructive" className="mt-4">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{dialogError}</AlertDescription>
+              </Alert>
+            )}
+
+            {selectedHotel && hotelOffers && !dialogError && (
+              <div className="mt-4 space-y-4">
+                <h4 className="font-semibold mb-2">{hotelOffers.hotel.name}</h4>
+                <p>Check-in: {formatDate(hotelOffers.offers[0].checkInDate)}</p>
+                <p>
+                  Check-out: {formatDate(hotelOffers.offers[0].checkOutDate)}
+                </p>
+                <p>Room Type: {hotelOffers.offers[0].room.type}</p>
+                <p>
+                  Price:{" "}
+                  {convertCurrency(
+                    hotelOffers.offers[0].price.total,
+                    hotelOffers.offers[0].price.currency,
+                    currencyCode
+                  ).toFixed(2)}{" "}
+                  {currencyCode}
+                </p>
+                <p>Adults: {adults}</p>
+                <div>
+                  <h5 className="font-semibold mt-4 mb-2">Description:</h5>
+                  <ul className="list-disc pl-5 space-y-1">
+                    {hotelOffers.offers[0].room.description.text
+                      .split("-")
+                      .map((item, index) => (
+                        <li key={index}>{item.trim()}</li>
+                      ))}
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-semibold mt-4 mb-2">Amenities:</h5>
+                  <ul className="list-disc pl-5 space-y-1">
+                    {hotelOffers.hotel.amenities.map((amenity, index) => (
+                      <li key={index}>
+                        {amenity
+                          .split("_")
+                          .map(
+                            (word) =>
+                              word.charAt(0) + word.slice(1).toLowerCase()
+                          )
+                          .join(" ")}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="space-y-4">
+                  <Input
+                    placeholder="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                  <Input
+                    placeholder="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                  <Input
+                    placeholder="Phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                  <Input
+                    placeholder="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+
+                  <RadioGroup
+                    value={paymentMethod}
+                    onValueChange={setPaymentMethod}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="wallet" id="wallet" />
+                      <Label htmlFor="wallet">Wallet</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="card" id="card" />
+                      <Label htmlFor="card">Credit/Debit Card</Label>
+                    </div>
+                  </RadioGroup>
+
+                  {paymentMethod === "card" && (
+                    <div className="space-y-4">
+                      <Input
+                        placeholder="Card Number"
+                        value={cardNumber}
+                        onChange={(e) => setCardNumber(e.target.value)}
+                      />
+                      <Input
+                        placeholder="Expiry Date (YYYY-MM)"
+                        value={expiryDate}
+                        onChange={(e) => setExpiryDate(e.target.value)}
+                      />
+                      <Input
+                        placeholder="Card Holder Name"
+                        value={holderName}
+                        onChange={(e) => setHolderName(e.target.value)}
+                      />
+                      <Input
+                        placeholder="CVV"
+                        value={cvv}
+                        onChange={(e) => setCvv(e.target.value)}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <Button
+                  className="mt-4 w-full bg-[#388A94] hover:bg-[#1A3B47] text-white"
+                  onClick={handleBookNow}
+                  disabled={!isBookingFormValid()}
+                >
+                  Book Now
+                </Button>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        <Dialog
+          open={isBookingConfirmationOpen}
+          onOpenChange={setIsBookingConfirmationOpen}
+        >
+          <DialogContent className="bg-white">
+            <DialogHeader>
+              <DialogTitle>Booking Confirmed</DialogTitle>
+              <DialogDescription>
+                Your hotel has been booked successfully. You will receive a
+                confirmation email shortly.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogClose asChild>
+              <Button
+                onClick={handleCloseAllPopups}
+                className="mt-4 w-full bg-[#388A94] hover:bg-[#1A3B47] text-white"
+              >
+                Close
+              </Button>
+            </DialogClose>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 }

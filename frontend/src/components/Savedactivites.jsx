@@ -2,7 +2,15 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { Star, Clock, MapPin, Calendar, Bookmark, CheckCircle, XCircle } from "lucide-react";
+import {
+  Star,
+  Clock,
+  MapPin,
+  Calendar,
+  Bookmark,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Loader from "@/components/Loader";
@@ -16,9 +24,14 @@ import {
   ToastViewport,
 } from "@/components/ui/toast";
 
-
-
-const ActivityCard = ({ activity, onSelect, onActivityUnsaved, userInfo, exchangeRates, showToast }) => {
+const ActivityCard = ({
+  activity,
+  onSelect,
+  onActivityUnsaved,
+  userInfo,
+  exchangeRates,
+  showToast,
+}) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
   const handleUnsave = async (e) => {
@@ -26,7 +39,7 @@ const ActivityCard = ({ activity, onSelect, onActivityUnsaved, userInfo, exchang
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        `http://localhost:4000/tourist/save-activity/${activity._id}`,
+        `https://trip-genie-apis.vercel.app/tourist/save-activity/${activity._id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -34,7 +47,10 @@ const ActivityCard = ({ activity, onSelect, onActivityUnsaved, userInfo, exchang
         onActivityUnsaved(activity._id);
       }
     } catch (error) {
-      showToast('error', "An error occurred while unsaving your activity. Please try again.");
+      showToast(
+        "error",
+        "An error occurred while unsaving your activity. Please try again."
+      );
     }
   };
 
@@ -77,7 +93,6 @@ const ActivityCard = ({ activity, onSelect, onActivityUnsaved, userInfo, exchang
             </div>
           )}
         </div>
-
       </div>
 
       <div className="flex flex-1 flex-col gap-1">
@@ -88,19 +103,27 @@ const ActivityCard = ({ activity, onSelect, onActivityUnsaved, userInfo, exchang
               <div className="flex-shrink-0 h-4 w-4 flex items-center justify-center mr-1">
                 <MapPin className="h-4 w-4" />
               </div>
-              <span className="leading-tight">{activity.location?.address || "Location not available"}</span>
+              <span className="leading-tight">
+                {activity.location?.address || "Location not available"}
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-1 text-base">
             <Star className="h-6 w-6 fill-[#F88C33] text-[#F88C33]" />
-            <span className="text-[#F88C33]">{activity.rating?.toFixed(1) || "0.0"}</span>
+            <span className="text-[#F88C33]">
+              {activity.rating?.toFixed(1) || "0.0"}
+            </span>
           </div>
         </div>
 
         <div className="flex items-center gap-4 text-sm text-[#5D9297]">
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4 text-[#5D9297]" />
-            <span>{activity.duration === 1 ? "1 hour" : `${activity.duration} hours`}</span>
+            <span>
+              {activity.duration === 1
+                ? "1 hour"
+                : `${activity.duration} hours`}
+            </span>
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4 text-[#5D9297]" />
@@ -124,7 +147,12 @@ const ActivityCard = ({ activity, onSelect, onActivityUnsaved, userInfo, exchang
             >
               View
             </Button>
-            <Button size="sm" variant="default" className="bg-gray-200 hover:bg-gray-300 text-black font-semibold" onClick={handleUnsave}>
+            <Button
+              size="sm"
+              variant="default"
+              className="bg-gray-200 hover:bg-gray-300 text-black font-semibold"
+              onClick={handleUnsave}
+            >
               Unsave
             </Button>
           </div>
@@ -138,26 +166,33 @@ const SkeletonCard = () => {
   return (
     <Card className="group relative flex items-center gap-4 p-2 transition-all hover:shadow-lg cursor-pointer">
       <div className="relative h-36 w-36 shrink-0 rounded-sm bg-gray-300 animate-pulse" />
-      <div className="flex flex-1 flex-col gap-2"> {/* Reduced gap between elements */}
+      <div className="flex flex-1 flex-col gap-2">
+        {" "}
+        {/* Reduced gap between elements */}
         <div className="flex items-start justify-between">
-          <div className="w-3/4 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" /> {/* Increased width for title */}
-          <div className="w-1/3 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" /> {/* Increased width for other small section */}
+          <div className="w-3/4 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" />{" "}
+          {/* Increased width for title */}
+          <div className="w-1/3 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" />{" "}
+          {/* Increased width for other small section */}
         </div>
-
         <div className="flex items-center gap-2 text-sm text-[#5D9297]">
           {/* Increased gap between elements */}
           <div className="flex items-center gap-2">
             <div className="h-4 w-4 p-2 bg-gray-300 rounded-full animate-pulse" />
-            <div className="w-4/5 pl-11 pr-11 pt-1 pb-1 h-5 bg-gray-300 rounded-sm animate-pulse" /> {/* Increased width */}
+            <div className="w-4/5 pl-11 pr-11 pt-1 pb-1 h-5 bg-gray-300 rounded-sm animate-pulse" />{" "}
+            {/* Increased width */}
           </div>
           <div className="flex items-center gap-2">
             <div className="h-4 w-4 p-2 bg-gray-300 rounded-full animate-pulse" />
-            <div className="w-4/5 h-5 pl-11 pr-11 pt-1 pb-1 bg-gray-300 rounded-sm animate-pulse" /> {/* Increased width */}
+            <div className="w-4/5 h-5 pl-11 pr-11 pt-1 pb-1 bg-gray-300 rounded-sm animate-pulse" />{" "}
+            {/* Increased width */}
           </div>
         </div>
-
-        <div className="mt-2 flex items-center justify-between"> {/* Adjusted margin-top */}
-          <div className="w-3/4 h-6 bg-gray-300 rounded-sm mr-2 animate-pulse" /> {/* Increased width */}
+        <div className="mt-2 flex items-center justify-between">
+          {" "}
+          {/* Adjusted margin-top */}
+          <div className="w-3/4 h-6 bg-gray-300 rounded-sm mr-2 animate-pulse" />{" "}
+          {/* Increased width */}
           <div className="flex gap-2">
             <Button
               size="sm"
@@ -182,7 +217,6 @@ const SkeletonCard = () => {
   );
 };
 
-
 export default function SavedActivities() {
   const [savedActivities, setSavedActivities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -190,8 +224,8 @@ export default function SavedActivities() {
   const [userInfo, setUserInfo] = useState(null);
   const [exchangeRates, setExchangeRates] = useState({});
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastType, setToastType] = useState('success');
-  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState("success");
+  const [toastMessage, setToastMessage] = useState("");
   const navigate = useNavigate();
 
   const showToast = (type, message) => {
@@ -202,7 +236,9 @@ export default function SavedActivities() {
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:4000/rates");
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/rates"
+      );
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -214,7 +250,7 @@ export default function SavedActivities() {
     if (role !== "tourist") return;
     try {
       const response = await axios.get(
-        "http://localhost:4000/tourist/currencies",
+        "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -232,13 +268,16 @@ export default function SavedActivities() {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -274,9 +313,12 @@ export default function SavedActivities() {
   const fetchSavedActivities = useCallback(async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await axios.get("http://localhost:4000/tourist/saved-activities", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/tourist/saved-activities",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setSavedActivities(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -294,11 +336,10 @@ export default function SavedActivities() {
   };
 
   const handleActivityUnsaved = (activityId) => {
-    setSavedActivities((prev) => prev.filter((activity) => activity._id !== activityId));
-    showToast(
-      "success",
-      "Activity removed from saved list successfully!",
+    setSavedActivities((prev) =>
+      prev.filter((activity) => activity._id !== activityId)
     );
+    showToast("success", "Activity removed from saved list successfully!");
     setTimeout(() => setAlertMessage(null), 3000);
   };
 
@@ -316,7 +357,6 @@ export default function SavedActivities() {
                 <SkeletonCard key={idx} />
               ))}
             </div>
-
           ) : savedActivities.length === 0 ? (
             <div className="text-center space-y-4 py-12">
               <h2 className="text-2xl font-semibold text-gray-600">
@@ -356,19 +396,19 @@ export default function SavedActivities() {
             onOpenChange={setIsToastOpen}
             open={isToastOpen}
             duration={5000}
-            className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+            className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
           >
             <div className="flex items-center">
-              {toastType === 'success' ? (
+              {toastType === "success" ? (
                 <CheckCircle className="text-green-500 mr-2" />
               ) : (
                 <XCircle className="text-red-500 mr-2" />
               )}
               <div>
-                <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
-                <ToastDescription>
-                  {toastMessage}
-                </ToastDescription>
+                <ToastTitle>
+                  {toastType === "success" ? "Success" : "Error"}
+                </ToastTitle>
+                <ToastDescription>{toastMessage}</ToastDescription>
               </div>
             </div>
             <ToastClose />
@@ -376,7 +416,5 @@ export default function SavedActivities() {
         )}
       </div>
     </ToastProvider>
-
   );
 }
-

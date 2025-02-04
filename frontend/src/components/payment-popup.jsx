@@ -76,7 +76,13 @@ const PaymentPopup = ({
     const newDiscountedTotal = totalPrice - discountAmount;
     setDiscountedTotal(newDiscountedTotal);
     onDiscountedTotalChange(newDiscountedTotal); // Notify parent component of the change
-  }, [numberOfTickets, priceOne, discountAmount, totalPrice, onDiscountedTotalChange]);
+  }, [
+    numberOfTickets,
+    priceOne,
+    discountAmount,
+    totalPrice,
+    onDiscountedTotalChange,
+  ]);
 
   useEffect(() => {
     if (selectedItineraryDate) {
@@ -97,7 +103,7 @@ const PaymentPopup = ({
 
     try {
       const response = await fetch(
-        "http://localhost:4000/tourist/get/promo-code",
+        "https://trip-genie-apis.vercel.app/tourist/get/promo-code",
         {
           method: "POST",
           headers: {
@@ -195,7 +201,7 @@ const PaymentPopup = ({
         }
 
         const response = await fetch(
-          "http://localhost:4000/create-booking-session",
+          "https://trip-genie-apis.vercel.app/create-booking-session",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

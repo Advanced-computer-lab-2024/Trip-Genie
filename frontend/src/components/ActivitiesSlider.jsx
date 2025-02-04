@@ -30,7 +30,7 @@ export function Activities() {
         if (role === undefined) role = "guest";
         if (role !== "tourist" && role !== "advertiser" && role != "guest")
           return;
-        const api = `http://localhost:4000/${role}/activities`;
+        const api = `https://trip-genie-apis.vercel.app/${role}/activities`;
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -55,7 +55,7 @@ export function Activities() {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/populate`,
+        `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
           headers: {
@@ -86,7 +86,7 @@ export function Activities() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/${userRole}/getCurrency/${activityCurrency}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${activityCurrency}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setCurrencySymbol(response.data);
@@ -116,12 +116,15 @@ export function Activities() {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
         const response2 = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setUserPreferredCurrency(response2.data);

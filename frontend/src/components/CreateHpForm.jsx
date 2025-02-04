@@ -91,7 +91,6 @@ export default function CreateHpForm() {
         native: "",
         student: "",
       },
-    
     },
   });
 
@@ -118,7 +117,7 @@ export default function CreateHpForm() {
         const token = Cookies.get("jwt");
         const role = Cookies.get("role") || "guest";
         const response = await axios.get(
-          `http://localhost:4000/${role}/currencies`,
+          `https://trip-genie-apis.vercel.app/${role}/currencies`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -141,7 +140,7 @@ export default function CreateHpForm() {
       const role = Cookies.get("role") || "guest";
 
       const response = await axios.get(
-        `http://localhost:4000/${role}/historical-tag`,
+        `https://trip-genie-apis.vercel.app/${role}/historical-tag`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -226,7 +225,7 @@ export default function CreateHpForm() {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/tourism-governor/historical-places`,
+        `https://trip-genie-apis.vercel.app/tourism-governor/historical-places`,
         formData,
         {
           headers: {
@@ -261,7 +260,7 @@ export default function CreateHpForm() {
 
   return (
     <div>
-     <div className="w-full bg-[#1A3B47] py-8 top-0 z-10">
+      <div className="w-full bg-[#1A3B47] py-8 top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"></div>
       </div>
       <div
@@ -276,11 +275,15 @@ export default function CreateHpForm() {
               Create Historical Place
             </h2>
             <p className="text-sm mb-6 text-[#1A3B47]">
-              Add a new historical place to your collection. Fill in all the details carefully to ensure accurate information for visitors.
+              Add a new historical place to your collection. Fill in all the
+              details carefully to ensure accurate information for visitors.
             </p>
           </div>
           <div className="w-full md:w-3/4 p-6">
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-4 gap-4">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="grid grid-cols-4 gap-4"
+            >
               <div className="col-span-2">
                 <Label htmlFor="title">Name</Label>
                 <Input id="title" {...register("title")} />
@@ -293,7 +296,9 @@ export default function CreateHpForm() {
                 <Label htmlFor="description">Description</Label>
                 <Textarea id="description" {...register("description")} />
                 {errors.description && (
-                  <p className="text-red-500 text-xs">{errors.description.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.description.message}
+                  </p>
                 )}
               </div>
 
@@ -313,7 +318,9 @@ export default function CreateHpForm() {
                   ))}
                 </select>
                 {errors.location?.country && (
-                  <p className="text-red-500 text-xs">{errors.location.country.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.location.country.message}
+                  </p>
                 )}
               </div>
 
@@ -333,20 +340,29 @@ export default function CreateHpForm() {
                   ))}
                 </select>
                 {errors.location?.city && (
-                  <p className="text-red-500 text-xs">{errors.location.city.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.location.city.message}
+                  </p>
                 )}
                 {isCityDisabled && (
                   <p className="text-blue-500 text-xs">
-                    No cities available for this country. You can proceed without selecting a city.
+                    No cities available for this country. You can proceed
+                    without selecting a city.
                   </p>
                 )}
               </div>
 
               <div className="col-span-4">
                 <Label htmlFor="address">Address</Label>
-                <Input id="address" {...register("location.address")} placeholder="Address" />
+                <Input
+                  id="address"
+                  {...register("location.address")}
+                  placeholder="Address"
+                />
                 {errors.location?.address && (
-                  <p className="text-red-500 text-xs">{errors.location.address.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.location.address.message}
+                  </p>
                 )}
               </div>
 
@@ -369,51 +385,91 @@ export default function CreateHpForm() {
                   )}
                 />
                 {errors.historicalTag && (
-                  <p className="text-red-500 text-xs">{errors.historicalTag.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.historicalTag.message}
+                  </p>
                 )}
               </div>
 
               <div className="col-span-2">
                 <Label htmlFor="weekdays">Opening Hours (Weekdays)</Label>
-                <Input id="weekdays" {...register("openingHours.weekdays")} placeholder="e.g., 9 AM - 5 PM" />
+                <Input
+                  id="weekdays"
+                  {...register("openingHours.weekdays")}
+                  placeholder="e.g., 9 AM - 5 PM"
+                />
                 {errors.openingHours?.weekdays && (
-                  <p className="text-red-500 text-xs">{errors.openingHours.weekdays.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.openingHours.weekdays.message}
+                  </p>
                 )}
               </div>
 
               <div className="col-span-2">
                 <Label htmlFor="weekends">Opening Hours (Weekends)</Label>
-                <Input id="weekends" {...register("openingHours.weekends")} placeholder="e.g., 10 AM - 4 PM" />
+                <Input
+                  id="weekends"
+                  {...register("openingHours.weekends")}
+                  placeholder="e.g., 10 AM - 4 PM"
+                />
                 {errors.openingHours?.weekends && (
-                  <p className="text-red-500 text-xs">{errors.openingHours.weekends.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.openingHours.weekends.message}
+                  </p>
                 )}
               </div>
 
               <div className="col-span-2">
-                <Label htmlFor="foreigner">Ticket Prices (in USD) (Foreigner)</Label>
-                <Input id="foreigner" type="number" min="0" {...register("ticketPrices.foreigner")} placeholder="Enter foreigner ticket price (USD)" />
+                <Label htmlFor="foreigner">
+                  Ticket Prices (in USD) (Foreigner)
+                </Label>
+                <Input
+                  id="foreigner"
+                  type="number"
+                  min="0"
+                  {...register("ticketPrices.foreigner")}
+                  placeholder="Enter foreigner ticket price (USD)"
+                />
                 {errors.ticketPrices?.foreigner && (
-                  <p className="text-red-500 text-xs">{errors.ticketPrices.foreigner.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.ticketPrices.foreigner.message}
+                  </p>
                 )}
               </div>
 
               <div className="col-span-2">
                 <Label htmlFor="native">Ticket Prices (in USD) (Native)</Label>
-                <Input id="native" type="number" min="0" {...register("ticketPrices.native")} placeholder="Enter native ticket price (USD)" />
+                <Input
+                  id="native"
+                  type="number"
+                  min="0"
+                  {...register("ticketPrices.native")}
+                  placeholder="Enter native ticket price (USD)"
+                />
                 {errors.ticketPrices?.native && (
-                  <p className="text-red-500 text-xs">{errors.ticketPrices.native.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.ticketPrices.native.message}
+                  </p>
                 )}
               </div>
 
               <div className="col-span-2">
-                <Label htmlFor="student">Ticket Prices (in USD) (Student)</Label>
-                <Input id="student" type="number" min="0" {...register("ticketPrices.student")} placeholder="Enter student ticket price (USD)" />
+                <Label htmlFor="student">
+                  Ticket Prices (in USD) (Student)
+                </Label>
+                <Input
+                  id="student"
+                  type="number"
+                  min="0"
+                  {...register("ticketPrices.student")}
+                  placeholder="Enter student ticket price (USD)"
+                />
                 {errors.ticketPrices?.student && (
-                  <p className="text-red-500 text-xs">{errors.ticketPrices.student.message}</p>
+                  <p className="text-red-500 text-xs">
+                    {errors.ticketPrices.student.message}
+                  </p>
                 )}
               </div>
-
-            
 
               <div className="col-span-4">
                 <Label htmlFor="pictures">Pictures</Label>
@@ -433,7 +489,9 @@ export default function CreateHpForm() {
                 {loading ? "Creating..." : "Create Historical Place"}
               </Button>
 
-              {error && <p className="col-span-4 text-red-500 text-xs">{error}</p>}
+              {error && (
+                <p className="col-span-4 text-red-500 text-xs">{error}</p>
+              )}
             </form>
           </div>
         </div>
@@ -448,7 +506,10 @@ export default function CreateHpForm() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button onClick={handleGoBack} className="bg-[#5D9297] text-white hover:bg-[#1A3B47]">
+            <Button
+              onClick={handleGoBack}
+              className="bg-[#5D9297] text-white hover:bg-[#1A3B47]"
+            >
               Go to All Historical Places
             </Button>
             <Button variant="outline" onClick={handleCreateNew}>

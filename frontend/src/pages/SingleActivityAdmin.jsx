@@ -24,7 +24,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Card, CardContent, CardHeader, CardDescription, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardDescription,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -155,8 +161,9 @@ const StarRating = ({ rating, setRating, readOnly = false }) => {
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
-          className={`w-6 h-6 ${readOnly ? "" : "cursor-pointer"} ${star <= rating ? "text-[#F88C33] fill-current" : "text-gray-300"
-            }`}
+          className={`w-6 h-6 ${readOnly ? "" : "cursor-pointer"} ${
+            star <= rating ? "text-[#F88C33] fill-current" : "text-gray-300"
+          }`}
           onClick={() => !readOnly && setRating(star)}
           aria-label={`${star} star${star !== 1 ? "s" : ""}`}
         />
@@ -228,7 +235,7 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        "http://localhost:4000/tourist/book-transportation",
+        "https://trip-genie-apis.vercel.app/tourist/book-transportation",
         {
           touristID: currentUser,
           transportationID: selectedTransportation._id,
@@ -278,7 +285,7 @@ const SingleActivityAdmin = ({ activityId }) => {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center">
                   {transport.vehicleType === "Bus" ||
-                    transport.vehicleType === "Microbus" ? (
+                  transport.vehicleType === "Microbus" ? (
                     <Bus className="w-5 h-5 mr-2 text-blue-500" />
                   ) : (
                     <Car className="w-5 h-5 mr-2 text-green-500" />
@@ -393,19 +400,20 @@ const SingleActivityAdmin = ({ activityId }) => {
 
       const token = Cookies.get("jwt");
 
-      const response = await fetch(`http://localhost:4000/${userRole}/activities/${activity._id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ appropriate: updatedStatus, }),
-      });
-
+      const response = await fetch(
+        `https://trip-genie-apis.vercel.app/${userRole}/activities/${activity._id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ appropriate: updatedStatus }),
+        }
+      );
 
       setIsAppropriate(updatedStatus); // Update state to reflect the new status
       setDialogOpen(false); // Close the dialog
-
     } catch (error) {
       console.error("Failed to update itinerary status:", error);
     }
@@ -419,7 +427,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       const totalPrice = calculateTotalPrice();
 
       const response = await fetch(
-        `http://localhost:4000/${userRole}/activityBooking`,
+        `https://trip-genie-apis.vercel.app/${userRole}/activityBooking`,
         {
           method: "POST",
           headers: {
@@ -437,7 +445,7 @@ const SingleActivityAdmin = ({ activityId }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-      if (errorData.message === "Insufficient funds in wallet") {
+        if (errorData.message === "Insufficient funds in wallet") {
           setBookingError(
             "Insufficient funds, please choose a different payment method or update your wallet."
           );
@@ -485,7 +493,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       try {
         const token = Cookies.get("jwt");
         const response = await fetch(
-          `http://localhost:4000/${userRole}/activities/${activityIdToUse}`,
+          `https://trip-genie-apis.vercel.app/${userRole}/activities/${activityIdToUse}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -549,7 +557,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          `http://localhost:4000/${userRole}/touristActivityAttendedBookings`,
+          `https://trip-genie-apis.vercel.app/${userRole}/touristActivityAttendedBookings`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -566,7 +574,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          "http://localhost:4000/tourist/touristActivityBookings",
+          "https://trip-genie-apis.vercel.app/tourist/touristActivityBookings",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -596,7 +604,7 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/populate`,
+        `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
           headers: {
@@ -627,7 +635,7 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/${userRole}/getCurrency/${activity.currency}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${activity.currency}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -663,13 +671,16 @@ const SingleActivityAdmin = ({ activityId }) => {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -712,10 +723,10 @@ const SingleActivityAdmin = ({ activityId }) => {
       const additionalPrice =
         userBooking.paymentAmount +
         calculateDiscountedPrice(activity.price, activity.specialDiscount) *
-        additionalTickets;
+          additionalTickets;
 
       const response = await axios.put(
-        `http://localhost:4000/${userRole}/activityBooking/${userBooking._id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/activityBooking/${userBooking._id}`,
         {
           numberOfTickets,
           paymentAmount: additionalPrice,
@@ -733,7 +744,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       console.error("Error updating booking:", error);
       setBookingError(
         error.response?.data?.message ||
-        "An error occurred while updating the booking."
+          "An error occurred while updating the booking."
       );
     } finally {
       setIsBooking(false);
@@ -749,7 +760,7 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/activities/${id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/activities/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -806,7 +817,7 @@ const SingleActivityAdmin = ({ activityId }) => {
   const handleActivityRating = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/${userRole}/activities/rate/${id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/activities/rate/${id}`,
         {
           method: "POST",
           headers: {
@@ -846,8 +857,8 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const method = userComment ? "PUT" : "POST";
       const url = userComment
-        ? `http://localhost:4000/${userRole}/activities/updateComment/${id}`
-        : `http://localhost:4000/${userRole}/activities/comment/${id}`;
+        ? `https://trip-genie-apis.vercel.app/${userRole}/activities/updateComment/${id}`
+        : `https://trip-genie-apis.vercel.app/${userRole}/activities/comment/${id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -877,8 +888,8 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const method = userComment ? "PUT" : "POST";
       const url = userComment
-        ? `http://localhost:4000/${userRole}/activities/updateComment/${id}`
-        : `http://localhost:4000/${userRole}/activities/comment/${id}`;
+        ? `https://trip-genie-apis.vercel.app/${userRole}/activities/updateComment/${id}`
+        : `https://trip-genie-apis.vercel.app/${userRole}/activities/comment/${id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -939,10 +950,6 @@ const SingleActivityAdmin = ({ activityId }) => {
   const ActivityDetailSkeleton = () => {
     return (
       <div className="min-h-screen bg-gray-100">
-        
-
-        
-
         <div className="mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Left Section */}
@@ -1102,7 +1109,7 @@ const SingleActivityAdmin = ({ activityId }) => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="bg-gray-100">
-        <div className="" >
+        <div className="">
           <div className="pt-4">
             <div className="flex flex-col md:flex-row gap-8">
               <div className="md:col-span-2">
@@ -1114,7 +1121,11 @@ const SingleActivityAdmin = ({ activityId }) => {
                         <ToastProvider>
                           <Popover open={open} onOpenChange={setOpen}>
                             <PopoverTrigger asChild>
-                              <Button variant="outline" size="sm" className="ml-4">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="ml-4"
+                              >
                                 <Share2 className="h-4 w-4" />
                               </Button>
                             </PopoverTrigger>
@@ -1158,7 +1169,6 @@ const SingleActivityAdmin = ({ activityId }) => {
                         </ToastProvider>
                       </div>
                     </CardTitle>
-
 
                     <CardDescription className="flex items-center justify-end"></CardDescription>
                   </CardHeader>
@@ -1205,15 +1215,8 @@ const SingleActivityAdmin = ({ activityId }) => {
                       />
                     </div>
                   </CardContent>
-
-
                 </Card>
-
-
               </div>
-
-
-
 
               <div className="flex flex-col md:flex-col gap-8">
                 <div className="flex-1 bg-white shadow-md rounded-lg p-4">
@@ -1225,12 +1228,17 @@ const SingleActivityAdmin = ({ activityId }) => {
                       <div className="flex items-center">
                         {/* Rating Badge */}
                         <div className="flex items-center px-3 py-1 rounded-full">
-                          <StarRating rating={activity.rating} readOnly={true} />
+                          <StarRating
+                            rating={activity.rating}
+                            readOnly={true}
+                          />
                         </div>
 
                         {/* Rating Count outside the badge */}
                         <span className="text-sm font-normal ml-2">
-                          {activity.comments ? `(${activity.comments.length})` : "(0)"}
+                          {activity.comments
+                            ? `(${activity.comments.length})`
+                            : "(0)"}
                         </span>
                       </div>
                       <div className="flex items-start">
@@ -1243,7 +1251,10 @@ const SingleActivityAdmin = ({ activityId }) => {
                             <div className="flex items-baseline">
                               <span className="text-4xl font-bold text-gray-900">
                                 {formatPrice(
-                                  calculateDiscountedPrice(activity.price, activity.specialDiscount)
+                                  calculateDiscountedPrice(
+                                    activity.price,
+                                    activity.specialDiscount
+                                  )
                                 )}
                               </span>
                               <span className="ml-3 text-xl font-semibold text-red-600">
@@ -1282,17 +1293,17 @@ const SingleActivityAdmin = ({ activityId }) => {
                         </span>
                       </div>
 
-
                       <div className="text-lg text-gray-600 mt-4 mb-6 overflow-hidden w-[400px]">
                         {isExpanded
                           ? activity.description
                           : `${activity.description.substring(0, 130)}...`}
-                        <button onClick={toggleExpanded} className="text-blue-500 hover:underline ml-2">
+                        <button
+                          onClick={toggleExpanded}
+                          className="text-blue-500 hover:underline ml-2"
+                        >
                           {isExpanded ? "View Less" : "View More"}
                         </button>
                       </div>
-
-
 
                       {userRole === "tourist" && !isActivityPassed() && (
                         <>
@@ -1327,18 +1338,15 @@ const SingleActivityAdmin = ({ activityId }) => {
                         </>
                       )}
 
-
-
-
                       <div className="border-t-4 border-gray-300 w-1/2 mx-auto my-4"></div>
-
                     </div>
-
                   </div>
 
                   <CardHeader>
                     <div className="flex justify-between items-center">
-                      <span className="text-3xl font-bold -ml-2 ">Advertiser Profile</span>
+                      <span className="text-3xl font-bold -ml-2 ">
+                        Advertiser Profile
+                      </span>
                       <Badge
                         variant="secondary"
                         className="px-2 py-1 text-xs font-medium rounded-full bg-blue-500 text-white hover:bg-blue-500 hover:text-white"
@@ -1407,22 +1415,28 @@ const SingleActivityAdmin = ({ activityId }) => {
                       <>
                         <div className="mt-6 border-t border-gray-300 pt-4"></div>
                         <Button
-                          className={`w-full mx-auto text-white ${isAppropriate
-                            ? "bg-red-500 hover:bg-red-600" // Appropriate: Red Button
-                            : "bg-green-500 hover:bg-green-600" // Inappropriate: Green Button
-                            }`}
+                          className={`w-full mx-auto text-white ${
+                            isAppropriate
+                              ? "bg-red-500 hover:bg-red-600" // Appropriate: Red Button
+                              : "bg-green-500 hover:bg-green-600" // Inappropriate: Green Button
+                          }`}
                           onClick={handleOpenDialog}
                         >
-                          {isAppropriate ? "Flag as Inappropriate" : "Flag as Appropriate"}
+                          {isAppropriate
+                            ? "Flag as Inappropriate"
+                            : "Flag as Appropriate"}
                         </Button>
 
                         {dialogOpen && (
                           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                             <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
                               <div className="mb-4">
-                                <h2 className="text-lg font-semibold">Confirm Action</h2>
+                                <h2 className="text-lg font-semibold">
+                                  Confirm Action
+                                </h2>
                                 <p className="text-gray-600 mt-2">
-                                  Are you sure you want to change the status of this itinerary/event?
+                                  Are you sure you want to change the status of
+                                  this itinerary/event?
                                 </p>
                               </div>
                               <div className="flex justify-end space-x-4">
@@ -1441,17 +1455,12 @@ const SingleActivityAdmin = ({ activityId }) => {
                                   Confirm
                                 </Button>
                               </div>
-
                             </div>
                           </div>
                         )}
                       </>
-
                     )}
                   </CardContent>
-
-
-
                 </div>
 
                 {/* {userRole === 'tourist' && !isActivityPassed() && booked &&(
@@ -1462,7 +1471,6 @@ const SingleActivityAdmin = ({ activityId }) => {
           {"Update Booking"}
           </Button>
           )} */}
-
               </div>
             </div>
 
@@ -1515,7 +1523,9 @@ const SingleActivityAdmin = ({ activityId }) => {
 
                 {userRole === "tourist" && userComment && (
                   <div className="border-t pt-4">
-                    <div className="text-sm text-gray-500 mb-2">Tap to Rate:</div>
+                    <div className="text-sm text-gray-500 mb-2">
+                      Tap to Rate:
+                    </div>
                     <div
                       className="flex gap-2"
                       onMouseLeave={() => setIsRatingHovered(false)}
@@ -1523,14 +1533,15 @@ const SingleActivityAdmin = ({ activityId }) => {
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Star
                           key={star}
-                          className={`w-8 h-8 cursor-pointer ${(
-                            isRatingHovered
-                              ? quickRating >= star
-                              : quickRating >= star
-                          )
-                            ? "text-yellow-500 fill-current"
-                            : "text-gray-300"
-                            }`}
+                          className={`w-8 h-8 cursor-pointer ${
+                            (
+                              isRatingHovered
+                                ? quickRating >= star
+                                : quickRating >= star
+                            )
+                              ? "text-yellow-500 fill-current"
+                              : "text-gray-300"
+                          }`}
                           onMouseEnter={() => {
                             setIsRatingHovered(true);
                             setQuickRating(star);
@@ -1654,8 +1665,6 @@ const SingleActivityAdmin = ({ activityId }) => {
               )}
             </div>
           </div>
-
-
 
           <Dialog open={showBookingDialog} onOpenChange={setShowBookingDialog}>
             <DialogContent className="sm:max-w-[425px]">
@@ -1827,7 +1836,6 @@ const SingleActivityAdmin = ({ activityId }) => {
           </Dialog>
         </div>
 
-
         {/* Full Comment Dialog */}
         <Dialog
           open={!!showFullComment}
@@ -1840,7 +1848,10 @@ const SingleActivityAdmin = ({ activityId }) => {
             <ScrollArea className="max-h-[60vh] overflow-auto">
               <div className="space-y-4">
                 <div>
-                  <StarRating rating={showFullComment?.rating} readOnly={true} />
+                  <StarRating
+                    rating={showFullComment?.rating}
+                    readOnly={true}
+                  />
                   <p className="text-sm text-gray-500 mt-1">
                     {showFullComment && formatCommentDate(showFullComment.date)}
                   </p>
@@ -1850,7 +1861,9 @@ const SingleActivityAdmin = ({ activityId }) => {
                     <Smile className="w-5 h-5 mr-2 text-green-500" />
                     Liked:
                   </h4>
-                  <p>{showFullComment?.content?.liked || "Nothing mentioned"}</p>
+                  <p>
+                    {showFullComment?.content?.liked || "Nothing mentioned"}
+                  </p>
                 </div>
                 <div>
                   <h4 className="font-semibold flex items-center">
@@ -1979,7 +1992,10 @@ const SingleActivityAdmin = ({ activityId }) => {
               <label className="block text-sm font-medium text-gray-700">
                 Your Rating
               </label>
-              <StarRating rating={activityRating} setRating={setActivityRating} />
+              <StarRating
+                rating={activityRating}
+                setRating={setActivityRating}
+              />
             </div>
             <DialogFooter>
               <Button onClick={handleActivityRating}>Submit My Rating</Button>
@@ -1992,8 +2008,8 @@ const SingleActivityAdmin = ({ activityId }) => {
             <DialogHeader>
               <DialogTitle>Confirm Deletion</DialogTitle>
               <DialogDescription>
-                Are you sure you want to delete this activity? This action cannot
-                be undone.
+                Are you sure you want to delete this activity? This action
+                cannot be undone.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
@@ -2119,7 +2135,10 @@ const SingleActivityAdmin = ({ activityId }) => {
               >
                 Cancel
               </Button>
-              <Button onClick={handleTransportationBooking} disabled={isBooking}>
+              <Button
+                onClick={handleTransportationBooking}
+                disabled={isBooking}
+              >
                 {isBooking ? "Booking..." : "Confirm Booking"}
               </Button>
             </DialogFooter>
@@ -2134,7 +2153,8 @@ const SingleActivityAdmin = ({ activityId }) => {
             <DialogHeader>
               <DialogTitle>Transportation Booked Successfully</DialogTitle>
               <DialogDescription>
-                Your transportation has been booked. Thank you for your purchase!
+                Your transportation has been booked. Thank you for your
+                purchase!
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>

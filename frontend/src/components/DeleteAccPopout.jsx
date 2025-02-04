@@ -4,10 +4,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Cookies from "js-cookie";
-import { Search, Trash2 } from 'lucide-react';
+import { Search, Trash2 } from "lucide-react";
 import DeleteConfirmation from "@/components/ui/deletionConfirmation";
 import {
   ToastProvider,
@@ -17,7 +24,7 @@ import {
   ToastDescription,
   ToastClose,
 } from "@/components/ui/toast";
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle } from "lucide-react";
 
 export function DeleteAccount() {
   const [users, setUsers] = useState([]);
@@ -44,7 +51,7 @@ export function DeleteAccount() {
     setIsLoading(true);
     try {
       const token = Cookies.get("jwt");
-      const url = "http://localhost:4000/admin/userbyrole";
+      const url = "https://trip-genie-apis.vercel.app/admin/userbyrole";
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` },
         params: { role: role === "all" ? undefined : role },
@@ -86,7 +93,7 @@ export function DeleteAccount() {
         showToast("Cannot delete user: role is undefined.", "error");
         return;
       }
-      const url = `http://localhost:4000/admin/${userRole}s/${id}`;
+      const url = `https://trip-genie-apis.vercel.app/admin/${userRole}s/${id}`;
       const response = await axios.delete(url, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -182,7 +189,9 @@ export function DeleteAccount() {
                 <Table className="[&_tr]:h-2">
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="font-medium p-3">Username</TableHead>
+                      <TableHead className="font-medium p-3">
+                        Username
+                      </TableHead>
                       <TableHead className="font-medium p-3">Email</TableHead>
                       <TableHead className="font-medium p-3">Role</TableHead>
                       <TableHead className="text-right p-3">Action</TableHead>
@@ -191,9 +200,15 @@ export function DeleteAccount() {
                   <TableBody>
                     {filteredUsers.map((user) => (
                       <TableRow key={user._id}>
-                        <TableCell className="font-medium p-3">{user.username}</TableCell>
-                        <TableCell className="font-medium p-3">{user.email}</TableCell>
-                        <TableCell className="font-medium p-3">{user.role}</TableCell>
+                        <TableCell className="font-medium p-3">
+                          {user.username}
+                        </TableCell>
+                        <TableCell className="font-medium p-3">
+                          {user.email}
+                        </TableCell>
+                        <TableCell className="font-medium p-3">
+                          {user.role}
+                        </TableCell>
                         <TableCell className="text-right p-3">
                           <Button
                             variant="ghost"

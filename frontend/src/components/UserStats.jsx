@@ -68,13 +68,13 @@ export default function UserStats() {
       setIsLoading(true);
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/admin/users-report",
+        "https://trip-genie-apis.vercel.app/admin/users-report",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       setStats(response.data);
-     setIsLoading(false);
+      setIsLoading(false);
     } catch (err) {
       setError(err.message);
     }
@@ -89,7 +89,7 @@ export default function UserStats() {
 
       // Get current month stats
       const currentMonthResponse = await axios.get(
-        `http://localhost:4000/admin/users-report?month=${
+        `https://trip-genie-apis.vercel.app/admin/users-report?month=${
           currentDate.getMonth() + 1
         }&year=${currentDate.getFullYear()}`,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -97,7 +97,7 @@ export default function UserStats() {
 
       // Get last month stats
       const lastMonthResponse = await axios.get(
-        `http://localhost:4000/admin/users-report?month=${
+        `https://trip-genie-apis.vercel.app/admin/users-report?month=${
           lastMonth.getMonth() + 1
         }&year=${lastMonth.getFullYear()}`,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -120,7 +120,7 @@ export default function UserStats() {
       setIsFiltering(true);
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/admin/users-report?month=${filters.month}&year=${filters.year}`,
+        `https://trip-genie-apis.vercel.app/admin/users-report?month=${filters.month}&year=${filters.year}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setFilteredStats(response.data);
@@ -172,7 +172,10 @@ export default function UserStats() {
     : 0;
 
   const resetFilters = () => {
-    setFilters({ month: (new Date().getMonth() + 1).toString(), year: new Date().getFullYear().toString() });
+    setFilters({
+      month: (new Date().getMonth() + 1).toString(),
+      year: new Date().getFullYear().toString(),
+    });
   };
 
   return (
@@ -214,104 +217,105 @@ export default function UserStats() {
               </div>
             </CardHeader>
             {isLoading ? (
-  
-   
-   <CardContent className="p-3 flex flex-col justify-center items-center w-full">
-              <div className="relative flex items-center justify-center w-32 h-32">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke="#E6DCCF"
-                    strokeWidth="10"
-                  />
-                  <motion.circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke="#1A3B47"
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                    strokeDasharray="283"
-                    strokeDashoffset="283"
-                    initial={{ strokeDashoffset: 283 }}
-                    animate={{
-                      strokeDashoffset: 283 - (283 * fillPercentage) / 100,
-                    }}
-                    transition={{
-                      duration: 1,
-                      ease: "easeInOut",
-                    }}
-                  />
-                </svg>
-                
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-lg font-bold text-[#1A3B47]">
-                  <div className="h-4 w-1/2 bg-gray-200 rounded mb-4 animate-pulse"></div>
-                  </span>
-                  <div className="h-4 w-1/2 mx-auto bg-gray-200 rounded mb-4 animate-pulse -mt-4"></div>
-                </div>
-              </div>
-              <div className="text-center mt-4">
-                <p className="text-base text-[#5D9297]">
-                % of total
-                </p>
-              </div>
-            </CardContent>
-) : (
-            <CardContent className="p-3 flex flex-col justify-center items-center w-full">
-              <div className="relative flex items-center justify-center w-32 h-32">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke="#E6DCCF"
-                    strokeWidth="10"
-                  />
-                  <motion.circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    fill="none"
-                    stroke="#1A3B47"
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                    strokeDasharray="283"
-                    strokeDashoffset="283"
-                    initial={{ strokeDashoffset: 283 }}
-                    animate={{
-                      strokeDashoffset: 283 - (283 * fillPercentage) / 100,
-                    }}
-                    transition={{
-                      duration: 1,
-                      ease: "easeInOut",
-                    }}
-                  />
-                </svg>
-                
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-lg font-bold text-[#1A3B47]">
-                    {selectedUserCount}
-                  </span>
-                  <span className="text-sm text-[#5D9297]">
-                    {selectedUserType.charAt(0).toUpperCase() +
-                      selectedUserType.slice(1)}
-                  </span>
-                </div>
-              </div>
-              <div className="text-center mt-4">
-                <p className="text-base text-[#5D9297]">
-                  {fillPercentage.toFixed(1)}% of total
-                </p>
-              </div>
+              <CardContent className="p-3 flex flex-col justify-center items-center w-full">
+                <div className="relative flex items-center justify-center w-32 h-32">
+                  <svg
+                    className="w-full h-full -rotate-90"
+                    viewBox="0 0 100 100"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="#E6DCCF"
+                      strokeWidth="10"
+                    />
+                    <motion.circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="#1A3B47"
+                      strokeWidth="10"
+                      strokeLinecap="round"
+                      strokeDasharray="283"
+                      strokeDashoffset="283"
+                      initial={{ strokeDashoffset: 283 }}
+                      animate={{
+                        strokeDashoffset: 283 - (283 * fillPercentage) / 100,
+                      }}
+                      transition={{
+                        duration: 1,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  </svg>
 
-            </CardContent>
-)}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-lg font-bold text-[#1A3B47]">
+                      <div className="h-4 w-1/2 bg-gray-200 rounded mb-4 animate-pulse"></div>
+                    </span>
+                    <div className="h-4 w-1/2 mx-auto bg-gray-200 rounded mb-4 animate-pulse -mt-4"></div>
+                  </div>
+                </div>
+                <div className="text-center mt-4">
+                  <p className="text-base text-[#5D9297]">% of total</p>
+                </div>
+              </CardContent>
+            ) : (
+              <CardContent className="p-3 flex flex-col justify-center items-center w-full">
+                <div className="relative flex items-center justify-center w-32 h-32">
+                  <svg
+                    className="w-full h-full -rotate-90"
+                    viewBox="0 0 100 100"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="#E6DCCF"
+                      strokeWidth="10"
+                    />
+                    <motion.circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="none"
+                      stroke="#1A3B47"
+                      strokeWidth="10"
+                      strokeLinecap="round"
+                      strokeDasharray="283"
+                      strokeDashoffset="283"
+                      initial={{ strokeDashoffset: 283 }}
+                      animate={{
+                        strokeDashoffset: 283 - (283 * fillPercentage) / 100,
+                      }}
+                      transition={{
+                        duration: 1,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  </svg>
+
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-lg font-bold text-[#1A3B47]">
+                      {selectedUserCount}
+                    </span>
+                    <span className="text-sm text-[#5D9297]">
+                      {selectedUserType.charAt(0).toUpperCase() +
+                        selectedUserType.slice(1)}
+                    </span>
+                  </div>
+                </div>
+                <div className="text-center mt-4">
+                  <p className="text-base text-[#5D9297]">
+                    {fillPercentage.toFixed(1)}% of total
+                  </p>
+                </div>
+              </CardContent>
+            )}
           </Card>
 
           {/* User Growth Chart */}
@@ -321,15 +325,11 @@ export default function UserStats() {
                 User Growth
               </CardTitle>
             </CardHeader>
-           
+
             <CardContent>
-            
               <UserGrowthChart />
-                    
             </CardContent>
-                    
           </Card>
-                    
         </div>
 
         {/* Detailed Stats Table */}
@@ -403,60 +403,58 @@ export default function UserStats() {
                   </tr>
                 </thead>
                 {isLoading ? (
-  <thead className="bg-gray-50">
-    
-
-    {/* 6 more rows of pulsing lines with more space and bigger size */}
-    {[...Array(6)].map((_, rowIndex) => (
-      <tr key={rowIndex}>
-        {[1, 2, 3].map((i) => (
-          <th key={i} className="px-6 py-3">
-            <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
-          </th>
-        ))}
-      </tr>
-    ))}
-  </thead>
-) : (
-                <AnimatePresence mode="wait">
-                  {!isFiltering && (
-                    <motion.tbody
-                      key="table-body"
-                      className="bg-white divide-y divide-gray-200"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {tableData.map((item, index) => (
-                        <motion.tr
-                          key={item.type}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -20 }}
-                          transition={{ duration: 0.2, delay: index * 0.05 }}
-                        >
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {item.type}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {item.count}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {filteredStats?.total
-                              ? (
-                                  (item.count / filteredStats.total) *
-                                  100
-                                ).toFixed(1)
-                              : 0}
-                            %
-                          </td>
-                        </motion.tr>
-                      ))}
-                    </motion.tbody>
-                  )}
-                </AnimatePresence>
-)}
+                  <thead className="bg-gray-50">
+                    {/* 6 more rows of pulsing lines with more space and bigger size */}
+                    {[...Array(6)].map((_, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {[1, 2, 3].map((i) => (
+                          <th key={i} className="px-6 py-3">
+                            <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                ) : (
+                  <AnimatePresence mode="wait">
+                    {!isFiltering && (
+                      <motion.tbody
+                        key="table-body"
+                        className="bg-white divide-y divide-gray-200"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {tableData.map((item, index) => (
+                          <motion.tr
+                            key={item.type}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.2, delay: index * 0.05 }}
+                          >
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {item.type}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {item.count}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {filteredStats?.total
+                                ? (
+                                    (item.count / filteredStats.total) *
+                                    100
+                                  ).toFixed(1)
+                                : 0}
+                              %
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </motion.tbody>
+                    )}
+                  </AnimatePresence>
+                )}
               </table>
             </div>
           </CardContent>
@@ -484,7 +482,7 @@ export function UserGrowthChart() {
 
       for (let month = 0; month < 12; month++) {
         const response = await axios.get(
-          `http://localhost:4000/admin/users-report?month=${
+          `https://trip-genie-apis.vercel.app/admin/users-report?month=${
             month + 1
           }&year=${currentYear}`,
           { headers: { Authorization: `Bearer ${token}` } }
@@ -507,46 +505,41 @@ export function UserGrowthChart() {
   if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
 
   return (
-    
     <div className="h-[200px]">
-      {isLoading ?(
-      <div className="md:col-span-8 bg-transparent">
-      <div className="p-3 mb-2"></div>
-      <div className="pl-0">
-        {/* Reduced width for the chart skeleton */}
-        <div className="h-[160px] bg-gray-300 rounded animate-pulse mx-auto w-[90%] translate-y-[-30px]"></div>
-      </div>
+      {isLoading ? (
+        <div className="md:col-span-8 bg-transparent">
+          <div className="p-3 mb-2"></div>
+          <div className="pl-0">
+            {/* Reduced width for the chart skeleton */}
+            <div className="h-[160px] bg-gray-300 rounded animate-pulse mx-auto w-[90%] translate-y-[-30px]"></div>
+          </div>
+        </div>
+      ) : (
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={yearlyData}
+            margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+          >
+            <defs>
+              <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#B5D3D1" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#B5D3D1" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="users"
+              stroke="#B5D3D1"
+              fillOpacity={1}
+              fill="url(#colorUsers)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      )}
     </div>
-    
-    
-    ):(
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
-          data={yearlyData}
-          margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
-        >
-          <defs>
-            <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#B5D3D1" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#B5D3D1" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Area
-            type="monotone"
-            dataKey="users"
-            stroke="#B5D3D1"
-            fillOpacity={1}
-            fill="url(#colorUsers)"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    )}
-    </div>
-    
-    
   );
 }

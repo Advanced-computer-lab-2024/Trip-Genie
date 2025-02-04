@@ -317,13 +317,17 @@ const ActivityForm = ({
   }, [initialData, setValue]);
 
   const fetchTags = async () => {
-    const response = await fetch("http://localhost:4000/api/getAllTags");
+    const response = await fetch(
+      "https://trip-genie-apis.vercel.app/api/getAllTags"
+    );
     const data = await response.json();
     setTags(data.map((tag) => ({ value: tag._id, label: tag.type })));
   };
 
   const fetchCategories = async () => {
-    const response = await fetch("http://localhost:4000/api/getAllCategories");
+    const response = await fetch(
+      "https://trip-genie-apis.vercel.app/api/getAllCategories"
+    );
     const data = await response.json();
     setCategory(data.map((cat) => ({ value: cat._id, label: cat.name })));
   };
@@ -533,7 +537,6 @@ const ActivityForm = ({
           Save Activity
         </Button>
       </div>
-
     </form>
   );
 };
@@ -699,7 +702,7 @@ const ItineraryForm = () => {
       console.log("Form data prepared:", formData);
 
       const response = await axios.post(
-        `http://localhost:4000/${role}/itineraries`,
+        `https://trip-genie-apis.vercel.app/${role}/itineraries`,
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -969,10 +972,11 @@ const ItineraryForm = () => {
                               .toISOString()
                               .split("T")[0]
                           } // Sets min date to tomorrow
-                          className={`w-40 ${errors.availableDates?.[dateIndex]?.date
-                            ? "border-red-500"
-                            : ""
-                            }`}
+                          className={`w-40 ${
+                            errors.availableDates?.[dateIndex]?.date
+                              ? "border-red-500"
+                              : ""
+                          }`}
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
                               e.preventDefault();
@@ -1104,7 +1108,6 @@ const ItineraryForm = () => {
                 Create Another
               </Button>
             </DialogFooter>
-
           </DialogContent>
         </Dialog>
 

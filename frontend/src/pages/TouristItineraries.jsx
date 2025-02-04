@@ -234,7 +234,9 @@ export default function BookedItineraries() {
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:4000/rates");
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/rates"
+      );
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -247,14 +249,17 @@ export default function BookedItineraries() {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setTourist(response.data);
         const currencyId = response.data.preferredCurrency;
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -277,7 +282,7 @@ export default function BookedItineraries() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/tourist/touristItineraryBookings",
+        "https://trip-genie-apis.vercel.app/tourist/touristItineraryBookings",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -339,7 +344,7 @@ export default function BookedItineraries() {
 
     try {
       const response = await axios.delete(
-        `http://localhost:4000/tourist/itineraryBooking/${selectedBooking._id}`,
+        `https://trip-genie-apis.vercel.app/tourist/itineraryBooking/${selectedBooking._id}`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -529,17 +534,19 @@ export default function BookedItineraries() {
 
             {/* Cancel Booking Button */}
             <div className="text-center">
-              {!isWithin48Hours(selectedBooking?.date) && <Button
-                size="sm"
-                variant="default"
-                className="bg-red-500 hover:bg-red-600 text-white"
-                onClick={() => {
-                  setIsViewDialogOpen(false);
-                  handleDeleteBooking(selectedBooking);
-                }}
-              >
-                Cancel Booking
-              </Button>}
+              {!isWithin48Hours(selectedBooking?.date) && (
+                <Button
+                  size="sm"
+                  variant="default"
+                  className="bg-red-500 hover:bg-red-600 text-white"
+                  onClick={() => {
+                    setIsViewDialogOpen(false);
+                    handleDeleteBooking(selectedBooking);
+                  }}
+                >
+                  Cancel Booking
+                </Button>
+              )}
             </div>
           </DialogContent>
         </Dialog>

@@ -66,7 +66,7 @@ export function NotificationsDropdownSeller() {
     try {
       const role = getUserRole();
       const response = await axios.get(
-        `http://localhost:4000/${role}/unseen-notifications`,
+        `https://trip-genie-apis.vercel.app/${role}/unseen-notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -81,7 +81,7 @@ export function NotificationsDropdownSeller() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:4000/${getUserRole()}/notifications`,
+        `https://trip-genie-apis.vercel.app/${getUserRole()}/notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -105,7 +105,7 @@ export function NotificationsDropdownSeller() {
   const markNotificationsAsSeen = async () => {
     try {
       await axios.post(
-        `http://localhost:4000/${getUserRole()}/mark-dropdown-opened`,
+        `https://trip-genie-apis.vercel.app/${getUserRole()}/mark-dropdown-opened`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
@@ -121,7 +121,7 @@ export function NotificationsDropdownSeller() {
   const markNotificationAsSeen = async (notificationId) => {
     try {
       await axios.post(
-        `http://localhost:4000/${getUserRole()}/notifications/markAsSeen/${notificationId}`,
+        `https://trip-genie-apis.vercel.app/${getUserRole()}/notifications/markAsSeen/${notificationId}`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
@@ -142,7 +142,7 @@ export function NotificationsDropdownSeller() {
   const markAllAsSeen = async () => {
     try {
       await axios.post(
-        `http://localhost:4000/${getUserRole()}/mark-notifications-seen`,
+        `https://trip-genie-apis.vercel.app/${getUserRole()}/mark-notifications-seen`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },

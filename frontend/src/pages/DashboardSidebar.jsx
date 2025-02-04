@@ -1,5 +1,18 @@
 import React, { useState } from "react";
-import { BarChart, Users, Gift, Activity, MessageSquare, Map, LogOut, Home, ChevronDown, Bell, Tag, X } from 'lucide-react';
+import {
+  BarChart,
+  Users,
+  Gift,
+  Activity,
+  MessageSquare,
+  Map,
+  LogOut,
+  Home,
+  ChevronDown,
+  Bell,
+  Tag,
+  X,
+} from "lucide-react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/TGlogo.svg";
@@ -95,7 +108,8 @@ export function DashboardSidebar({
 }) {
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [openMenu, setOpenMenu] = useState(null);
-  const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] = useState(false);
+  const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] =
+    useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = (menuId) => {
@@ -113,7 +127,9 @@ export function DashboardSidebar({
   const handleConfirmLogout = async () => {
     console.log("Logging out...");
     try {
-      const response = await fetch("http://localhost:4000/auth/logout");
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/auth/logout"
+      );
 
       if (response.ok) {
         Cookies.remove("jwt");
@@ -153,8 +169,9 @@ export function DashboardSidebar({
 
   return (
     <div
-      className={`fixed left-0 top-0 h-screen flex flex-col bg-[#1A3B47] ${isCollapsed ? "w-16" : "w-64"
-        } transition-all duration-300 ease-in-out ${className}`}
+      className={`fixed left-0 top-0 h-screen flex flex-col bg-[#1A3B47] ${
+        isCollapsed ? "w-16" : "w-64"
+      } transition-all duration-300 ease-in-out ${className}`}
       style={{ zIndex: 1000 }}
     >
       {/* Sidebar Header */}
@@ -163,8 +180,9 @@ export function DashboardSidebar({
           <img src={logo} alt="Logo" className="h-8 w-auto object-contain" />
         )}
         <button
-          className={`text-white hover:bg-white/10 p-2 rounded-md transition-all duration-200 ${isCollapsed ? "w-full flex justify-center" : ""
-            }`}
+          className={`text-white hover:bg-white/10 p-2 rounded-md transition-all duration-200 ${
+            isCollapsed ? "w-full flex justify-center" : ""
+          }`}
           onClick={handleToggleCollapse}
         >
           <div className="flex flex-col items-center justify-center w-6 h-6">
@@ -184,13 +202,15 @@ export function DashboardSidebar({
               {tab.subItems ? (
                 <div>
                   <button
-                    className={`flex items-center w-full p-2 rounded-md transition-all duration-200 text-white hover:bg-white/10 ${activeTab === tab.id ? "bg-white/20" : ""
-                      }`}
+                    className={`flex items-center w-full p-2 rounded-md transition-all duration-200 text-white hover:bg-white/10 ${
+                      activeTab === tab.id ? "bg-white/20" : ""
+                    }`}
                     onClick={() => toggleMenu(tab.id)}
                   >
                     <tab.icon
-                      className={`h-5 w-5 min-w-[1.25rem] ${isCollapsed ? "" : "mr-3"
-                        }`}
+                      className={`h-5 w-5 min-w-[1.25rem] ${
+                        isCollapsed ? "" : "mr-3"
+                      }`}
                     />
                     {!isCollapsed && (
                       <>
@@ -198,25 +218,28 @@ export function DashboardSidebar({
                           {tab.title}
                         </span>
                         <ChevronDown
-                          className={`h-4 w-4 transition-transform duration-200 ${openMenu === tab.id ? "transform rotate-180" : ""
-                            }`}
+                          className={`h-4 w-4 transition-transform duration-200 ${
+                            openMenu === tab.id ? "transform rotate-180" : ""
+                          }`}
                         />
                       </>
                     )}
                   </button>
                   <div
-                    className={`pl-7 space-y-1 overflow-hidden transition-all duration-500 ease-in-out ${openMenu === tab.id && !isCollapsed
-                      ? "max-h-96"
-                      : "max-h-0"
-                      }`}
+                    className={`pl-7 space-y-1 overflow-hidden transition-all duration-500 ease-in-out ${
+                      openMenu === tab.id && !isCollapsed
+                        ? "max-h-96"
+                        : "max-h-0"
+                    }`}
                   >
                     {tab.subItems.map((subItem, index) => (
                       <button
                         key={subItem.id}
-                        className={`flex items-center w-full p-2 rounded-md transition-all duration-500 ease-in-out text-white/70 hover:text-white hover:bg-white/10 ${activeTab === subItem.id
-                          ? "bg-white/20 text-white"
-                          : ""
-                          }`}
+                        className={`flex items-center w-full p-2 rounded-md transition-all duration-500 ease-in-out text-white/70 hover:text-white hover:bg-white/10 ${
+                          activeTab === subItem.id
+                            ? "bg-white/20 text-white"
+                            : ""
+                        }`}
                         style={{ transitionDelay: getTransitionDelay(index) }}
                         onClick={() => handleTabClick(subItem.id)}
                       >
@@ -227,13 +250,15 @@ export function DashboardSidebar({
                 </div>
               ) : (
                 <button
-                  className={`flex items-center w-full p-2 rounded-md transition-all duration-200 text-white hover:bg-white/10 ${activeTab === tab.id ? "bg-white/20" : ""
-                    }`}
+                  className={`flex items-center w-full p-2 rounded-md transition-all duration-200 text-white hover:bg-white/10 ${
+                    activeTab === tab.id ? "bg-white/20" : ""
+                  }`}
                   onClick={() => handleTabClick(tab.id)}
                 >
                   <tab.icon
-                    className={`h-5 w-5 min-w-[1.25rem] ${isCollapsed ? "" : "mr-3"
-                      }`}
+                    className={`h-5 w-5 min-w-[1.25rem] ${
+                      isCollapsed ? "" : "mr-3"
+                    }`}
                   />
                   {!isCollapsed && (
                     <span className="truncate">{tab.title}</span>
@@ -249,8 +274,9 @@ export function DashboardSidebar({
       <div className="border-t border-[#1A3B47]/20 p-2">
         <hr className="my-2 border-white" />
         <button
-          className={`w-full flex items-center justify-start text-white hover:bg-white/10 p-2 rounded-md transition-all duration-200 ${isCollapsed ? "justify-center" : ""
-            }`}
+          className={`w-full flex items-center justify-start text-white hover:bg-white/10 p-2 rounded-md transition-all duration-200 ${
+            isCollapsed ? "justify-center" : ""
+          }`}
           onClick={handleLogoutClick}
         >
           <LogOut
@@ -291,9 +317,7 @@ export function DashboardSidebar({
             </div>
           </div>
         </div>
-
       )}
     </div>
   );
 }
-

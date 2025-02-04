@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import Cookies from 'js-cookie';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Cookies from "js-cookie";
 import {
   Dialog,
   DialogContent,
@@ -20,16 +20,15 @@ import { Label } from "@/components/ui/label";
 import signUpPicture from "../assets/images/signUpPicture.jpeg";
 import backgroundPicture from "../assets/images/backgroundPattern.png";
 
-
 // Form validation schema using zod
 const formSchema = z.object({
-  type: z.string().min(1, 'Please enter a type'),
+  type: z.string().min(1, "Please enter a type"),
   // period: z.string().min(1, 'Please enter a period'),
 });
 
 export default function CreateHtForm() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [showDialog, setShowDialog] = useState(false);
   const navigate = useNavigate();
 
@@ -40,35 +39,38 @@ export default function CreateHtForm() {
   } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      type: '',
+      type: "",
       // period: '',
     },
   });
 
   const onSubmit = async (data) => {
     setLoading(true);
-    setError('');
+    setError("");
 
-    const token = Cookies.get('jwt');
+    const token = Cookies.get("jwt");
 
     try {
-      const response = await fetch(`http://localhost:4000/tourism-governor/historical-tag`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `https://trip-genie-apis.vercel.app/tourism-governor/historical-tag`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         setShowDialog(true);
       } else {
         const body = await response.json();
         if (body.message === "Historical tag already exists") {
-          setError('Historical Tag already exists');
+          setError("Historical Tag already exists");
         } else {
-          setError('Failed to create historical tag. Please try again.');
+          setError("Failed to create historical tag. Please try again.");
         }
       }
     } catch (err) {
@@ -80,7 +82,7 @@ export default function CreateHtForm() {
 
   const handleGoBack = () => {
     setShowDialog(false);
-    navigate('/');
+    navigate("/");
   };
 
   const handleCreateNew = () => {
@@ -90,7 +92,7 @@ export default function CreateHtForm() {
 
   return (
     <div>
-     <div className="w-full bg-[#1A3B47] py-8 top-0 z-10">
+      <div className="w-full bg-[#1A3B47] py-8 top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"></div>
       </div>
       <div
@@ -105,7 +107,8 @@ export default function CreateHtForm() {
               Create Historical Tag
             </h2>
             <p className="text-sm mb-6 text-[#1A3B47]">
-              Add a new historical tag to categorize historical places and events.
+              Add a new historical tag to categorize historical places and
+              events.
             </p>
           </div>
           <div className="w-full md:w-2/3 p-6">
@@ -113,11 +116,13 @@ export default function CreateHtForm() {
               <div className="space-y-2">
                 <Label htmlFor="type">Type *</Label>
                 <Input
-                  {...register('type')}
+                  {...register("type")}
                   id="type"
                   placeholder="Enter historical tag type"
                 />
-                {errors.type && <p className="text-red-500 text-xs">{errors.type.message}</p>}
+                {errors.type && (
+                  <p className="text-red-500 text-xs">{errors.type.message}</p>
+                )}
               </div>
 
               {/* <div className="space-y-2">
@@ -135,7 +140,7 @@ export default function CreateHtForm() {
                 className="w-full bg-[#5D9297] text-white hover:bg-[#1A3B47]"
                 disabled={loading}
               >
-                {loading ? 'Creating...' : 'Create Historical Tag'}
+                {loading ? "Creating..." : "Create Historical Tag"}
               </Button>
 
               {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -153,7 +158,10 @@ export default function CreateHtForm() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button onClick={handleGoBack} className="bg-[#5D9297] text-white hover:bg-[#1A3B47]">
+            <Button
+              onClick={handleGoBack}
+              className="bg-[#5D9297] text-white hover:bg-[#1A3B47]"
+            >
               Go to Home Page
             </Button>
             <Button variant="outline" onClick={handleCreateNew}>

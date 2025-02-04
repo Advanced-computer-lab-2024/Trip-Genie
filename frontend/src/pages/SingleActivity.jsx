@@ -168,8 +168,9 @@ const StarRating = ({ rating, setRating, readOnly = false }) => {
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
-          className={`w-6 h-6 ${readOnly ? "" : "cursor-pointer"} ${star <= rating ? "text-[#F88C33] fill-current" : "text-gray-300"
-            }`}
+          className={`w-6 h-6 ${readOnly ? "" : "cursor-pointer"} ${
+            star <= rating ? "text-[#F88C33] fill-current" : "text-gray-300"
+          }`}
           onClick={() => !readOnly && setRating(star)}
           aria-label={`${star} star${star !== 1 ? "s" : ""}`}
         />
@@ -268,9 +269,12 @@ const ActivityDetail = () => {
     const fetchTouristData = async () => {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setTourist(response.data);
         setPotentialLoyaltyPoints(response.data.loyaltyPoints);
 
@@ -301,7 +305,7 @@ const ActivityDetail = () => {
         console.log("we hate ehab1");
         try {
           const response = await axios.get(
-            `http://localhost:4000/check-payment-status?session_id=${sessionId}`
+            `https://trip-genie-apis.vercel.app/check-payment-status?session_id=${sessionId}`
           );
           console.log("we hate ehab2");
           console.log("Payment status response:", response.data);
@@ -337,7 +341,7 @@ const ActivityDetail = () => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        "http://localhost:4000/tourist/book-transportation",
+        "https://trip-genie-apis.vercel.app/tourist/book-transportation",
         {
           touristID: currentUser,
           transportationID: selectedTransportation._id,
@@ -387,7 +391,7 @@ const ActivityDetail = () => {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center">
                   {transport.vehicleType === "Bus" ||
-                    transport.vehicleType === "Microbus" ? (
+                  transport.vehicleType === "Microbus" ? (
                     <Bus className="w-5 h-5 mr-2 text-blue-500" />
                   ) : (
                     <Car className="w-5 h-5 mr-2 text-green-500" />
@@ -507,7 +511,7 @@ const ActivityDetail = () => {
       const token = Cookies.get("jwt");
 
       const response = await fetch(
-        `http://localhost:4000/${userRole}/activities/${activity._id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/activities/${activity._id}`,
         {
           method: "PUT",
           headers: {
@@ -540,11 +544,14 @@ const ActivityDetail = () => {
   const fetchCurrencies = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await fetch("http://localhost:4000/tourist/currencies", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/tourist/currencies",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch currencies");
       }
@@ -596,7 +603,7 @@ const ActivityDetail = () => {
 
   const fetchExchangeRate = async () => {
     try {
-      const response = await fetch("http://localhost:4000/rates");
+      const response = await fetch("https://trip-genie-apis.vercel.app/rates");
       if (!response.ok) {
         throw new Error("Failed to fetch exchange rates");
       }
@@ -613,14 +620,17 @@ const ActivityDetail = () => {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setTourist(response.data);
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -651,7 +661,7 @@ const ActivityDetail = () => {
       try {
         const token = Cookies.get("jwt");
         const response = await fetch(
-          `http://localhost:4000/${userRole}/activities/${id}`,
+          `https://trip-genie-apis.vercel.app/${userRole}/activities/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -716,7 +726,7 @@ const ActivityDetail = () => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          `http://localhost:4000/${userRole}/touristActivityAttendedBookings`,
+          `https://trip-genie-apis.vercel.app/${userRole}/touristActivityAttendedBookings`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -733,7 +743,7 @@ const ActivityDetail = () => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          "http://localhost:4000/tourist/touristActivityBookings",
+          "https://trip-genie-apis.vercel.app/tourist/touristActivityBookings",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -763,7 +773,7 @@ const ActivityDetail = () => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          "http://localhost:4000/tourist/saved-activities",
+          "https://trip-genie-apis.vercel.app/tourist/saved-activities",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -794,10 +804,10 @@ const ActivityDetail = () => {
       const additionalPrice =
         userBooking.paymentAmount +
         calculateDiscountedPrice(activity.price, activity.specialDiscount) *
-        additionalTickets;
+          additionalTickets;
 
       const response = await axios.put(
-        `http://localhost:4000/${userRole}/activityBooking/${userBooking._id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/activityBooking/${userBooking._id}`,
         {
           numberOfTickets,
           paymentAmount: additionalPrice,
@@ -815,7 +825,7 @@ const ActivityDetail = () => {
       console.error("Error updating booking:", error);
       setBookingError(
         error.response?.data?.message ||
-        "An error occurred while updating the booking."
+          "An error occurred while updating the booking."
       );
     } finally {
       setIsBooking(false);
@@ -831,7 +841,7 @@ const ActivityDetail = () => {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/activities/${id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/activities/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -882,8 +892,8 @@ const ActivityDetail = () => {
       let totalPrice =
         discountPercentage > 0
           ? (calculateTotalPrice(numberOfTickets) *
-            (100 - discountPercentage)) /
-          100
+              (100 - discountPercentage)) /
+            100
           : calculateTotalPrice(numberOfTickets);
 
       if (paymentType === "Wallet") {
@@ -895,7 +905,7 @@ const ActivityDetail = () => {
       }
 
       const response = await fetch(
-        `http://localhost:4000/${userRole}/activityBooking`,
+        `https://trip-genie-apis.vercel.app/${userRole}/activityBooking`,
         {
           method: "POST",
           headers: {
@@ -966,7 +976,7 @@ const ActivityDetail = () => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        `http://localhost:4000/tourist/save-activity/${itemId}`,
+        `https://trip-genie-apis.vercel.app/tourist/save-activity/${itemId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -1046,7 +1056,7 @@ const ActivityDetail = () => {
   const handleActivityRating = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/${userRole}/activities/rate/${id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/activities/rate/${id}`,
         {
           method: "POST",
           headers: {
@@ -1086,8 +1096,8 @@ const ActivityDetail = () => {
     try {
       const method = userComment ? "PUT" : "POST";
       const url = userComment
-        ? `http://localhost:4000/${userRole}/activities/updateComment/${id}`
-        : `http://localhost:4000/${userRole}/activities/comment/${id}`;
+        ? `https://trip-genie-apis.vercel.app/${userRole}/activities/updateComment/${id}`
+        : `https://trip-genie-apis.vercel.app/${userRole}/activities/comment/${id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -1128,34 +1138,34 @@ const ActivityDetail = () => {
     // Conditionally add the Save step based on user role
     ...(userRole !== "guest"
       ? [
-        {
-          target: ".Save",
-          content: (
-            <>
-              Click here to save this activity for later viewing or booking in
-              your saved activities list.
-              <br />
-              Tip:
-              <br />
-              You can view your saved activities anytime! Simply click the
-              hamburger menu on the top right corner → My Account → Activities
-              → Saved
-            </>
-          ),
-          placement: "left",
-        },
-      ]
+          {
+            target: ".Save",
+            content: (
+              <>
+                Click here to save this activity for later viewing or booking in
+                your saved activities list.
+                <br />
+                Tip:
+                <br />
+                You can view your saved activities anytime! Simply click the
+                hamburger menu on the top right corner → My Account → Activities
+                → Saved
+              </>
+            ),
+            placement: "left",
+          },
+        ]
       : []),
     // Conditionally add the bookNow step based on user role
     ...(userRole !== "guest"
       ? [
-        {
-          target: ".bookNow",
-          content:
-            "Click here to be able to book this activity and proceed to the payment process.",
-          placement: "left",
-        },
-      ]
+          {
+            target: ".bookNow",
+            content:
+              "Click here to be able to book this activity and proceed to the payment process.",
+            placement: "left",
+          },
+        ]
       : []),
     {
       target: ".AdvertiserDetail",
@@ -1192,8 +1202,8 @@ const ActivityDetail = () => {
     try {
       const method = userComment ? "PUT" : "POST";
       const url = userComment
-        ? `http://localhost:4000/${userRole}/activities/updateComment/${id}`
-        : `http://localhost:4000/${userRole}/activities/comment/${id}`;
+        ? `https://trip-genie-apis.vercel.app/${userRole}/activities/updateComment/${id}`
+        : `https://trip-genie-apis.vercel.app/${userRole}/activities/comment/${id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -1427,12 +1437,7 @@ const ActivityDetail = () => {
   return (
     <ToastProvider>
       <div className="min-h-screen bg-gray-100">
-        <div
-
-          className="bg-[#1A3B47] text-white py-8 px-4"
-        >
-
-        </div>
+        <div className="bg-[#1A3B47] text-white py-8 px-4"></div>
 
         <div className="bg-gray-100">
           <div className="mx-4 ">
@@ -1549,8 +1554,8 @@ const ActivityDetail = () => {
                     <div>
                       <div className="space-y-4">
                         <div className="ActivityDetail">
-
-                          {(userRole === "advertiser" || userRole === "admin") &&
+                          {(userRole === "advertiser" ||
+                            userRole === "admin") &&
                             !activity.isBookingOpen && (
                               <div className="mt-2 p-2 bg-red-100 border border-red-400 text-red-700 rounded text-center">
                                 Booking is currently closed.
@@ -1562,7 +1567,8 @@ const ActivityDetail = () => {
                               if (activity.rating) {
                                 ratingValue = Math.floor(activity.rating);
                               }
-                              const isHalfStar = activity.rating - ratingValue >= 0.5; // Check for half-star
+                              const isHalfStar =
+                                activity.rating - ratingValue >= 0.5; // Check for half-star
 
                               if (index < ratingValue) {
                                 // Full star
@@ -1602,8 +1608,8 @@ const ActivityDetail = () => {
                           </div>
 
                           <span className="  text-[#5D9297] text-medium font-semibold ml-4">
-                            {activity.reviews ? activity.reviews.length : 0} Item
-                            Ratings
+                            {activity.reviews ? activity.reviews.length : 0}{" "}
+                            Item Ratings
                           </span>
                           <div className="flex items-start">
                             <div>
@@ -1654,17 +1660,21 @@ const ActivityDetail = () => {
                             <Clock className="w-5 h-5 mr-2 text-orange-500" />
                             <span className="text-gray-700">
                               Time:{" "}
-                              {new Date(activity.timing).toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
+                              {new Date(activity.timing).toLocaleTimeString(
+                                [],
+                                {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                }
+                              )}
                             </span>
                           </div>
                           <div className="text-lg text-gray-600 mt-4 mb-6 overflow-hidden w-[400px]">
                             {isExpanded
                               ? activity.description
-                              : `${activity.description.substring(0, 130)}${activity.description.length > 130 ? "..." : ""
-                              }`}
+                              : `${activity.description.substring(0, 130)}${
+                                  activity.description.length > 130 ? "..." : ""
+                                }`}
                             {activity.description.length > 130 && (
                               <button
                                 onClick={toggleExpanded}
@@ -1691,26 +1701,29 @@ const ActivityDetail = () => {
                                 e.stopPropagation();
                                 handleSaveToggle(activity._id);
                               }}
-                              className={`w-full font-bold py-2 px-4 rounded mt-2 text-lg flex items-center justify-center gap-2 Save ${isSaved
-                                ? "bg-[#1A3B47] hover:bg-[#1A3B47] text-white"
-                                : "bg-[#388A94] hover:bg-[#2B6870] text-white"
-                                }`}
+                              className={`w-full font-bold py-2 px-4 rounded mt-2 text-lg flex items-center justify-center gap-2 Save ${
+                                isSaved
+                                  ? "bg-[#1A3B47] hover:bg-[#1A3B47] text-white"
+                                  : "bg-[#388A94] hover:bg-[#2B6870] text-white"
+                              }`}
                             >
                               <Bookmark
-                                className={`w-5 h-5 ${isSaved
-                                  ? "stroke-white fill-[#1A3B47]"
-                                  : "stroke-white"
-                                  }`}
+                                className={`w-5 h-5 ${
+                                  isSaved
+                                    ? "stroke-white fill-[#1A3B47]"
+                                    : "stroke-white"
+                                }`}
                               />
                               {isSaved ? "Unsave" : "Save"}
                             </Button>
 
                             <Button
                               onClick={handleBookNowClick}
-                              className={`w-full font-bold py-2 px-4 rounded mt-2 text-lg bookNow ${activity.isBookingOpen
-                                ? "bg-[#388A94] hover:bg-[#2B6870] text-white"
-                                : "bg-gray-400 text-gray-700 cursor-not-allowed"
-                                }`}
+                              className={`w-full font-bold py-2 px-4 rounded mt-2 text-lg bookNow ${
+                                activity.isBookingOpen
+                                  ? "bg-[#388A94] hover:bg-[#2B6870] text-white"
+                                  : "bg-gray-400 text-gray-700 cursor-not-allowed"
+                              }`}
                               disabled={!activity.isBookingOpen}
                             >
                               {activity.isBookingOpen
@@ -1817,10 +1830,11 @@ const ActivityDetail = () => {
                           <>
                             <div className="mt-6 border-t border-gray-300 pt-4"></div>
                             <Button
-                              className={`w-full mx-auto text-white ${isAppropriate
-                                ? "bg-red-500 hover:bg-red-600" // Appropriate: Red Button
-                                : "bg-green-500 hover:bg-green-600" // Inappropriate: Green Button
-                                }`}
+                              className={`w-full mx-auto text-white ${
+                                isAppropriate
+                                  ? "bg-red-500 hover:bg-red-600" // Appropriate: Red Button
+                                  : "bg-green-500 hover:bg-green-600" // Inappropriate: Green Button
+                              }`}
                               onClick={handleOpenDialog}
                             >
                               {isAppropriate
@@ -1935,14 +1949,15 @@ const ActivityDetail = () => {
                         {[1, 2, 3, 4, 5].map((star) => (
                           <Star
                             key={star}
-                            className={`w-8 h-8 cursor-pointer ${(
-                              isRatingHovered
-                                ? quickRating >= star
-                                : quickRating >= star
-                            )
-                              ? "text-yellow-500 fill-current"
-                              : "text-gray-300"
-                              }`}
+                            className={`w-8 h-8 cursor-pointer ${
+                              (
+                                isRatingHovered
+                                  ? quickRating >= star
+                                  : quickRating >= star
+                              )
+                                ? "text-yellow-500 fill-current"
+                                : "text-gray-300"
+                            }`}
                             onMouseEnter={() => {
                               setIsRatingHovered(true);
                               setQuickRating(star);
@@ -2190,7 +2205,10 @@ const ActivityDetail = () => {
               </DialogContent>
             </Dialog>
 
-            <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+            <Dialog
+              open={showSuccessDialog}
+              onOpenChange={setShowSuccessDialog}
+            >
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   {/* Flexbox container to align icon and title horizontally */}
@@ -2231,13 +2249,18 @@ const ActivityDetail = () => {
                     )}
                     {paymentType === "Wallet" && (
                       <div className="grid grid-cols-2 gap-4">
-                        <Label className="text-right">New Wallet Balance:</Label>
+                        <Label className="text-right">
+                          New Wallet Balance:
+                        </Label>
                         <div>{touristWallet}</div>
                       </div>
                     )}
 
                     <div className="grid grid-cols-2 gap-4">
-                      <Label className="text-right"> Loyalty Points Earned:</Label>
+                      <Label className="text-right">
+                        {" "}
+                        Loyalty Points Earned:
+                      </Label>
 
                       {loyaltyy}
                     </div>
@@ -2273,7 +2296,8 @@ const ActivityDetail = () => {
                       readOnly={true}
                     />
                     <p className="text-sm text-gray-500 mt-1">
-                      {showFullComment && formatCommentDate(showFullComment.date)}
+                      {showFullComment &&
+                        formatCommentDate(showFullComment.date)}
                     </p>
                   </div>
                   <div>
@@ -2291,7 +2315,8 @@ const ActivityDetail = () => {
                       Disliked:
                     </h4>
                     <p>
-                      {showFullComment?.content?.disliked || "Nothing mentioned"}
+                      {showFullComment?.content?.disliked ||
+                        "Nothing mentioned"}
                     </p>
                   </div>
                 </div>
@@ -2331,7 +2356,10 @@ const ActivityDetail = () => {
                     id="liked"
                     value={newReview.liked}
                     onChange={(e) =>
-                      setNewReview((prev) => ({ ...prev, liked: e.target.value }))
+                      setNewReview((prev) => ({
+                        ...prev,
+                        liked: e.target.value,
+                      }))
                     }
                     rows={3}
                     className="mt-2"
@@ -2379,7 +2407,10 @@ const ActivityDetail = () => {
                     id="anonymous-mode"
                     checked={newReview.isAnonymous}
                     onCheckedChange={(checked) =>
-                      setNewReview((prev) => ({ ...prev, isAnonymous: checked }))
+                      setNewReview((prev) => ({
+                        ...prev,
+                        isAnonymous: checked,
+                      }))
                     }
                   />
                   <Label htmlFor="anonymous-mode">Post anonymously</Label>
@@ -2451,7 +2482,8 @@ const ActivityDetail = () => {
               <DialogHeader>
                 <DialogTitle>Cannot Delete Activity</DialogTitle>
                 <DialogDescription>
-                  This activity cannot be deleted because it has active bookings.
+                  This activity cannot be deleted because it has active
+                  bookings.
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter className="flex justify-end mt-2">
@@ -2585,7 +2617,9 @@ const ActivityDetail = () => {
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button onClick={() => setShowTransportationSuccessDialog(false)}>
+                <Button
+                  onClick={() => setShowTransportationSuccessDialog(false)}
+                >
                   Close
                 </Button>
               </DialogFooter>
@@ -2595,8 +2629,9 @@ const ActivityDetail = () => {
 
         {alertMessage && (
           <Alert
-            className={`fixed bottom-4 right-4 w-96 ${alertMessage.type === "success" ? "bg-green-500" : "bg-red-500"
-              } text-white`}
+            className={`fixed bottom-4 right-4 w-96 ${
+              alertMessage.type === "success" ? "bg-green-500" : "bg-red-500"
+            } text-white`}
           >
             <AlertTitle>
               {alertMessage.type === "success" ? "Success" : "Error"}
@@ -2613,26 +2648,25 @@ const ActivityDetail = () => {
             onOpenChange={setIsToastOpen2}
             open={isToastOpen2}
             duration={3000} // Set duration to 3 seconds
-            className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+            className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
           >
             <div className="flex items-center">
-              {toastType === 'success' ? (
+              {toastType === "success" ? (
                 <CheckCircle className="text-green-500 mr-2" />
               ) : (
                 <XCircle className="text-red-500 mr-2" />
               )}
               <div>
-                <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
-                <ToastDescription>
-                  {toastMessage}
-                </ToastDescription>
+                <ToastTitle>
+                  {toastType === "success" ? "Success" : "Error"}
+                </ToastTitle>
+                <ToastDescription>{toastMessage}</ToastDescription>
               </div>
             </div>
             <ToastClose />
           </Toast>
         )}
-
-      </div >
+      </div>
     </ToastProvider>
   );
 };

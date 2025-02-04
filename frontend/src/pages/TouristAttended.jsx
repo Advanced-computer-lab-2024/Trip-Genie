@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { Star, Clock, MapPin, Calendar, Eye, Info } from 'lucide-react';
+import { Star, Clock, MapPin, Calendar, Eye, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Loader from "@/components/Loader";
@@ -53,19 +53,27 @@ const ActivityCard = ({ booking, onSelect, userInfo, exchangeRates }) => {
               <div className="flex-shrink-0 h-4 w-4 flex items-center justify-center mr-1">
                 <MapPin className="h-4 w-4" />
               </div>
-              <span className="leading-tight">{activity.location?.address || "Location not available"}</span>
+              <span className="leading-tight">
+                {activity.location?.address || "Location not available"}
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-1 text-base">
             <Star className="h-6 w-6 fill-[#F88C33] text-[#F88C33]" />
-            <span className="text-[#F88C33]">{activity.rating?.toFixed(1) || "0.0"}</span>
+            <span className="text-[#F88C33]">
+              {activity.rating?.toFixed(1) || "0.0"}
+            </span>
           </div>
         </div>
 
         <div className="flex items-center gap-4 text-sm text-[#5D9297]">
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4 text-[#5D9297]" />
-            <span>{activity.duration === 1 ? "1 hour" : `${activity.duration} hours`}</span>
+            <span>
+              {activity.duration === 1
+                ? "1 hour"
+                : `${activity.duration} hours`}
+            </span>
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4 text-[#5D9297]" />
@@ -99,28 +107,33 @@ const SkeletonCard = () => {
   return (
     <Card className="group relative flex items-center gap-4 p-2 transition-all hover:shadow-lg cursor-pointer">
       <div className="relative h-36 w-36 shrink-0 rounded-sm bg-gray-300 animate-pulse" />
-      <div className="flex flex-1 flex-col gap-2"> {/* Reduced gap between elements */}
+      <div className="flex flex-1 flex-col gap-2">
+        {" "}
+        {/* Reduced gap between elements */}
         <div className="flex items-start justify-between">
-          <div className="w-3/4 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" /> {/* Increased width for title */}
-          <div className="w-1/3 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" /> {/* Increased width for other small section */}
+          <div className="w-3/4 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" />{" "}
+          {/* Increased width for title */}
+          <div className="w-1/3 h-6 bg-gray-300 rounded-sm animate-pulse mr-2" />{" "}
+          {/* Increased width for other small section */}
         </div>
-
         <div className="flex items-center gap-2 text-sm text-[#5D9297]">
           {/* Increased gap between elements */}
           <div className="flex items-center gap-2">
             <div className="h-4 w-4 p-2 bg-gray-300 rounded-full animate-pulse" />
-            <div className="w-4/5 pl-11 pr-11 pt-1 pb-1  h-5 bg-gray-300 rounded-sm animate-pulse" /> {/* Increased width */}
+            <div className="w-4/5 pl-11 pr-11 pt-1 pb-1  h-5 bg-gray-300 rounded-sm animate-pulse" />{" "}
+            {/* Increased width */}
           </div>
           <div className="flex items-center gap-2">
             <div className="h-4 w-4 p-2 bg-gray-300 rounded-full animate-pulse" />
-            <div className="w-4/5 h-5 pl-11 pr-11 pt-1 pb-1 bg-gray-300 rounded-sm animate-pulse " /> {/* Increased width */}
+            <div className="w-4/5 h-5 pl-11 pr-11 pt-1 pb-1 bg-gray-300 rounded-sm animate-pulse " />{" "}
+            {/* Increased width */}
           </div>
         </div>
-
-
-
-        <div className="mt-2 flex items-center justify-between"> {/* Adjusted margin-top */}
-          <div className="w-3/4 h-6 bg-gray-300 rounded-sm mr-2 animate-pulse" /> {/* Increased width */}
+        <div className="mt-2 flex items-center justify-between">
+          {" "}
+          {/* Adjusted margin-top */}
+          <div className="w-3/4 h-6 bg-gray-300 rounded-sm mr-2 animate-pulse" />{" "}
+          {/* Increased width */}
           <div className="flex gap-2">
             <Button
               size="sm"
@@ -134,7 +147,6 @@ const SkeletonCard = () => {
         </div>
       </div>
     </Card>
-
   );
 };
 const SkeletonDialog = () => {
@@ -182,7 +194,7 @@ const SkeletonDialog = () => {
 const fetchData = async (userRole, dataType) => {
   try {
     const response = await axios.get(
-      `http://localhost:4000/${userRole}/${dataType}`,
+      `https://trip-genie-apis.vercel.app/${userRole}/${dataType}`,
       {
         headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
       }
@@ -213,7 +225,9 @@ export default function TouristAttendedActivities() {
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:4000/rates");
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/rates"
+      );
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -226,14 +240,17 @@ export default function TouristAttendedActivities() {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
         setTourist(response.data);
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -277,20 +294,21 @@ export default function TouristAttendedActivities() {
   }, [fetchUserInfo, fetchExchangeRates]);
 
   const handleReviewClick = async (id) => {
-    try {// fetch the activity from the backend
-      const response = await axios.get(`http://localhost:4000/tourist/activities/${id}`, {
-        headers: { Authorization: `Bearer ${Cookies.get("jwt")}` }
-      }
-      )
-
+    try {
+      // fetch the activity from the backend
+      const response = await axios.get(
+        `https://trip-genie-apis.vercel.app/tourist/activities/${id}`,
+        {
+          headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
+        }
+      );
 
       if (response.status === 200) {
         navigate(`/activity/${id}`);
       } else {
         setIsReviewDialogOpen(true);
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error fetching activity:", error);
       setIsReviewDialogOpen(true);
     }
@@ -331,7 +349,7 @@ export default function TouristAttendedActivities() {
         </div>
       </div>
     );
-  };
+  }
 
   if (error) return <div>{error}</div>;
 
@@ -342,14 +360,14 @@ export default function TouristAttendedActivities() {
          */}
       <Toaster />
       <div className="container mx-auto px-4 py-8">
-
         {activities.length === 0 ? (
           <div className="text-center space-y-4 py-12">
             <h2 className="text-2xl font-semibold text-gray-600">
               No attended activities yet
             </h2>
             <p className="text-gray-500">
-              Your attended activities will appear here once you've completed them.
+              Your attended activities will appear here once you've completed
+              them.
             </p>
             <Button
               size="lg"
@@ -379,21 +397,20 @@ export default function TouristAttendedActivities() {
         <DialogContent className="sm:max-w-[330px] bg-white rounded-lg shadow-lg p-4">
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold text-[#1A3B47]">
-              <div>
-                Booking Receipt for
-              </div>
+              <div>Booking Receipt for</div>
               <div className="text-[#388A94] text-xl font-bold">
                 {selectedBooking?.activity.name}
               </div>
               <div className="text-sm text-gray-400 mt-1">
-                Booking ID: <span className=" font-semibold">
-                  {selectedBooking?._id ? selectedBooking._id.substring(0, 10) : "AB123456"}
+                Booking ID:{" "}
+                <span className=" font-semibold">
+                  {selectedBooking?._id
+                    ? selectedBooking._id.substring(0, 10)
+                    : "AB123456"}
                 </span>
               </div>
             </DialogTitle>
           </DialogHeader>
-
-
 
           {/* Main content */}
           <div className="border-t border-gray-200 pt-4 space-y-4">
@@ -434,7 +451,9 @@ export default function TouristAttendedActivities() {
 
             {/* Tickets Booked */}
             <div className="flex justify-between items-center">
-              <p className="text-sm font-medium text-gray-400">Tickets Booked</p>
+              <p className="text-sm font-medium text-gray-400">
+                Tickets Booked
+              </p>
               <p className="text-[#1A3B47] font-semibold text-right">
                 {selectedBooking?.numberOfTickets || "1"} Tickets
               </p>
@@ -486,7 +505,8 @@ export default function TouristAttendedActivities() {
           <DialogHeader>
             <DialogTitle>Activity Deleted</DialogTitle>
             <DialogDescription>
-              The activity you are trying to review has been deleted and is no longer available.
+              The activity you are trying to review has been deleted and is no
+              longer available.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex justify-end">
@@ -497,13 +517,8 @@ export default function TouristAttendedActivities() {
               Close
             </Button>
           </DialogFooter>
-
-
         </DialogContent>
       </Dialog>
-
-
     </div>
   );
 }
-

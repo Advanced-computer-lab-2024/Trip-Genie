@@ -93,7 +93,7 @@ const HistoricalPlaceDetail = ({ id }) => {
       try {
         const token = Cookies.get("jwt");
         const response = await fetch(
-          `http://localhost:4000/${userRole}/historical-places/${id}`,
+          `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -130,7 +130,6 @@ const HistoricalPlaceDetail = ({ id }) => {
     fetchHistoricalPlaceDetails();
   }, [id]); // Add id to dependency array
 
-
   const handleUpdate = () => {
     navigate(`/update-historical-place/${id}`);
   };
@@ -142,7 +141,7 @@ const HistoricalPlaceDetail = ({ id }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/historical-places/${id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -194,8 +193,6 @@ const HistoricalPlaceDetail = ({ id }) => {
   const HistoricalPlaceDetailSkeleton = () => {
     return (
       <div>
-        
-        
         <div className="min-h-screen bg-gray-100 pt-8">
           <div className="container mx-auto px-4 py-8 ">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -204,12 +201,10 @@ const HistoricalPlaceDetail = ({ id }) => {
                   <div className="flex justify-between items-start mb-2">
                     <div className="h-8 w-1/4 bg-gray-300 rounded animate-pulse"></div>
                     <div className="h-10 w-1/12 bg-gray-300 rounded animate-pulse mt-1"></div>
-
-                    
                   </div>
                   <div className="h-12 w-2/4 bg-gray-300 rounded animate-pulse mt-2"></div>
                 </div>
-  
+
                 <div className="flex flex-col md:flex-row gap-8">
                   <div className="md:w-2/3">
                     <div className="relative pb-[56.25%] h-0">
@@ -217,16 +212,19 @@ const HistoricalPlaceDetail = ({ id }) => {
                     </div>
                     <div className="mt-4 flex gap-2 overflow-x-auto">
                       {[1, 2, 3, 4].map((index) => (
-                        <div key={index} className="w-24 h-24 bg-gray-300 rounded animate-pulse"></div>
+                        <div
+                          key={index}
+                          className="w-24 h-24 bg-gray-300 rounded animate-pulse"
+                        ></div>
                       ))}
                     </div>
                   </div>
-  
+
                   <div className="md:w-1/3 space-y-4">
                     <Button variant="outline" size="sm" className="ml-auto">
                       <Share2 className="h-4 w-4" />
                     </Button>
-  
+
                     <Card>
                       <CardHeader>
                         <CardTitle>Location</CardTitle>
@@ -242,28 +240,36 @@ const HistoricalPlaceDetail = ({ id }) => {
                         </div>
                       </CardContent>
                     </Card>
-  
+
                     <Card>
                       <CardHeader>
                         <CardTitle>Ticket Prices</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        {['Foreigner', 'Native', 'Student'].map((type, index) => (
-                          <div key={index} className="flex items-center justify-between mt-2">
-                            <span>{type}:</span>
-                            <div className="h-4 w-1/4 bg-gray-300 rounded animate-pulse"></div>
-                          </div>
-                        ))}
+                        {["Foreigner", "Native", "Student"].map(
+                          (type, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center justify-between mt-2"
+                            >
+                              <span>{type}:</span>
+                              <div className="h-4 w-1/4 bg-gray-300 rounded animate-pulse"></div>
+                            </div>
+                          )
+                        )}
                       </CardContent>
                     </Card>
-  
+
                     <Card>
                       <CardHeader>
                         <CardTitle>Opening Hours</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        {['Weekdays', 'Weekends'].map((day, index) => (
-                          <div key={index} className="flex items-center justify-between mt-2">
+                        {["Weekdays", "Weekends"].map((day, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-between mt-2"
+                          >
                             <span>{day}:</span>
                             <div className="h-4 w-1/3 bg-gray-300 rounded animate-pulse"></div>
                           </div>
@@ -272,8 +278,6 @@ const HistoricalPlaceDetail = ({ id }) => {
                     </Card>
                   </div>
                 </div>
-  
-                
               </div>
             </div>
           </div>
@@ -314,7 +318,9 @@ const HistoricalPlaceDetail = ({ id }) => {
   }
 
   return (
-    <div style={{ backgroundColor: "#B5D3D1" }}> {/* Light Aqua/Seafoam Green */}
+    <div style={{ backgroundColor: "#B5D3D1" }}>
+      {" "}
+      {/* Light Aqua/Seafoam Green */}
       <div className="bg-gray-100">
         <div className="">
           <div className="bg-white shadow-lg rounded-lg overflow-hidden">

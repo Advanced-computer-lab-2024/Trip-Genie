@@ -206,11 +206,14 @@ const ExternalFlightBookings = ({ user }) => {
   const fetchCurrencies = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await fetch("http://localhost:4000/tourist/currencies", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/tourist/currencies",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch currencies");
       }
@@ -232,7 +235,7 @@ const ExternalFlightBookings = ({ user }) => {
 
   const fetchExchangeRate = async () => {
     try {
-      const response = await fetch("http://localhost:4000/rates");
+      const response = await fetch("https://trip-genie-apis.vercel.app/rates");
       if (!response.ok) {
         throw new Error("Failed to fetch exchange rates");
       }
@@ -249,14 +252,17 @@ const ExternalFlightBookings = ({ user }) => {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setTourist(response.data);
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -281,10 +287,10 @@ const ExternalFlightBookings = ({ user }) => {
     try {
       const token = Cookies.get("jwt");
       const [flightsResponse] = await Promise.all([
-        axios.get("http://localhost:4000/tourist/my-flights", {
+        axios.get("https://trip-genie-apis.vercel.app/tourist/my-flights", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("http://localhost:4000/tourist/", {
+        axios.get("https://trip-genie-apis.vercel.app/tourist/", {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -302,7 +308,7 @@ const ExternalFlightBookings = ({ user }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        `http://localhost:4000/tourist/cancel-flight/${selectedFlight}`,
+        `https://trip-genie-apis.vercel.app/tourist/cancel-flight/${selectedFlight}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -358,7 +364,6 @@ const ExternalFlightBookings = ({ user }) => {
 
   return (
     <ToastProvider>
-      
       <div className="bg-gray-100 max-w-7xl gap-4 ">
         <h1 className="text-3xl font-bold mb-2">Flight Bookings</h1>
         <p className="text-sm text-gray-500 mb-2">My Bookings / Flights</p>
@@ -832,11 +837,14 @@ const ExternalHotelBookings = ({ user }) => {
   const fetchCurrencies = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await fetch("http://localhost:4000/tourist/currencies", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/tourist/currencies",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch currencies");
       }
@@ -963,14 +971,17 @@ const ExternalHotelBookings = ({ user }) => {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setTourist(response.data);
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -993,7 +1004,7 @@ const ExternalHotelBookings = ({ user }) => {
 
   const fetchExchangeRate = async () => {
     try {
-      const response = await fetch("http://localhost:4000/rates");
+      const response = await fetch("https://trip-genie-apis.vercel.app/rates");
       if (!response.ok) {
         throw new Error("Failed to fetch exchange rates");
       }
@@ -1008,10 +1019,10 @@ const ExternalHotelBookings = ({ user }) => {
     try {
       const token = Cookies.get("jwt");
       const [hotelsResponse, currencyResponse] = await Promise.all([
-        axios.get("http://localhost:4000/tourist/my-hotels", {
+        axios.get("https://trip-genie-apis.vercel.app/tourist/my-hotels", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("http://localhost:4000/tourist/", {
+        axios.get("https://trip-genie-apis.vercel.app/tourist/", {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -1029,7 +1040,7 @@ const ExternalHotelBookings = ({ user }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        `http://localhost:4000/tourist/cancel-hotel/${selectedHotel}`,
+        `https://trip-genie-apis.vercel.app/tourist/cancel-hotel/${selectedHotel}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -1422,10 +1433,10 @@ const RedeemPoints = ({ user, onRedeemPoints }) => {
       try {
         const token = Cookies.get("jwt");
         const [ratesResponse, currenciesResponse] = await Promise.all([
-          axios.get("http://localhost:4000/rates", {
+          axios.get("https://trip-genie-apis.vercel.app/rates", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:4000/tourist/currencies", {
+          axios.get("https://trip-genie-apis.vercel.app/tourist/currencies", {
             headers: { Authorization: `Bearer ${token}` },
           }),
           fetchUserInfo(),
@@ -1496,14 +1507,17 @@ const RedeemPoints = ({ user, onRedeemPoints }) => {
           return;
         }
 
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
 
         if (currencyId) {
           const response2 = await axios.get(
-            `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+            `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -1599,7 +1613,7 @@ const CurrencyApp = ({ user }) => {
       try {
         const token = Cookies.get("jwt");
         const codeResponse = await axios.get(
-          "http://localhost:4000/tourist/currencies/idd",
+          "https://trip-genie-apis.vercel.app/tourist/currencies/idd",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -1609,7 +1623,7 @@ const CurrencyApp = ({ user }) => {
         console.log("Preferred Currency Code:", preferredCurrencyCode);
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${preferredCurrencyCode}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${preferredCurrencyCode}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -1627,7 +1641,7 @@ const CurrencyApp = ({ user }) => {
         try {
           const token = Cookies.get("jwt");
           const response = await axios.get(
-            "http://localhost:4000/tourist/currencies",
+            "https://trip-genie-apis.vercel.app/tourist/currencies",
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -1648,7 +1662,7 @@ const CurrencyApp = ({ user }) => {
       try {
         const token = Cookies.get("jwt");
         await axios.post(
-          "http://localhost:4000/tourist/currencies/set",
+          "https://trip-genie-apis.vercel.app/tourist/currencies/set",
           { currencyId: selectedCurrency },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -1766,7 +1780,7 @@ const DeleteAccount = ({ onClose }) => {
       const token = Cookies.get("jwt");
       const role = Cookies.get("role");
       const response = await axios.delete(
-        `http://localhost:4000/${role}/delete-account`,
+        `https://trip-genie-apis.vercel.app/${role}/delete-account`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -1860,14 +1874,14 @@ export default function AccountManagement() {
       try {
         const token = Cookies.get("jwt");
         const role = getUserRole();
-        const api = `http://localhost:4000/${role}`;
+        const api = `https://trip-genie-apis.vercel.app/${role}`;
         const response = await axios.get(api, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setUser({ 
-          ...response.data, 
+        setUser({
+          ...response.data,
           role,
-          email: response.data.email // Ensure email is included
+          email: response.data.email, // Ensure email is included
         });
       } catch (err) {
         setError(err.message);
@@ -1893,7 +1907,7 @@ export default function AccountManagement() {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const api = `http://localhost:4000/${role}/redeem-points`;
+      const api = `https://trip-genie-apis.vercel.app/${role}/redeem-points`;
       const response = await axios.post(
         api,
         {},
@@ -2191,7 +2205,9 @@ export default function AccountManagement() {
   const logOut = async () => {
     console.log("Logging out...");
     try {
-      const response = await fetch("http://localhost:4000/auth/logout");
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/auth/logout"
+      );
       if (response.ok) {
         Cookies.set("jwt", "");
         Cookies.set("role", "");
@@ -2250,142 +2266,143 @@ export default function AccountManagement() {
     setIsToastOpen(true);
   };
 
- 
-
-  
   return (
     <div>
       <ToastProvider>
-      <div className="w-full bg-[#1A3B47] py-8 top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"></div>
-      </div>
-      {role === "tourism-governor" && (
-        <div className="text-[#1A3B47] p-2 border-b bg-gray-100 border-gray-300">
-          <div className="flex justify-end items-center">
-            {user && (
-              <DropdownMenu>
-                <DropdownMenuTrigger className="focus:outline-none group">
-                  <div className="flex items-center space-x-2 p-2 rounded-full transition-colors duration-200 group-hover:bg-[#B5D3D1]">
-                    <span className="mr-2 text-[#1A3B47]">
-                      {user.username}
-                    </span>
-                    <Avatar
-                      className="h-8 w-8 !bg-[#388A94] text-white"
-                      style={{ backgroundColor: "#388A94" }}
-                    >
-                      <AvatarFallback className="bg-transparent">
-                        {getInitials(user.username)}
-                      </AvatarFallback>
-                    </Avatar>
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="end"
-                  className="w-56 bg-white shadow-lg rounded-md p-2"
-                >
-                  <div className="flex items-center space-x-2 p-2">
-                    <Avatar className="h-12 w-12 bg-[#388A94] text-white">
-                      <AvatarFallback className="text-lg bg-transparent">
-                        {getInitials(user.username)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-semibold text-[#1A3B47]">
+        <div className="w-full bg-[#1A3B47] py-8 top-0 z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"></div>
+        </div>
+        {role === "tourism-governor" && (
+          <div className="text-[#1A3B47] p-2 border-b bg-gray-100 border-gray-300">
+            <div className="flex justify-end items-center">
+              {user && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="focus:outline-none group">
+                    <div className="flex items-center space-x-2 p-2 rounded-full transition-colors duration-200 group-hover:bg-[#B5D3D1]">
+                      <span className="mr-2 text-[#1A3B47]">
                         {user.username}
-                      </p>
-                      <p className="text-sm text-[#5D9297]">Tourism Governor</p>
+                      </span>
+                      <Avatar
+                        className="h-8 w-8 !bg-[#388A94] text-white"
+                        style={{ backgroundColor: "#388A94" }}
+                      >
+                        <AvatarFallback className="bg-transparent">
+                          {getInitials(user.username)}
+                        </AvatarFallback>
+                      </Avatar>
                     </div>
-                  </div>
-                  {/* Always show email container if user exists */}
-                  <div className="flex items-center justify-center mt-2 text-[#1A3B47]">
-                    <Mail className="mr-2 h-4 w-4" />
-                    <p className="text-xs">{user.email || 'No email available'}</p>
-                  </div>
-                  <DropdownMenuItem
-                    className="w-full text-[#1A3B47] hover:bg-[#B5D3D1] transition-colors duration-200 border border-gray-300 text-center mt-2"
-                    onClick={handleChangePasswordClick}
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="end"
+                    className="w-56 bg-white shadow-lg rounded-md p-2"
                   >
-                    <span className="w-full text-center">Change Password</span>
-                  </DropdownMenuItem>
-                  <Separator className="my-2" />
-                  <DropdownMenuItem
-                    className="w-full text-[#1A3B47] hover:bg-[#B5D3D1] transition-colors duration-200"
-                    onClick={handleLogoutClick}
-                  >
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
+                    <div className="flex items-center space-x-2 p-2">
+                      <Avatar className="h-12 w-12 bg-[#388A94] text-white">
+                        <AvatarFallback className="text-lg bg-transparent">
+                          {getInitials(user.username)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-semibold text-[#1A3B47]">
+                          {user.username}
+                        </p>
+                        <p className="text-sm text-[#5D9297]">
+                          Tourism Governor
+                        </p>
+                      </div>
+                    </div>
+                    {/* Always show email container if user exists */}
+                    <div className="flex items-center justify-center mt-2 text-[#1A3B47]">
+                      <Mail className="mr-2 h-4 w-4" />
+                      <p className="text-xs">
+                        {user.email || "No email available"}
+                      </p>
+                    </div>
+                    <DropdownMenuItem
+                      className="w-full text-[#1A3B47] hover:bg-[#B5D3D1] transition-colors duration-200 border border-gray-300 text-center mt-2"
+                      onClick={handleChangePasswordClick}
+                    >
+                      <span className="w-full text-center">
+                        Change Password
+                      </span>
+                    </DropdownMenuItem>
+                    <Separator className="my-2" />
+                    <DropdownMenuItem
+                      className="w-full text-[#1A3B47] hover:bg-[#B5D3D1] transition-colors duration-200"
+                      onClick={handleLogoutClick}
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-      <div className="flex min-h-screen bg-gray-100">
-        <Sidebar
-          menuStructure={menuStructure}
-          role={role}
-          activeTab={activeTab}
-          onTabClick={handleTabClick}
-        />
-        <main className="flex-1 p-8">
-          <div className="w-full mx-auto">{renderContent()}</div>
-        </main>
-
-        {showDeleteAccount && (
-          <DeleteAccount onClose={() => setShowDeleteAccount(false)} />
         )}
-        {showPopup && (
-          <LogoutPopup
-            onConfirm={handleConfirmLogout}
-            onCancel={handleCancelLogout}
+        <div className="flex min-h-screen bg-gray-100">
+          <Sidebar
+            menuStructure={menuStructure}
+            role={role}
+            activeTab={activeTab}
+            onTabClick={handleTabClick}
           />
-        )}
-      </div>
+          <main className="flex-1 p-8">
+            <div className="w-full mx-auto">{renderContent()}</div>
+          </main>
 
-      {/* Password Change Modal */}
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button
-                className="close-button"
-                onClick={() => setIsModalOpen(false)}
-              >
-                ×
-              </button>
-            </div>
-            <div className="modal-body">
-              <PasswordChanger onSuccess={handlePasswordChangeSuccess} />
-            </div>
-          </div>
+          {showDeleteAccount && (
+            <DeleteAccount onClose={() => setShowDeleteAccount(false)} />
+          )}
+          {showPopup && (
+            <LogoutPopup
+              onConfirm={handleConfirmLogout}
+              onCancel={handleCancelLogout}
+            />
+          )}
         </div>
-      )}
-
-      <ToastViewport /> {/* Add this line */}
-      {isToastOpen && (
-        <Toast
-          onOpenChange={setIsToastOpen}
-          open={isToastOpen}
-          duration={2000}
-          className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
-        >
-          <div className="flex items-center">
-            {toastType === "success" ? (
-              <CheckCircle className="text-green-500 mr-2" />
-            ) : (
-              <XCircle className="text-red-500 mr-2" />
-            )}
-            <div>
-              <ToastTitle>
-                {toastType === "success" ? "Success" : "Error"}
-              </ToastTitle>
-              <ToastDescription>{toastMessage}</ToastDescription>
+        {/* Password Change Modal */}
+        {isModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button
+                  className="close-button"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  ×
+                </button>
+              </div>
+              <div className="modal-body">
+                <PasswordChanger onSuccess={handlePasswordChangeSuccess} />
+              </div>
             </div>
           </div>
-          <ToastClose />
-        </Toast>
-      )}
+        )}
+        <ToastViewport /> {/* Add this line */}
+        {isToastOpen && (
+          <Toast
+            onOpenChange={setIsToastOpen}
+            open={isToastOpen}
+            duration={2000}
+            className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
+          >
+            <div className="flex items-center">
+              {toastType === "success" ? (
+                <CheckCircle className="text-green-500 mr-2" />
+              ) : (
+                <XCircle className="text-red-500 mr-2" />
+              )}
+              <div>
+                <ToastTitle>
+                  {toastType === "success" ? "Success" : "Error"}
+                </ToastTitle>
+                <ToastDescription>{toastMessage}</ToastDescription>
+              </div>
+            </div>
+            <ToastClose />
+          </Toast>
+        )}
       </ToastProvider>
     </div>
   );

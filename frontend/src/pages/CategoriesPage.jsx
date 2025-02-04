@@ -5,9 +5,22 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Trash2, Edit, CheckCircle, XCircle, Plus } from 'lucide-react';
-import { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose } from "@/components/ui/toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Trash2, Edit, CheckCircle, XCircle, Plus } from "lucide-react";
+import {
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  ToastTitle,
+  ToastDescription,
+  ToastClose,
+} from "@/components/ui/toast";
 import DeleteConfirmation from "@/components/ui/deletionConfirmation";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -19,8 +32,8 @@ export default function CategoriesPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('');
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
   const [loading, setLoading] = useState(true);
 
   const fetchCategories = async () => {
@@ -28,7 +41,7 @@ export default function CategoriesPage() {
       setLoading(true);
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/admin/categories",
+        "https://trip-genie-apis.vercel.app/admin/categories",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -39,7 +52,7 @@ export default function CategoriesPage() {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching categories:", error);
-      showToast('Error fetching categories', 'error');
+      showToast("Error fetching categories", "error");
     }
   };
 
@@ -58,7 +71,7 @@ export default function CategoriesPage() {
       try {
         const token = Cookies.get("jwt");
         await axios.post(
-          "http://localhost:4000/admin/categories",
+          "https://trip-genie-apis.vercel.app/admin/categories",
           { name: newCategory },
           {
             headers: {
@@ -67,13 +80,13 @@ export default function CategoriesPage() {
           }
         );
         setNewCategory("");
-        showToast('Category created successfully!', 'success');
+        showToast("Category created successfully!", "success");
         fetchCategories();
       } catch (error) {
-        showToast('This category already exists', 'error');
+        showToast("This category already exists", "error");
       }
     } else {
-      showToast('Please enter a category name.', 'error');
+      showToast("Please enter a category name.", "error");
     }
   };
 
@@ -82,7 +95,7 @@ export default function CategoriesPage() {
       try {
         const token = Cookies.get("jwt");
         await axios.put(
-          `http://localhost:4000/admin/categories/${selectedCategoryId}`,
+          `https://trip-genie-apis.vercel.app/admin/categories/${selectedCategoryId}`,
           { name: updatedCategory },
           {
             headers: {
@@ -90,15 +103,15 @@ export default function CategoriesPage() {
             },
           }
         );
-        showToast('Category updated successfully!', 'success');
+        showToast("Category updated successfully!", "success");
         setSelectedCategoryId(null);
         setUpdatedCategory("");
         fetchCategories();
       } catch (error) {
-        showToast('Category name already exists', 'error');
+        showToast("Category name already exists", "error");
       }
     } else {
-      showToast('Please enter a new category name.', 'error');
+      showToast("Please enter a new category name.", "error");
     }
   };
 
@@ -106,18 +119,18 @@ export default function CategoriesPage() {
     try {
       const token = Cookies.get("jwt");
       await axios.delete(
-        `http://localhost:4000/admin/categories/${categoryId}`,
+        `https://trip-genie-apis.vercel.app/admin/categories/${categoryId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      showToast('Category deleted successfully!', 'success');
+      showToast("Category deleted successfully!", "success");
       fetchCategories();
     } catch (error) {
       console.error("Error deleting category:", error);
-      showToast('Error deleting category', 'error');
+      showToast("Error deleting category", "error");
     }
   };
 
@@ -135,7 +148,7 @@ export default function CategoriesPage() {
   };
 
   const handleCancel = () => {
-    setNewCategory('');
+    setNewCategory("");
   };
 
   return (
@@ -143,7 +156,9 @@ export default function CategoriesPage() {
       <ToastProvider>
         <div className="">
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 className="text-xl font-bold text-[#1A3B47]">Create New Category</h2>
+            <h2 className="text-xl font-bold text-[#1A3B47]">
+              Create New Category
+            </h2>
             <div className="flex space-x-4">
               <Input
                 type="text"
@@ -162,7 +177,9 @@ export default function CategoriesPage() {
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-bold text-[#1A3B47]">Existing Categories</h2>
+            <h2 className="text-xl font-bold text-[#1A3B47]">
+              Existing Categories
+            </h2>
             <div className="overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -263,10 +280,15 @@ export default function CategoriesPage() {
         />
 
         {selectedCategoryId && (
-          <Dialog open={!!selectedCategoryId} onOpenChange={() => setSelectedCategoryId(null)}>
+          <Dialog
+            open={!!selectedCategoryId}
+            onOpenChange={() => setSelectedCategoryId(null)}
+          >
             <DialogContent className="sm:max-w-[500px] p-6 bg-white shadow-lg rounded-lg">
               <DialogHeader>
-                <DialogTitle className="text-lg font-semibold text-[#1A3B47]">Edit Category</DialogTitle>
+                <DialogTitle className="text-lg font-semibold text-[#1A3B47]">
+                  Edit Category
+                </DialogTitle>
               </DialogHeader>
               <Input
                 type="text"
@@ -284,14 +306,13 @@ export default function CategoriesPage() {
                 <Button
                   onClick={() => {
                     setSelectedCategoryId(null);
-                    setUpdatedCategory('');
+                    setUpdatedCategory("");
                   }}
                   className="bg-[#A3A3A3] hover:bg-[#7E7E7E] text-white px-4 py-2 rounded"
                 >
                   Cancel
                 </Button>
               </DialogFooter>
-
             </DialogContent>
           </Dialog>
         )}
@@ -302,19 +323,19 @@ export default function CategoriesPage() {
             onOpenChange={setIsToastOpen}
             open={isToastOpen}
             duration={3000} // Set duration to 3 seconds
-            className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+            className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
           >
             <div className="flex items-center">
-              {toastType === 'success' ? (
+              {toastType === "success" ? (
                 <CheckCircle className="text-green-500 mr-2" />
               ) : (
                 <XCircle className="text-red-500 mr-2" />
               )}
               <div>
-                <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
-                <ToastDescription>
-                  {toastMessage}
-                </ToastDescription>
+                <ToastTitle>
+                  {toastType === "success" ? "Success" : "Error"}
+                </ToastTitle>
+                <ToastDescription>{toastMessage}</ToastDescription>
               </div>
             </div>
             <ToastClose />

@@ -1,35 +1,80 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect, useCallback } from "react"
-import axios from "axios"
-import Flag from 'react-world-flags'
-import Cookies from "js-cookie"
-import { format, isToday, isYesterday, isThisWeek, isThisMonth, isThisYear, parseISO } from 'date-fns'; import { Activity, ShoppingCart, Plane, Hotel, Calendar, Wallet, Award, Bell, ShoppingBasket, CheckCircle, XCircle, Bus, Map, User, Car } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Modal } from "@/components/Modal"
-import { ImageCropper } from "@/components/ImageCropper"
-import ShippingAddress from "@/pages/AddShippingAddress"
-import Popup from "@/components/popup"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import PhoneInput from "react-phone-input-2"
-import "react-phone-input-2/lib/style.css"
-import { parsePhoneNumberFromString } from "libphonenumber-js"
-import { Label } from "@/components/ui/label"
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import Flag from "react-world-flags";
+import Cookies from "js-cookie";
+import {
+  format,
+  isToday,
+  isYesterday,
+  isThisWeek,
+  isThisMonth,
+  isThisYear,
+  parseISO,
+} from "date-fns";
+import {
+  Activity,
+  ShoppingCart,
+  Plane,
+  Hotel,
+  Calendar,
+  Wallet,
+  Award,
+  Bell,
+  ShoppingBasket,
+  CheckCircle,
+  XCircle,
+  Bus,
+  Map,
+  User,
+  Car,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Modal } from "@/components/Modal";
+import { ImageCropper } from "@/components/ImageCropper";
+import ShippingAddress from "@/pages/AddShippingAddress";
+import Popup from "@/components/popup";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import PasswordChanger from "@/components/Passwords";
-import { Toast, ToastClose, ToastDescription, ToastTitle, ToastProvider, ToastViewport } from "@/components/ui/toast";
-import WalletHistory from './WalletHistory';
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastTitle,
+  ToastProvider,
+  ToastViewport,
+} from "@/components/ui/toast";
+import WalletHistory from "./WalletHistory";
 
 const convertUrlToBase64 = async (url) => {
   const response = await fetch(url);
@@ -42,13 +87,18 @@ const convertUrlToBase64 = async (url) => {
 };
 
 const getTransactionIcon = (details) => {
-  if (details.toLowerCase().includes('activity')) return <Activity className="w-6 h-6" />;
-  if (details.toLowerCase().includes('itinerary')) return <Map className="w-6 h-6" />;
-  if (details.toLowerCase().includes('bus')) return <Bus className="w-6 h-6" />;
-  if (details.toLowerCase().includes('car')) return <Car className="w-6 h-6" />;
-  if (details.toLowerCase().includes('order')) return <ShoppingBasket className="w-6 h-6" />;
-  if (details.toLowerCase().includes('flight')) return <Plane className="w-6 h-6" />;
-  if (details.toLowerCase().includes('hotel')) return <Hotel className="w-6 h-6" />;
+  if (details.toLowerCase().includes("activity"))
+    return <Activity className="w-6 h-6" />;
+  if (details.toLowerCase().includes("itinerary"))
+    return <Map className="w-6 h-6" />;
+  if (details.toLowerCase().includes("bus")) return <Bus className="w-6 h-6" />;
+  if (details.toLowerCase().includes("car")) return <Car className="w-6 h-6" />;
+  if (details.toLowerCase().includes("order"))
+    return <ShoppingBasket className="w-6 h-6" />;
+  if (details.toLowerCase().includes("flight"))
+    return <Plane className="w-6 h-6" />;
+  if (details.toLowerCase().includes("hotel"))
+    return <Hotel className="w-6 h-6" />;
 
   return <Wallet className="w-6 h-6" />;
 };
@@ -57,14 +107,17 @@ const groupTransactionsByDate = (transactions) => {
   const grouped = {
     Today: { transactions: [], total: 0, sign: "" },
     Yesterday: { transactions: [], total: 0, sign: "" },
-    'This Week': { transactions: [], total: 0, sign: "" },
-    'This Month': { transactions: [], total: 0, sign: "" },
-    Earlier: {}
+    "This Week": { transactions: [], total: 0, sign: "" },
+    "This Month": { transactions: [], total: 0, sign: "" },
+    Earlier: {},
   };
 
-  transactions.forEach(transaction => {
+  transactions.forEach((transaction) => {
     const date = parseISO(transaction.timestamp);
-    const amount = transaction.transactionType === "deposit" ? transaction.amount : -transaction.amount;
+    const amount =
+      transaction.transactionType === "deposit"
+        ? transaction.amount
+        : -transaction.amount;
     const absAmount = Math.abs(amount); // Use the absolute value for total
     const sign = amount >= 0 ? "positive" : "negative"; // Set the sign based on the transaction type
 
@@ -77,15 +130,15 @@ const groupTransactionsByDate = (transactions) => {
       grouped.Yesterday.total += absAmount;
       grouped.Yesterday.sign = sign; // Set the sign for Yesterday
     } else if (isThisWeek(date)) {
-      grouped['This Week'].transactions.push(transaction);
-      grouped['This Week'].total += absAmount;
-      grouped['This Week'].sign = sign; // Set the sign for This Week
+      grouped["This Week"].transactions.push(transaction);
+      grouped["This Week"].total += absAmount;
+      grouped["This Week"].sign = sign; // Set the sign for This Week
     } else if (isThisMonth(date)) {
-      grouped['This Month'].transactions.push(transaction);
-      grouped['This Month'].total += absAmount;
-      grouped['This Month'].sign = sign; // Set the sign for This Month
+      grouped["This Month"].transactions.push(transaction);
+      grouped["This Month"].total += absAmount;
+      grouped["This Month"].sign = sign; // Set the sign for This Month
     } else {
-      const monthYear = format(date, 'MMMM yyyy');
+      const monthYear = format(date, "MMMM yyyy");
       if (!grouped.Earlier[monthYear]) {
         grouped.Earlier[monthYear] = { transactions: [], total: 0, sign: "" };
       }
@@ -96,12 +149,16 @@ const groupTransactionsByDate = (transactions) => {
   });
 
   // Sort transactions within each group
-  Object.keys(grouped).forEach(key => {
+  Object.keys(grouped).forEach((key) => {
     if (Array.isArray(grouped[key].transactions)) {
-      grouped[key].transactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    } else if (typeof grouped[key] === 'object') {
-      Object.keys(grouped[key]).forEach(subKey => {
-        grouped[key][subKey].transactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      grouped[key].transactions.sort(
+        (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+      );
+    } else if (typeof grouped[key] === "object") {
+      Object.keys(grouped[key]).forEach((subKey) => {
+        grouped[key][subKey].transactions.sort(
+          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+        );
       });
     }
   });
@@ -109,20 +166,18 @@ const groupTransactionsByDate = (transactions) => {
   return grouped;
 };
 
-
-
-
 const phoneValidator = (value) => {
   const phoneNumber = parsePhoneNumberFromString("+" + value);
   return phoneNumber ? phoneNumber.isValid() : false;
 };
 
-
 const SkeletonLoader = () => {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-2">Account</h1>
-      <p className="text-sm text-gray-500 mb-2">Settings and Privacy  / Account</p>
+      <p className="text-sm text-gray-500 mb-2">
+        Settings and Privacy / Account
+      </p>
       <div className="container mx-auto px-4 py-8 ">
         <div className="animate-pulse">
           <div className="grid grid-cols-12 gap-6">
@@ -181,7 +236,6 @@ const SkeletonLoader = () => {
                         <div className="w-14 h-3 bg-gray-200 rounded-md animate-pulse"></div>
                         <div className="w-20 h-5 bg-gray-200 rounded-md animate-pulse mt-1"></div>
                       </div>
-
                     </div>
 
                     <Separator />
@@ -226,8 +280,10 @@ const SkeletonLoader = () => {
             <div className="col-span-5 bg-white border rounded-lg shadow-sm p-6">
               {/* Title Skeleton */}
               <div className="mb-4 flex items-center justify-between animate-pulse">
-                <div className="w-32 h-4 bg-gray-200 rounded-md"></div> {/* Skeleton for Title */}
-                <div className="w-24 h-6 bg-gray-200 rounded-md"></div> {/* Skeleton for Button */}
+                <div className="w-32 h-4 bg-gray-200 rounded-md"></div>{" "}
+                {/* Skeleton for Title */}
+                <div className="w-24 h-6 bg-gray-200 rounded-md"></div>{" "}
+                {/* Skeleton for Button */}
               </div>
 
               {/* Scrollable Card Skeleton */}
@@ -238,20 +294,28 @@ const SkeletonLoader = () => {
                     className="bg-white rounded-lg mb-3 p-4 shadow-sm animate-pulse"
                   >
                     <div className="flex items-center mb-2">
-                      <div className="w-6 h-6 bg-gray-200 rounded-full"></div> {/* Location icon skeleton */}
-                      <div className="w-24 h-4 bg-gray-200 rounded-md ml-2"></div> {/* Location type skeleton */}
+                      <div className="w-6 h-6 bg-gray-200 rounded-full"></div>{" "}
+                      {/* Location icon skeleton */}
+                      <div className="w-24 h-4 bg-gray-200 rounded-md ml-2"></div>{" "}
+                      {/* Location type skeleton */}
                     </div>
                     <div className="space-y-1">
-                      <div className="w-32 h-4 bg-gray-200 rounded-md"></div> {/* Street skeleton */}
-                      <div className="w-24 h-4 bg-gray-200 rounded-md"></div> {/* City, state, postal code skeleton */}
-                      <div className="w-40 h-3 bg-gray-200 rounded-md"></div> {/* Landmark skeleton */}
+                      <div className="w-32 h-4 bg-gray-200 rounded-md"></div>{" "}
+                      {/* Street skeleton */}
+                      <div className="w-24 h-4 bg-gray-200 rounded-md"></div>{" "}
+                      {/* City, state, postal code skeleton */}
+                      <div className="w-40 h-3 bg-gray-200 rounded-md"></div>{" "}
+                      {/* Landmark skeleton */}
                     </div>
                     <div className="flex items-center justify-between pt-3 mt-3 border-t border-gray-100">
                       <div className="flex space-x-3">
-                        <div className="w-16 h-4 bg-gray-200 rounded-md"></div> {/* Edit button skeleton */}
-                        <div className="w-16 h-4 bg-gray-200 rounded-md"></div> {/* Delete button skeleton */}
+                        <div className="w-16 h-4 bg-gray-200 rounded-md"></div>{" "}
+                        {/* Edit button skeleton */}
+                        <div className="w-16 h-4 bg-gray-200 rounded-md"></div>{" "}
+                        {/* Delete button skeleton */}
                       </div>
-                      <div className="w-32 h-4 bg-gray-200 rounded-md"></div> {/* Set as Default button skeleton */}
+                      <div className="w-32 h-4 bg-gray-200 rounded-md"></div>{" "}
+                      {/* Set as Default button skeleton */}
                     </div>
                   </div>
                 ))}
@@ -259,7 +323,6 @@ const SkeletonLoader = () => {
             </div>
 
             <div className="col-span-8">
-
               <Card>
                 <CardContent className="pt-6">
                   {/* Current Balance Skeleton */}
@@ -286,15 +349,15 @@ const SkeletonLoader = () => {
                   </div>
                 </CardContent>
               </Card>
-
-
             </div>
 
             <Card className="col-span-4">
               <CardHeader className="flex">
                 <div className="w-full flex justify-between items-center animate-pulse">
-                  <div className="w-32 h-4 bg-gray-200 rounded-md"></div> {/* Skeleton for Title */}
-                  <div className="w-20 h-6 bg-gray-200 rounded-md"></div> {/* Skeleton for Button */}
+                  <div className="w-32 h-4 bg-gray-200 rounded-md"></div>{" "}
+                  {/* Skeleton for Title */}
+                  <div className="w-20 h-6 bg-gray-200 rounded-md"></div>{" "}
+                  {/* Skeleton for Button */}
                 </div>
               </CardHeader>
 
@@ -302,20 +365,24 @@ const SkeletonLoader = () => {
                 <div className="flex flex-col max-h-[180px] overflow-y-auto">
                   <div className="space-y-4 p-4">
                     {[...Array(5)].map((_, index) => (
-                      <div key={index} className="flex items-center gap-4 animate-pulse">
-                        <div className="w-8 h-8 bg-gray-200 rounded-full"></div> {/* Placeholder for profile image */}
+                      <div
+                        key={index}
+                        className="flex items-center gap-4 animate-pulse"
+                      >
+                        <div className="w-8 h-8 bg-gray-200 rounded-full"></div>{" "}
+                        {/* Placeholder for profile image */}
                         <div className="flex flex-col gap-2">
-                          <div className="w-40 h-4 bg-gray-200 rounded-md"></div> {/* Placeholder for notification body */}
-                          <div className="w-24 h-3 bg-gray-200 rounded-md"></div> {/* Placeholder for notification timestamp */}
+                          <div className="w-40 h-4 bg-gray-200 rounded-md"></div>{" "}
+                          {/* Placeholder for notification body */}
+                          <div className="w-24 h-3 bg-gray-200 rounded-md"></div>{" "}
+                          {/* Placeholder for notification timestamp */}
                         </div>
                       </div>
                     ))}
                   </div>
-
                 </div>
               </CardContent>
             </Card>
-
           </div>
         </div>
       </div>
@@ -349,10 +416,10 @@ export function TouristProfileComponent() {
   const [activeTab, setActiveTab] = useState("wallet");
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('success');
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
 
-  const showToast = (message, type = 'success') => {
+  const showToast = (message, type = "success") => {
     setToastMessage(message);
     setToastType(type);
     setIsToastOpen(true);
@@ -366,33 +433,44 @@ export function TouristProfileComponent() {
 
   const getUserRole = () => Cookies.get("role") || "guest";
 
-  const convertCurrency = useCallback((amount, fromCurrency, toCurrency) => {
-    if (typeof fromCurrency === "string" && typeof toCurrency === "string") {
-      return (amount / rates[fromCurrency]) * rates[toCurrency];
-    }
-    else if (typeof fromCurrency !== "string" && typeof toCurrency === "string") {
-      return (amount / rates[fromCurrency.code]) * rates[toCurrency];
-    }
-    else if (typeof fromCurrency !== "string" && typeof toCurrency !== "string") {
-      return (amount / rates[fromCurrency?.code]) * rates[toCurrency?.code];
-    }
-    else if (typeof fromCurrency === "string" && typeof toCurrency !== "string") {
+  const convertCurrency = useCallback(
+    (amount, fromCurrency, toCurrency) => {
+      if (typeof fromCurrency === "string" && typeof toCurrency === "string") {
+        return (amount / rates[fromCurrency]) * rates[toCurrency];
+      } else if (
+        typeof fromCurrency !== "string" &&
+        typeof toCurrency === "string"
+      ) {
+        return (amount / rates[fromCurrency.code]) * rates[toCurrency];
+      } else if (
+        typeof fromCurrency !== "string" &&
+        typeof toCurrency !== "string"
+      ) {
+        return (amount / rates[fromCurrency?.code]) * rates[toCurrency?.code];
+      } else if (
+        typeof fromCurrency === "string" &&
+        typeof toCurrency !== "string"
+      ) {
+        return (amount / rates[fromCurrency]) * rates[toCurrency?.code];
+      } else if (!rates[fromCurrency] || !rates[toCurrency.code]) return amount;
       return (amount / rates[fromCurrency]) * rates[toCurrency?.code];
-    }
-    else if (!rates[fromCurrency] || !rates[toCurrency.code]) return amount;
-    return (amount / rates[fromCurrency]) * rates[toCurrency?.code];
-  }, [rates]);
+    },
+    [rates]
+  );
 
-  const formatCurrency = useCallback((amount, currency) => {
-    const currencyInfo = currencies.find((c) => c.code === currencyCode);
-    return `${currencyInfo ? currencyInfo.symbol : ""}${amount.toFixed(2)}`;
-  }, [currencies]);
+  const formatCurrency = useCallback(
+    (amount, currency) => {
+      const currencyInfo = currencies.find((c) => c.code === currencyCode);
+      return `${currencyInfo ? currencyInfo.symbol : ""}${amount.toFixed(2)}`;
+    },
+    [currencies]
+  );
 
   const fetchTouristProfile = async () => {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const api = `http://localhost:4000/${role}`;
+      const api = `https://trip-genie-apis.vercel.app/${role}`;
       const response = await axios.get(api, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -421,7 +499,7 @@ export function TouristProfileComponent() {
     const fetchNationalities = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/nationalities"
+          "https://trip-genie-apis.vercel.app/api/nationalities"
         );
         setNationalities(response.data);
       } catch (error) {
@@ -437,10 +515,10 @@ export function TouristProfileComponent() {
         try {
           const token = Cookies.get("jwt");
           const [ratesResponse, currenciesResponse] = await Promise.all([
-            axios.get("http://localhost:4000/rates", {
+            axios.get("https://trip-genie-apis.vercel.app/rates", {
               headers: { Authorization: `Bearer ${token}` },
             }),
-            axios.get("http://localhost:4000/tourist/currencies", {
+            axios.get("https://trip-genie-apis.vercel.app/tourist/currencies", {
               headers: { Authorization: `Bearer ${token}` },
             }),
           ]);
@@ -467,17 +545,20 @@ export function TouristProfileComponent() {
     if (tourist) {
       try {
         const token = Cookies.get("jwt");
-        const response = await fetch(`http://localhost:4000/tourist/populate`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            base: "67140446ee157ee4f239d523",
-            target: tourist.preferredCurrency,
-          }),
-        });
+        const response = await fetch(
+          `https://trip-genie-apis.vercel.app/tourist/populate`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              base: "67140446ee157ee4f239d523",
+              target: tourist.preferredCurrency,
+            }),
+          }
+        );
         const data = await response.json();
         if (response.ok) {
           setExchangeRate(data.conversion_rate);
@@ -494,7 +575,7 @@ export function TouristProfileComponent() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/tourist/getCurrency/${tourist.preferredCurrency}`,
+        `https://trip-genie-apis.vercel.app/tourist/getCurrency/${tourist.preferredCurrency}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -505,7 +586,6 @@ export function TouristProfileComponent() {
       console.error("Error fetching currency symbol:", error);
     }
   }, [tourist]);
-
 
   const formatWallet = (price) => {
     fetchExchangeRate();
@@ -550,15 +630,15 @@ export function TouristProfileComponent() {
 
   const handleDiscard = () => {
     setEditedTourist(tourist);
-    setSelectedImage(tourist.profilePicture)
+    setSelectedImage(tourist.profilePicture);
     setDropdownOpen(false);
     setIsEditing(false);
     setValidationMessages({});
-
   };
 
   const validateFields = () => {
-    const { email, mobile, nationality, jobOrStudent, fname, lname, username } = editedTourist;
+    const { email, mobile, nationality, jobOrStudent, fname, lname, username } =
+      editedTourist;
     const messages = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -595,7 +675,7 @@ export function TouristProfileComponent() {
 
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const api = `http://localhost:4000/${role}`;
+      const api = `https://trip-genie-apis.vercel.app/${role}`;
       finalTourist.profilePicture = selectedImage;
       setDropdownOpen(false);
       console.log(finalTourist);
@@ -627,7 +707,7 @@ export function TouristProfileComponent() {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const api = `http://localhost:4000/${role}/redeem-points`;
+      const api = `https://trip-genie-apis.vercel.app/${role}/redeem-points`;
       const response = await axios.post(
         api,
         {},
@@ -647,7 +727,7 @@ export function TouristProfileComponent() {
       console.error("Error redeeming points:", error);
       throw new Error(
         error.response?.data?.error ||
-        "Failed to redeem points. Please try again."
+          "Failed to redeem points. Please try again."
       );
     }
   };
@@ -668,14 +748,17 @@ export function TouristProfileComponent() {
               console.error("No JWT token found");
               return;
             }
-            const response = await axios.get("http://localhost:4000/tourist/", {
-              headers: { Authorization: `Bearer ${token}` },
-            });
+            const response = await axios.get(
+              "https://trip-genie-apis.vercel.app/tourist/",
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
             const currencyId = response.data.preferredCurrency;
 
             if (currencyId) {
               const response2 = await axios.get(
-                `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+                `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
                 {
                   headers: { Authorization: `Bearer ${token}` },
                 }
@@ -727,11 +810,15 @@ export function TouristProfileComponent() {
       <Card className="w-full h-[240px] shadow-none border border-white">
         <CardHeader>
           <CardTitle>Redeem Loyalty Points</CardTitle>
-          <CardDescription>Convert your loyalty points into wallet balance.</CardDescription>
+          <CardDescription>
+            Convert your loyalty points into wallet balance.
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">Available Wallet Balance:</span>
+            <span className="text-sm font-medium">
+              Available Wallet Balance:
+            </span>
             <span className="text-lg font-bold text-[#388A94]">
               {formatCurrency(convertedWalletAmount, preferredCurrency)}
             </span>
@@ -739,7 +826,7 @@ export function TouristProfileComponent() {
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium">Loyalty Points:</span>
             <span className="text-lg font-bold text-[#1A3B47]">
-              {(user.loyaltyPoints).toFixed(2)} points
+              {user.loyaltyPoints.toFixed(2)} points
             </span>
           </div>
           <Button
@@ -750,15 +837,13 @@ export function TouristProfileComponent() {
             {isRedeeming
               ? "Redeeming..."
               : `Redeem Points for ${formatCurrency(
-                pointsValueInPreferredCurrency,
-                preferredCurrency
-              )}`}
+                  pointsValueInPreferredCurrency,
+                  preferredCurrency
+                )}`}
           </Button>
         </CardContent>
         <CardFooter>
-          {redeemError && (
-            <p className="text-red-500 text-sm">{redeemError}</p>
-          )}
+          {redeemError && <p className="text-red-500 text-sm">{redeemError}</p>}
           {redeemSuccess && (
             <p className="text-green-500 text-sm">{redeemSuccess}</p>
           )}
@@ -776,7 +861,7 @@ export function TouristProfileComponent() {
       try {
         const token = Cookies.get("jwt");
         const codeResponse = await axios.get(
-          "http://localhost:4000/tourist/currencies/idd",
+          "https://trip-genie-apis.vercel.app/tourist/currencies/idd",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -785,7 +870,7 @@ export function TouristProfileComponent() {
         const preferredCurrencyCode = codeResponse.data;
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${preferredCurrencyCode}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${preferredCurrencyCode}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -801,7 +886,7 @@ export function TouristProfileComponent() {
         try {
           const token = Cookies.get("jwt");
           const response = await axios.get(
-            "http://localhost:4000/tourist/currencies",
+            "https://trip-genie-apis.vercel.app/tourist/currencies",
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -820,7 +905,7 @@ export function TouristProfileComponent() {
       try {
         const token = Cookies.get("jwt");
         await axios.post(
-          "http://localhost:4000/tourist/currencies/set",
+          "https://trip-genie-apis.vercel.app/tourist/currencies/set",
           { currencyId: selectedCurrency },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -866,7 +951,9 @@ export function TouristProfileComponent() {
         <CardContent>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="currency-select">Select New Preferred Currency</Label>
+              <Label htmlFor="currency-select">
+                Select New Preferred Currency
+              </Label>
               <Select
                 value={selectedCurrency}
                 onValueChange={(value) => setSelectedCurrency(value)}
@@ -897,13 +984,15 @@ export function TouristProfileComponent() {
   };
 
   const getDefaultAddress = () => {
-    const defaultAddress = tourist.shippingAddresses.find(addr => addr.default);
+    const defaultAddress = tourist.shippingAddresses.find(
+      (addr) => addr.default
+    );
     return defaultAddress
       ? {
-        streetName: defaultAddress.streetName,
-        city: defaultAddress.city,
-        postalCode: defaultAddress.postalCode,
-      }
+          streetName: defaultAddress.streetName,
+          city: defaultAddress.city,
+          postalCode: defaultAddress.postalCode,
+        }
       : null;
   };
 
@@ -927,8 +1016,8 @@ export function TouristProfileComponent() {
         style={{
           width: 25,
           height: 17,
-          borderRadius: '4px',
-          overflow: 'hidden',
+          borderRadius: "4px",
+          overflow: "hidden",
         }}
       />
     );
@@ -943,13 +1032,10 @@ export function TouristProfileComponent() {
     fetchNotifications();
   }, []);
 
-
-
-
   const checkUnseenNotifications = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/tourist/unseen-notifications`,
+        `https://trip-genie-apis.vercel.app/tourist/unseen-notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -964,7 +1050,7 @@ export function TouristProfileComponent() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:4000/tourist/notifications`,
+        `https://trip-genie-apis.vercel.app/tourist/notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -985,7 +1071,7 @@ export function TouristProfileComponent() {
   const markNotificationAsSeen = async (notificationID) => {
     try {
       await axios.post(
-        `http://localhost:4000/tourist/notifications/markAsSeen/${notificationID}`,
+        `https://trip-genie-apis.vercel.app/tourist/notifications/markAsSeen/${notificationID}`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
@@ -1026,13 +1112,13 @@ export function TouristProfileComponent() {
     );
   }
 
-
-
   return (
     <ToastProvider>
       <div>
         <h1 className="text-3xl font-bold mb-2">Account</h1>
-        <p className="text-sm text-gray-500 mb-2">Settings and Privacy  / Account</p>
+        <p className="text-sm text-gray-500 mb-2">
+          Settings and Privacy / Account
+        </p>
 
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-12 gap-6">
@@ -1111,15 +1197,23 @@ export function TouristProfileComponent() {
                               name="username"
                               value={editedTourist.username}
                               onChange={handleInputChange}
-                              className={validationMessages.username ? "border-red-500" : ""}
+                              className={
+                                validationMessages.username
+                                  ? "border-red-500"
+                                  : ""
+                              }
                             />
                             {validationMessages.username && (
-                              <p className="text-red-500 text-xs mt-1">{validationMessages.username}</p>
+                              <p className="text-red-500 text-xs mt-1">
+                                {validationMessages.username}
+                              </p>
                             )}
                           </div>
                         ) : (
                           <>
-                            <h2 className="text-xl font-bold">{tourist.username}</h2>
+                            <h2 className="text-xl font-bold">
+                              {tourist.username}
+                            </h2>
                             <div
                               className={`w-7 h-7 flex items-center justify-center rounded-full ${getBadgeColor()}`}
                             >
@@ -1135,14 +1229,20 @@ export function TouristProfileComponent() {
                             name="email"
                             value={editedTourist.email}
                             onChange={handleInputChange}
-                            className={validationMessages.email ? "border-red-500" : ""}
+                            className={
+                              validationMessages.email ? "border-red-500" : ""
+                            }
                           />
                           {validationMessages.email && (
-                            <p className="text-red-500 text-xs mt-1">{validationMessages.email}</p>
+                            <p className="text-red-500 text-xs mt-1">
+                              {validationMessages.email}
+                            </p>
                           )}
                         </div>
                       ) : (
-                        <p className="text-sm text-gray-500 mt-1">{tourist.email}</p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {tourist.email}
+                        </p>
                       )}
                     </div>
                     <Separator />
@@ -1172,7 +1272,6 @@ export function TouristProfileComponent() {
                           Edit Profile
                         </Button>
 
-
                         <Button
                           onClick={() => setIsPasswordModalOpen(true)}
                           className="p-2 w-full mt-2 bg-[#1A3B47]"
@@ -1199,10 +1298,14 @@ export function TouristProfileComponent() {
                               name="fname"
                               value={editedTourist.fname}
                               onChange={handleInputChange}
-                              className={validationMessages.fname ? "border-red-500" : ""}
+                              className={
+                                validationMessages.fname ? "border-red-500" : ""
+                              }
                             />
                             {validationMessages.fname && (
-                              <p className="text-red-500 text-xs mt-1">{validationMessages.fname}</p>
+                              <p className="text-red-500 text-xs mt-1">
+                                {validationMessages.fname}
+                              </p>
                             )}
                           </div>
                         ) : (
@@ -1218,17 +1321,20 @@ export function TouristProfileComponent() {
                               name="lname"
                               value={editedTourist.lname}
                               onChange={handleInputChange}
-                              className={validationMessages.lname ? "border-red-500" : ""}
+                              className={
+                                validationMessages.lname ? "border-red-500" : ""
+                              }
                             />
                             {validationMessages.lname && (
-                              <p className="text-red-500 text-xs mt-1">{validationMessages.lname}</p>
+                              <p className="text-red-500 text-xs mt-1">
+                                {validationMessages.lname}
+                              </p>
                             )}
                           </div>
                         ) : (
                           <p className="text-sm font-medium">{tourist.lname}</p>
                         )}
                       </div>
-
                     </div>
                     <Separator />
 
@@ -1242,7 +1348,9 @@ export function TouristProfileComponent() {
                       </div>
                       <div>
                         <p className="text-xs text-gray-500">City</p>
-                        <p className="text-sm font-medium">{getDefaultAddress()?.city || "N/A"}</p>
+                        <p className="text-sm font-medium">
+                          {getDefaultAddress()?.city || "N/A"}
+                        </p>
                       </div>
                       <div>
                         <p className="text-xs text-gray-500">ZIP Code</p>
@@ -1262,9 +1370,15 @@ export function TouristProfileComponent() {
                         {isEditing ? (
                           <Select onValueChange={handleNationalityChange}>
                             <SelectTrigger
-                              className={validationMessages.nationality ? "border-red-500" : ""}
+                              className={
+                                validationMessages.nationality
+                                  ? "border-red-500"
+                                  : ""
+                              }
                             >
-                              <SelectValue placeholder={tourist.nationality.name} />
+                              <SelectValue
+                                placeholder={tourist.nationality.name}
+                              />
                             </SelectTrigger>
                             <SelectContent>
                               {nationalities.map((nat) => (
@@ -1286,7 +1400,9 @@ export function TouristProfileComponent() {
                             </SelectContent>
                           </Select>
                         ) : (
-                          <p className="text-sm font-medium">{tourist.nationality.name}</p>
+                          <p className="text-sm font-medium">
+                            {tourist.nationality.name}
+                          </p>
                         )}
                       </div>
 
@@ -1300,10 +1416,16 @@ export function TouristProfileComponent() {
                               name="jobOrStudent"
                               value={editedTourist.jobOrStudent}
                               onChange={handleInputChange}
-                              className={validationMessages.jobOrStudent ? "border-red-500" : ""}
+                              className={
+                                validationMessages.jobOrStudent
+                                  ? "border-red-500"
+                                  : ""
+                              }
                             />
                             {validationMessages.jobOrStudent && (
-                              <p className="text-red-500 text-xs mt-1">{validationMessages.jobOrStudent}</p>
+                              <p className="text-red-500 text-xs mt-1">
+                                {validationMessages.jobOrStudent}
+                              </p>
                             )}
                           </div>
                         ) : (
@@ -1328,28 +1450,36 @@ export function TouristProfileComponent() {
                               country="eg"
                               value={editedTourist.mobile}
                               onChange={(value) =>
-                                handleInputChange({ target: { name: 'mobile', value } })
+                                handleInputChange({
+                                  target: { name: "mobile", value },
+                                })
                               }
                               inputProps={{
-                                name: 'mobile',
+                                name: "mobile",
                                 required: true,
-                                className: `w-full pt-2 pb-2 pl-11 ${validationMessages.mobile ? 'border-red-500' : 'border-gray-300'}`,
+                                className: `w-full pt-2 pb-2 pl-11 ${
+                                  validationMessages.mobile
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                }`,
                               }}
                               containerClass="w-full"
-                              disableDropdown={false}  // Ensures the dropdown is visible
+                              disableDropdown={false} // Ensures the dropdown is visible
                               // Use a custom flag component for the country code dropdown
                               customFlagComponent={CustomFlag}
                             />
                             {validationMessages.mobile && (
-                              <span className="text-red-500 text-xs">{validationMessages.mobile}</span>
+                              <span className="text-red-500 text-xs">
+                                {validationMessages.mobile}
+                              </span>
                             )}
                           </div>
-
                         ) : (
-                          <p className="text-sm font-medium">+{tourist.mobile}</p>
+                          <p className="text-sm font-medium">
+                            +{tourist.mobile}
+                          </p>
                         )}
                       </div>
-
 
                       {/* Register Date */}
                       <div>
@@ -1360,68 +1490,74 @@ export function TouristProfileComponent() {
                       </div>
                     </div>
 
-
                     {/* Edit Button below email */}
-
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-
-
-
             {/* Shipping Addresses - 4 columns */}
             <div className="col-span-5 ">
-              <ShippingAddress addresses={tourist.shippingAddresses} fetch={fetchTouristProfile} showToast={showToast} />
+              <ShippingAddress
+                addresses={tourist.shippingAddresses}
+                fetch={fetchTouristProfile}
+                showToast={showToast}
+              />
             </div>
 
             {/* Tabs Section - spans 8 columns */}
             <div className="col-span-8">
               <Card>
                 <CardContent>
-                  <Tabs defaultValue="wallet" onValueChange={setActiveTab} className="w-full bg-white">
+                  <Tabs
+                    defaultValue="wallet"
+                    onValueChange={setActiveTab}
+                    className="w-full bg-white"
+                  >
                     <TabsList className="grid w-full grid-cols-3 bg-white pt-3">
                       <TabsTrigger
                         value="wallet"
-                        className={`relative flex items-center justify-center px-3 py-1 font-medium rounded-none border-b ${activeTab === 'wallet'
-                          ? 'border-[#1A3B47] text-[#1A3B47] border-b-2 shadow-none'
-                          : 'text-gray-500 bg-white'
-                          }`}
+                        className={`relative flex items-center justify-center px-3 py-1 font-medium rounded-none border-b ${
+                          activeTab === "wallet"
+                            ? "border-[#1A3B47] text-[#1A3B47] border-b-2 shadow-none"
+                            : "text-gray-500 bg-white"
+                        }`}
                       >
                         View Wallet Balance
-
                       </TabsTrigger>
                       <TabsTrigger
                         value="currency"
-                        className={`relative flex items-center justify-center px-3 py-1 font-medium rounded-none border-b ${activeTab === 'currency'
-                          ? 'border-[#1A3B47] text-[#1A3B47] border-b-2 shadow-none'
-                          : 'border-gray-300 text-gray-500 bg-white'
-                          }`}
+                        className={`relative flex items-center justify-center px-3 py-1 font-medium rounded-none border-b ${
+                          activeTab === "currency"
+                            ? "border-[#1A3B47] text-[#1A3B47] border-b-2 shadow-none"
+                            : "border-gray-300 text-gray-500 bg-white"
+                        }`}
                       >
                         Change Currency
-
                       </TabsTrigger>
                       <TabsTrigger
                         value="points"
-                        className={`relative flex items-center justify-center px-3 py-1 font-medium rounded-none border-b ${activeTab === 'points'
-                          ? 'border-[#1A3B47] text-[#1A3B47] border-b-2 shadow-none'
-                          : 'border-gray-300 text-gray-500 bg-white'
-                          }`}
+                        className={`relative flex items-center justify-center px-3 py-1 font-medium rounded-none border-b ${
+                          activeTab === "points"
+                            ? "border-[#1A3B47] text-[#1A3B47] border-b-2 shadow-none"
+                            : "border-gray-300 text-gray-500 bg-white"
+                        }`}
                       >
                         Redeem Points
-
-                      </TabsTrigger> </TabsList>
+                      </TabsTrigger>{" "}
+                    </TabsList>
 
                     <TabsContent value="wallet">
-
                       <Card className="shadow-none border border-white h-[240px]">
                         <CardContent className="pt-6">
                           <div className="flex items-center justify-between mb-6">
                             <div className="flex flex-col">
-                              <span className="font-bold text-2xl">Available Balance</span>
+                              <span className="font-bold text-2xl">
+                                Available Balance
+                              </span>
                               <span className="text-xs text-gray-500">
-                                Your wallet balance is updated in real-time based on your latest transactions.
+                                Your wallet balance is updated in real-time
+                                based on your latest transactions.
                               </span>
                             </div>
                             <span className="text-2xl text-[#388A94] font-bold self-start">
@@ -1430,18 +1566,31 @@ export function TouristProfileComponent() {
                           </div>
                           <div className="border-t border-gray-200 pt-4">
                             <div className="text-sm text-gray-500">
-                              - Use your wallet balance to book trips or purchase exclusive items.<br />
-                              - Wallet funds are non-transferable and expire after 12 months of inactivity.<br />
-                              - Access your <a href="/account/wallet-history" className=" font-semibold underline text-gray-600 hover:text-gray-800">Wallet History</a> to review all past transactions.<br />
-                              - For more details, visit the <a href="/account/help" className="font-semibold underline text-gray-600 hover:text-gray-800">Help Center</a>.
+                              - Use your wallet balance to book trips or
+                              purchase exclusive items.
+                              <br />
+                              - Wallet funds are non-transferable and expire
+                              after 12 months of inactivity.
+                              <br />- Access your{" "}
+                              <a
+                                href="/account/wallet-history"
+                                className=" font-semibold underline text-gray-600 hover:text-gray-800"
+                              >
+                                Wallet History
+                              </a>{" "}
+                              to review all past transactions.
+                              <br />- For more details, visit the{" "}
+                              <a
+                                href="/account/help"
+                                className="font-semibold underline text-gray-600 hover:text-gray-800"
+                              >
+                                Help Center
+                              </a>
+                              .
                             </div>
                           </div>
-
                         </CardContent>
                       </Card>
-
-
-
                     </TabsContent>
 
                     <TabsContent value="currency">
@@ -1449,7 +1598,10 @@ export function TouristProfileComponent() {
                     </TabsContent>
 
                     <TabsContent value="points">
-                      <RedeemPoints user={tourist} onRedeemPoints={handleRedeemPoints} />
+                      <RedeemPoints
+                        user={tourist}
+                        onRedeemPoints={handleRedeemPoints}
+                      />
                     </TabsContent>
                   </Tabs>
                 </CardContent>
@@ -1465,7 +1617,9 @@ export function TouristProfileComponent() {
                     <Button
                       variant="ghost"
                       className="text-sm text-[#388A94] p-2"
-                      onClick={() => (window.location.href = "/account/notifications")}
+                      onClick={() =>
+                        (window.location.href = "/account/notifications")
+                      }
                     >
                       View All
                     </Button>
@@ -1479,11 +1633,17 @@ export function TouristProfileComponent() {
                     // Skeleton Loader for Notifications
                     <div className="space-y-4 p-4">
                       {[...Array(5)].map((_, index) => (
-                        <div key={index} className="flex items-center gap-4 animate-pulse">
-                          <div className="w-8 h-8 bg-gray-200 rounded-full"></div> {/* Placeholder for profile image */}
+                        <div
+                          key={index}
+                          className="flex items-center gap-4 animate-pulse"
+                        >
+                          <div className="w-8 h-8 bg-gray-200 rounded-full"></div>{" "}
+                          {/* Placeholder for profile image */}
                           <div className="flex flex-col gap-2">
-                            <div className="w-40 h-4 bg-gray-200 rounded-md"></div> {/* Placeholder for notification body */}
-                            <div className="w-24 h-3 bg-gray-200 rounded-md"></div> {/* Placeholder for notification timestamp */}
+                            <div className="w-40 h-4 bg-gray-200 rounded-md"></div>{" "}
+                            {/* Placeholder for notification body */}
+                            <div className="w-24 h-3 bg-gray-200 rounded-md"></div>{" "}
+                            {/* Placeholder for notification timestamp */}
                           </div>
                         </div>
                       ))}
@@ -1498,7 +1658,10 @@ export function TouristProfileComponent() {
                         <li
                           key={index}
                           className="p-2 hover:bg-gray-50 transition-colors relative cursor-pointer flex flex-col gap-1"
-                          onClick={() => { markNotificationAsSeen(notification._id), navigate("/account/notifications") }}
+                          onClick={() => {
+                            markNotificationAsSeen(notification._id),
+                              navigate("/account/notifications");
+                          }}
                         >
                           {!notification.seen && (
                             <span className="absolute top-2 right-2 bg-[#F88C33] text-white text-xs px-2 py-1 rounded-full">
@@ -1511,7 +1674,9 @@ export function TouristProfileComponent() {
                               __html: notification.body.slice(0, 30) + "...", // Show first 30 characters
                             }}
                           ></div>
-                          <p className="text-xs text-gray-500">{formatDate(notification.date)}</p>
+                          <p className="text-xs text-gray-500">
+                            {formatDate(notification.date)}
+                          </p>
                         </li>
                       ))}
                     </ul>
@@ -1519,11 +1684,6 @@ export function TouristProfileComponent() {
                 </div>
               </CardContent>
             </Card>
-
-
-
-
-
           </div>
 
           {/* Profile Picture Update Modal */}
@@ -1535,10 +1695,17 @@ export function TouristProfileComponent() {
                 currentImage={selectedImage?.url || selectedImage}
               />
               <div className="mt-4 flex justify-end space-x-2">
-                <Button onClick={handleFirstSave} className="bg-[#1A3B47] hover:bg-[#142B36] text-white px-4 py-2 rounded">
+                <Button
+                  onClick={handleFirstSave}
+                  className="bg-[#1A3B47] hover:bg-[#142B36] text-white px-4 py-2 rounded"
+                >
                   Save
                 </Button>
-                <Button onClick={closeModal} variant="destructive" className="bg-[#A3A3A3] hover:bg-[#7E7E7E] text-white px-4 py-2 rounded">
+                <Button
+                  onClick={closeModal}
+                  variant="destructive"
+                  className="bg-[#A3A3A3] hover:bg-[#7E7E7E] text-white px-4 py-2 rounded"
+                >
                   Close
                 </Button>
               </div>
@@ -1552,7 +1719,10 @@ export function TouristProfileComponent() {
             isImageViewer={true}
             imageUrl={selectedImage?.url || selectedImage}
           />
-          <Modal show={isPasswordModalOpen} onClose={() => setIsPasswordModalOpen(false)}>
+          <Modal
+            show={isPasswordModalOpen}
+            onClose={() => setIsPasswordModalOpen(false)}
+          >
             <PasswordChanger onSuccess={handlePasswordChangeSuccess} />
           </Modal>
           {isToastOpen && (
@@ -1560,16 +1730,20 @@ export function TouristProfileComponent() {
               onOpenChange={setIsToastOpen}
               open={isToastOpen}
               duration={1500}
-              className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+              className={
+                toastType === "success" ? "bg-green-100" : "bg-red-100"
+              }
             >
               <div className="flex items-center">
-                {toastType === 'success' ? (
+                {toastType === "success" ? (
                   <CheckCircle className="text-green-500 mr-2" />
                 ) : (
                   <XCircle className="text-red-500 mr-2" />
                 )}
                 <div>
-                  <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
+                  <ToastTitle>
+                    {toastType === "success" ? "Success" : "Error"}
+                  </ToastTitle>
                   <ToastDescription>{toastMessage}</ToastDescription>
                 </div>
               </div>
@@ -1581,12 +1755,4 @@ export function TouristProfileComponent() {
       </div>
     </ToastProvider>
   );
-};
-
-
-
-
-
-
-
-
+}

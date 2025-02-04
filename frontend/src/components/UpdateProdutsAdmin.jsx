@@ -106,7 +106,7 @@ const UpdateProduct = ({ id, onBack }) => {
       try {
         const token = Cookies.get("jwt");
         const response = await fetch(
-          `http://localhost:4000/${userRole}/products/${id}`,
+          `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -219,7 +219,7 @@ const UpdateProduct = ({ id, onBack }) => {
       });
 
       const response = await fetch(
-        `http://localhost:4000/${userRole}/products/${id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
         {
           method: "PUT",
           headers: {
@@ -261,14 +261,18 @@ const UpdateProduct = ({ id, onBack }) => {
   const containerStyles = "grid grid-cols-1 md:grid-cols-2 gap-6";
   const columnStyles = "flex flex-col space-y-6 h-full";
   const labelStyles = "text-[#003f66]";
-  const buttonStyles = "bg-[#1A3B47] hover:bg-[#1A3B47]/90 text-white px-6 py-3 text-lg";
+  const buttonStyles =
+    "bg-[#1A3B47] hover:bg-[#1A3B47]/90 text-white px-6 py-3 text-lg";
 
   return (
     <ToastProvider>
       <div className="">
         <div className="w-full">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleUpdate)} className={formStyles}>
+            <form
+              onSubmit={form.handleSubmit(handleUpdate)}
+              className={formStyles}
+            >
               <div className={containerStyles}>
                 <div className={columnStyles}>
                   <FormField
@@ -276,7 +280,9 @@ const UpdateProduct = ({ id, onBack }) => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className={labelStyles}>Product Name</FormLabel>
+                        <FormLabel className={labelStyles}>
+                          Product Name
+                        </FormLabel>
                         <FormControl>
                           <Input id="name" {...field} className="w-full" />
                         </FormControl>
@@ -292,14 +298,18 @@ const UpdateProduct = ({ id, onBack }) => {
                     name="price"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className={labelStyles}>Price (in USD)</FormLabel>
+                        <FormLabel className={labelStyles}>
+                          Price (in USD)
+                        </FormLabel>
                         <FormControl>
                           <Input
                             id="price"
                             type="number"
                             min="0"
                             {...field}
-                            onChange={(e) => field.onChange(Number(e.target.value))}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
                             className="w-full"
                           />
                         </FormControl>
@@ -346,7 +356,9 @@ const UpdateProduct = ({ id, onBack }) => {
                             type="number"
                             min="1"
                             {...field}
-                            onChange={(e) => field.onChange(Number(e.target.value))}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
                             className="w-full"
                           />
                         </FormControl>
@@ -362,7 +374,9 @@ const UpdateProduct = ({ id, onBack }) => {
                     name="pictures"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className={labelStyles}>Product Pictures</FormLabel>
+                        <FormLabel className={labelStyles}>
+                          Product Pictures
+                        </FormLabel>
                         <FormControl>
                           <Input
                             id="pictures"
@@ -453,7 +467,9 @@ const UpdateProduct = ({ id, onBack }) => {
               <Check className="text-green-500 mr-2" />
               <div>
                 <ToastTitle>Success</ToastTitle>
-                <ToastDescription>Product updated successfully!</ToastDescription>
+                <ToastDescription>
+                  Product updated successfully!
+                </ToastDescription>
               </div>
             </div>
             <ToastClose />

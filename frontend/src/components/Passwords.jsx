@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Toast, ToastClose, ToastDescription, ToastTitle, ToastProvider, ToastViewport } from "@/components/ui/toast";
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastTitle,
+  ToastProvider,
+  ToastViewport,
+} from "@/components/ui/toast";
 import Cookies from "js-cookie";
-import { CheckCircle, XCircle, Lock } from "lucide-react";  // Ensure these icons are available
+import { CheckCircle, XCircle, Lock } from "lucide-react"; // Ensure these icons are available
 
 const getPasswordStrength = (password) => {
   const strength = {
@@ -23,8 +30,8 @@ export default function PasswordChanger({ onSuccess }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastType, setToastType] = useState('success');
-  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState("success");
+  const [toastMessage, setToastMessage] = useState("");
 
   const strength = getPasswordStrength(newPassword);
 
@@ -57,7 +64,7 @@ export default function PasswordChanger({ onSuccess }) {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/${role}/password`,
+        `https://trip-genie-apis.vercel.app/${role}/password`,
         {
           oldPassword,
           newPassword,
@@ -68,7 +75,7 @@ export default function PasswordChanger({ onSuccess }) {
       );
 
       if (response.status === 200) {
-        onSuccess('Your password has been successfully updated.'); // Call the onSuccess prop with a message
+        onSuccess("Your password has been successfully updated."); // Call the onSuccess prop with a message
         // Reset form fields
         setOldPassword("");
         setNewPassword("");
@@ -76,8 +83,8 @@ export default function PasswordChanger({ onSuccess }) {
       }
     } catch (error) {
       showToast(
-        'error',
-        error.response?.data?.message || 'An error occurred. Please try again.'
+        "error",
+        error.response?.data?.message || "An error occurred. Please try again."
       );
     }
   };
@@ -105,14 +112,19 @@ export default function PasswordChanger({ onSuccess }) {
           </span>
           <span>Change Password</span>
         </h1>
-
       </div>
       <ToastProvider>
         <div>
           <div className="container mx-auto px-4">
-            <form onSubmit={handlePasswordChange} className="space-y-4 w-full max-w-lg mx-auto">
+            <form
+              onSubmit={handlePasswordChange}
+              className="space-y-4 w-full max-w-lg mx-auto"
+            >
               <div className="space-y-2">
-                <label htmlFor="current-password" className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="current-password"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Current Password
                 </label>
                 <Input
@@ -122,10 +134,12 @@ export default function PasswordChanger({ onSuccess }) {
                   onChange={(e) => setOldPassword(e.target.value)}
                   required
                 />
-
               </div>
               <div className="space-y-2">
-                <label htmlFor="new-password" className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="new-password"
+                  className="text-sm font-medium text-gray-700"
+                >
                   New Password
                 </label>
                 <Input
@@ -141,9 +155,17 @@ export default function PasswordChanger({ onSuccess }) {
                   {/* Progress Bar */}
                   <div className="relative flex-grow h-2 bg-gray-200 rounded-full">
                     <div
-                      className={`absolute h-2 rounded-full transition-all duration-300 ${newPassword.length === 0 ? 'bg-gray-300' : getProgressBarColor()}`}
+                      className={`absolute h-2 rounded-full transition-all duration-300 ${
+                        newPassword.length === 0
+                          ? "bg-gray-300"
+                          : getProgressBarColor()
+                      }`}
                       style={{
-                        width: `${newPassword.length === 0 ? 0 : Math.max((strength.fulfilled / 3), 1 / 3) * 100}%`
+                        width: `${
+                          newPassword.length === 0
+                            ? 0
+                            : Math.max(strength.fulfilled / 3, 1 / 3) * 100
+                        }%`,
                       }}
                     ></div>
                   </div>
@@ -155,10 +177,12 @@ export default function PasswordChanger({ onSuccess }) {
                     </p>
                   )}
                 </div>
-
               </div>
               <div className="space-y-2">
-                <label htmlFor="confirm-password" className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="confirm-password"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Confirm New Password
                 </label>
                 <Input
@@ -177,33 +201,48 @@ export default function PasswordChanger({ onSuccess }) {
 
               <ul className="text-sm mt-4 space-y-1">
                 <li
-                  className={`flex items-center ${strength.length ? "text-[#388A94]" : "text-gray-500"}`}
+                  className={`flex items-center ${
+                    strength.length ? "text-[#388A94]" : "text-gray-500"
+                  }`}
                 >
                   <span
-                    className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${strength.length ? "bg-[#388A94] text-white" : "border-gray-500"
-                      }`}
+                    className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${
+                      strength.length
+                        ? "bg-[#388A94] text-white"
+                        : "border-gray-500"
+                    }`}
                   >
                     ✓
                   </span>
                   At least 8 characters
                 </li>
                 <li
-                  className={`flex items-center ${strength.uppercase ? "text-[#388A94]" : "text-gray-500"}`}
+                  className={`flex items-center ${
+                    strength.uppercase ? "text-[#388A94]" : "text-gray-500"
+                  }`}
                 >
                   <span
-                    className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${strength.uppercase ? "bg-[#388A94] text-white" : "border-gray-500"
-                      }`}
+                    className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${
+                      strength.uppercase
+                        ? "bg-[#388A94] text-white"
+                        : "border-gray-500"
+                    }`}
                   >
                     ✓
                   </span>
                   At least one uppercase letter
                 </li>
                 <li
-                  className={`flex items-center ${strength.number ? "text-[#388A94]" : "text-gray-500"}`}
+                  className={`flex items-center ${
+                    strength.number ? "text-[#388A94]" : "text-gray-500"
+                  }`}
                 >
                   <span
-                    className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${strength.number ? "bg-[#388A94] text-white" : "border-gray-500"
-                      }`}
+                    className={`mr-2 w-4 h-4 flex items-center justify-center rounded-full border ${
+                      strength.number
+                        ? "bg-[#388A94] text-white"
+                        : "border-gray-500"
+                    }`}
                   >
                     ✓
                   </span>
@@ -220,8 +259,6 @@ export default function PasswordChanger({ onSuccess }) {
                   Change Password
                 </Button>
               </div>
-
-
             </form>
           </div>
           <ToastViewport className="fixed top-0 right-0 p-4" />
@@ -230,19 +267,21 @@ export default function PasswordChanger({ onSuccess }) {
               onOpenChange={setIsToastOpen}
               open={isToastOpen}
               duration={5000}
-              className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+              className={
+                toastType === "success" ? "bg-green-100" : "bg-red-100"
+              }
             >
               <div className="flex items-center">
-                {toastType === 'success' ? (
+                {toastType === "success" ? (
                   <CheckCircle className="text-green-500 mr-2" />
                 ) : (
                   <XCircle className="text-red-500 mr-2" />
                 )}
                 <div>
-                  <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
-                  <ToastDescription>
-                    {toastMessage}
-                  </ToastDescription>
+                  <ToastTitle>
+                    {toastType === "success" ? "Success" : "Error"}
+                  </ToastTitle>
+                  <ToastDescription>{toastMessage}</ToastDescription>
                 </div>
               </div>
               <ToastClose />

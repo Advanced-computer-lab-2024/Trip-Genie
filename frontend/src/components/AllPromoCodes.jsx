@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Toast, ToastClose, ToastDescription, ToastTitle, ToastProvider, ToastViewport } from "@/components/ui/toast";
-import { CheckCircle, XCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastTitle,
+  ToastProvider,
+  ToastViewport,
+} from "@/components/ui/toast";
+import { CheckCircle, XCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import DeleteConfirmation from "@/components/ui/deletionConfirmation";
 
 const AllPromoCodes = () => {
@@ -13,13 +20,13 @@ const AllPromoCodes = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("all");
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('success');
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
   const [openPromoCodeId, setOpenPromoCodeId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [promoCodeToDelete, setPromoCodeToDelete] = useState(null);
 
-  const showToast = (message, type = 'success') => {
+  const showToast = (message, type = "success") => {
     setToastMessage(message);
     setToastType(type);
     setIsToastOpen(true);
@@ -31,7 +38,7 @@ const AllPromoCodes = () => {
         setLoading(true);
         const token = Cookies.get("jwt");
         let role = Cookies.get("role") || "guest";
-        const api = `http://localhost:4000/${role}/promo-code`;
+        const api = `https://trip-genie-apis.vercel.app/${role}/promo-code`;
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,7 +50,10 @@ const AllPromoCodes = () => {
       } catch (err) {
         setError(err.message);
         console.error("Error fetching promo codes:", err);
-        showToast("Failed to fetch promo codes. Please try again later.", "error");
+        showToast(
+          "Failed to fetch promo codes. Please try again later.",
+          "error"
+        );
         setLoading(false);
       }
     };
@@ -51,9 +61,12 @@ const AllPromoCodes = () => {
     fetchPromoCodes();
   }, []);
 
-  const filteredPromoCodes = Array.isArray(promoCodes) ? promoCodes.filter(
-    (promoCode) => activeTab === "all" || promoCode.status.toLowerCase() === activeTab
-  ) : [];
+  const filteredPromoCodes = Array.isArray(promoCodes)
+    ? promoCodes.filter(
+        (promoCode) =>
+          activeTab === "all" || promoCode.status.toLowerCase() === activeTab
+      )
+    : [];
 
   const toggleAccordion = (id) => {
     setOpenPromoCodeId(openPromoCodeId === id ? null : id);
@@ -62,12 +75,16 @@ const AllPromoCodes = () => {
   const handleEdit = async (id) => {
     try {
       const token = Cookies.get("jwt");
-      const api = `http://localhost:4000/promo-code/${id}`;
-      await axios.put(api, {}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const api = `https://trip-genie-apis.vercel.app/promo-code/${id}`;
+      await axios.put(
+        api,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       showToast("Promo code edited successfully.", "success");
     } catch (err) {
       console.error("Error editing promo code:", err);
@@ -84,17 +101,24 @@ const AllPromoCodes = () => {
     if (promoCodeToDelete) {
       try {
         const token = Cookies.get("jwt");
-        const api = `http://localhost:4000/admin/promo-code/${promoCodeToDelete._id}`;
+        const api = `https://trip-genie-apis.vercel.app/admin/promo-code/${promoCodeToDelete._id}`;
         await axios.delete(api, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setPromoCodes(promoCodes.filter(promoCode => promoCode._id !== promoCodeToDelete._id));
+        setPromoCodes(
+          promoCodes.filter(
+            (promoCode) => promoCode._id !== promoCodeToDelete._id
+          )
+        );
         showToast("Promo code deleted successfully.", "success");
       } catch (err) {
         console.error("Error deleting promo code:", err);
-        showToast("Failed to delete promo code. Please try again later.", "error");
+        showToast(
+          "Failed to delete promo code. Please try again later.",
+          "error"
+        );
       }
       setShowDeleteModal(false);
       setPromoCodeToDelete(null);
@@ -105,19 +129,28 @@ const AllPromoCodes = () => {
     const newStatus = currentStatus === "active" ? "inactive" : "active";
     try {
       const token = Cookies.get("jwt");
-      const api = `http://localhost:4000/admin/promo-code/${id}`;
-      await axios.put(api, { status: newStatus }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setPromoCodes(promoCodes.map(promoCode => 
-        promoCode._id === id ? { ...promoCode, status: newStatus } : promoCode
-      ));
+      const api = `https://trip-genie-apis.vercel.app/admin/promo-code/${id}`;
+      await axios.put(
+        api,
+        { status: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setPromoCodes(
+        promoCodes.map((promoCode) =>
+          promoCode._id === id ? { ...promoCode, status: newStatus } : promoCode
+        )
+      );
       showToast(`Promo code status updated to ${newStatus}.`, "success");
     } catch (err) {
       console.error("Error updating promo code status:", err);
-      showToast("Failed to update promo code status. Please try again later.", "error");
+      showToast(
+        "Failed to update promo code status. Please try again later.",
+        "error"
+      );
     }
   };
 
@@ -186,7 +219,11 @@ const AllPromoCodes = () => {
       <div>
         <div className="bg-white border rounded-md shadow-md p-6 mb-40">
           <div className="grid grid-cols-1 items-center gap-4 mb-6">
-            <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value)} className="w-full">
+            <Tabs
+              value={activeTab}
+              onValueChange={(value) => setActiveTab(value)}
+              className="w-full"
+            >
               <TabsList className="grid grid-cols-3 bg-white w-full">
                 <TabsTrigger
                   value="all"
@@ -228,13 +265,17 @@ const AllPromoCodes = () => {
               <div key={promoCode._id} className="mb-4">
                 <div
                   className={`cursor-pointer border rounded-md p-4 transition-all duration-300 ${
-                    openPromoCodeId === promoCode._id ? "bg-gray-50 shadow-md" : "bg-white shadow-sm"
+                    openPromoCodeId === promoCode._id
+                      ? "bg-gray-50 shadow-md"
+                      : "bg-white shadow-sm"
                   }`}
                   onClick={() => toggleAccordion(promoCode._id)}
                 >
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-teal-800">{promoCode.code}</h3>
+                      <h3 className="font-semibold text-teal-800">
+                        {promoCode.code}
+                      </h3>
                     </div>
                     <div className="flex items-center gap-2">
                       <div
@@ -242,26 +283,44 @@ const AllPromoCodes = () => {
                           promoCode.status === "inactive"
                             ? "bg-[#F88C33] text-white"
                             : "bg-[#388A94] text-white"
-                        } ${openPromoCodeId === promoCode._id ? "px-3 py-1" : "w-4 h-4"} text-sm font-medium`}
+                        } ${
+                          openPromoCodeId === promoCode._id
+                            ? "px-3 py-1"
+                            : "w-4 h-4"
+                        } text-sm font-medium`}
                       >
                         {openPromoCodeId === promoCode._id
-                          ? `${promoCode.status.charAt(0).toUpperCase()}${promoCode.status.slice(1).toLowerCase()}`
+                          ? `${promoCode.status
+                              .charAt(0)
+                              .toUpperCase()}${promoCode.status
+                              .slice(1)
+                              .toLowerCase()}`
                           : ""}
                       </div>
                     </div>
                   </div>
                   <div className="flex justify-between items-center mt-2">
-                    <p className="text-sm text-gray-500">{promoCode.percentOff}% off</p>
+                    <p className="text-sm text-gray-500">
+                      {promoCode.percentOff}% off
+                    </p>
                     {openPromoCodeId === promoCode._id && (
                       <div className="flex gap-2">
                         <span
-                          onClick={(e) => { e.stopPropagation(); handleStatusChange(promoCode._id, promoCode.status); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleStatusChange(promoCode._id, promoCode.status);
+                          }}
                           className="text-sm text-[#5D9297] cursor-pointer hover:text-[#1A3B47] hover:underline mr-2"
                         >
-                          {promoCode.status === "active" ? "Set Inactive" : "Set Active"}
+                          {promoCode.status === "active"
+                            ? "Set Inactive"
+                            : "Set Active"}
                         </span>
                         <span
-                          onClick={(e) => { e.stopPropagation(); handleDeleteClick(promoCode); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteClick(promoCode);
+                          }}
                           className="text-sm text-[#5D9297] cursor-pointer hover:text-[#1A3B47] hover:underline"
                         >
                           Delete
@@ -271,10 +330,22 @@ const AllPromoCodes = () => {
                   </div>
                   {openPromoCodeId === promoCode._id && (
                     <div className="mt-2">
-                      <p className="text-sm text-gray-500">Usage limit: {promoCode.usage_limit}</p>
-                      <p className="text-sm text-gray-500">Times used: {promoCode.timesUsed}</p>
-                      <p className="text-sm text-gray-500">Start date: {new Date(promoCode.dateRange.start).toLocaleDateString()}</p>
-                      <p className="text-sm text-gray-500">End date: {new Date(promoCode.dateRange.end).toLocaleDateString()}</p>
+                      <p className="text-sm text-gray-500">
+                        Usage limit: {promoCode.usage_limit}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Times used: {promoCode.timesUsed}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Start date:{" "}
+                        {new Date(
+                          promoCode.dateRange.start
+                        ).toLocaleDateString()}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        End date:{" "}
+                        {new Date(promoCode.dateRange.end).toLocaleDateString()}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -288,16 +359,18 @@ const AllPromoCodes = () => {
           onOpenChange={setIsToastOpen}
           open={isToastOpen}
           duration={3000} // Set the duration to 3000 milliseconds (3 seconds)
-          className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+          className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
         >
           <div className="flex items-center">
-            {toastType === 'success' ? (
+            {toastType === "success" ? (
               <CheckCircle className="text-green-500 mr-2" />
             ) : (
               <XCircle className="text-red-500 mr-2" />
             )}
             <div>
-              <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
+              <ToastTitle>
+                {toastType === "success" ? "Success" : "Error"}
+              </ToastTitle>
               <ToastDescription>{toastMessage}</ToastDescription>
             </div>
           </div>

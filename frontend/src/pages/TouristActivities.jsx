@@ -228,7 +228,9 @@ export default function BookedActivities() {
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:4000/rates");
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/rates"
+      );
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -241,14 +243,17 @@ export default function BookedActivities() {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setTourist(response.data);
         const currencyId = response.data.preferredCurrency;
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -271,7 +276,7 @@ export default function BookedActivities() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/tourist/touristActivityBookings",
+        "https://trip-genie-apis.vercel.app/tourist/touristActivityBookings",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -333,7 +338,7 @@ export default function BookedActivities() {
 
     try {
       const response = await axios.delete(
-        `http://localhost:4000/tourist/activityBooking/${selectedBooking._id}`,
+        `https://trip-genie-apis.vercel.app/tourist/activityBooking/${selectedBooking._id}`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }

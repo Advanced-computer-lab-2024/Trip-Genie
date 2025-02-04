@@ -1,37 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Trash2, Edit, Plus, CheckCircle, XCircle } from 'lucide-react';
-import { ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose } from "@/components/ui/toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Trash2, Edit, Plus, CheckCircle, XCircle } from "lucide-react";
+import {
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  ToastTitle,
+  ToastDescription,
+  ToastClose,
+} from "@/components/ui/toast";
 import DeleteConfirmation from "@/components/ui/deletionConfirmation";
 import { AnimatePresence, motion } from "framer-motion";
 
 export function TagsPage() {
   const [tags, setTags] = useState([]);
-  const [newTag, setNewTag] = useState('');
+  const [newTag, setNewTag] = useState("");
   const [editTagId, setEditTagId] = useState(null);
-  const [editTagName, setEditTagName] = useState('');
+  const [editTagName, setEditTagName] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [tagToDelete, setTagToDelete] = useState(null);
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('');
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
 
   const fetchTags = async () => {
     try {
-      const token = Cookies.get('jwt');
-      const response = await axios.get('http://localhost:4000/admin/tags', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const token = Cookies.get("jwt");
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/admin/tags",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setTags(response.data);
     } catch (error) {
-      console.error('Error fetching Tags:', error);
-      showToast('Error fetching Tags', 'error');
+      console.error("Error fetching Tags:", error);
+      showToast("Error fetching Tags", "error");
     }
   };
 
@@ -48,57 +64,71 @@ export function TagsPage() {
   const createTag = async () => {
     if (newTag) {
       try {
-        const token = Cookies.get('jwt');
-        await axios.post('http://localhost:4000/admin/tags', { type: newTag }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setNewTag('');
-        showToast('Tag created successfully!', 'success');
+        const token = Cookies.get("jwt");
+        await axios.post(
+          "https://trip-genie-apis.vercel.app/admin/tags",
+          { type: newTag },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setNewTag("");
+        showToast("Tag created successfully!", "success");
         fetchTags();
       } catch (error) {
-        showToast('This tag already exists.', 'error');
+        showToast("This tag already exists.", "error");
       }
     } else {
-      showToast('Please enter a tag name.', 'error');
+      showToast("Please enter a tag name.", "error");
     }
   };
 
   const updateTag = async () => {
     if (editTagName) {
       try {
-        const token = Cookies.get('jwt');
-        await axios.put(`http://localhost:4000/admin/tags/${editTagId}`, { type: editTagName }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        showToast('Tag updated successfully!', 'success');
+        const token = Cookies.get("jwt");
+        await axios.put(
+          `https://trip-genie-apis.vercel.app/admin/tags/${editTagId}`,
+          { type: editTagName },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        showToast("Tag updated successfully!", "success");
         setEditTagId(null);
-        setEditTagName('');
+        setEditTagName("");
         fetchTags();
       } catch (error) {
-        showToast('Tag name already exists', 'error');
+        showToast("Tag name already exists", "error");
       }
     } else {
-      showToast('Please provide a valid tag name.', 'error');
+      showToast("Please provide a valid tag name.", "error");
     }
   };
 
   const deleteTag = async (tagId) => {
     try {
-      const token = Cookies.get('jwt');
-      await axios.delete(`http://localhost:4000/admin/tags/${tagId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      showToast('Tag deleted successfully!', 'success');
+      const token = Cookies.get("jwt");
+      await axios.delete(
+        `https://trip-genie-apis.vercel.app/admin/tags/${tagId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      showToast("Tag deleted successfully!", "success");
       fetchTags();
     } catch (error) {
-      console.error('Error deleting tag:', error.response?.data || error.message);
-      showToast('Error deleting tag', 'error');
+      console.error(
+        "Error deleting tag:",
+        error.response?.data || error.message
+      );
+      showToast("Error deleting tag", "error");
     }
   };
 
@@ -119,7 +149,6 @@ export function TagsPage() {
     <div className="min-h-screen">
       <ToastProvider>
         <div className="">
-
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
             <h2 className="text-xl font-bold text-[#1A3B47]">Create New Tag</h2>
             <div className="flex space-x-4">
@@ -222,7 +251,9 @@ export function TagsPage() {
           <Dialog open={!!editTagId} onOpenChange={() => setEditTagId(null)}>
             <DialogContent className="sm:max-w-[500px] p-6 bg-white shadow-lg rounded-lg">
               <DialogHeader>
-                <DialogTitle className="text-lg font-semibold text-[#1A3B47]">Edit Tag</DialogTitle>
+                <DialogTitle className="text-lg font-semibold text-[#1A3B47]">
+                  Edit Tag
+                </DialogTitle>
               </DialogHeader>
               <Input
                 type="text"
@@ -240,14 +271,13 @@ export function TagsPage() {
                 <Button
                   onClick={() => {
                     setEditTagId(null);
-                    setEditTagName('');
+                    setEditTagName("");
                   }}
                   className="bg-[#A3A3A3] hover:bg-[#7E7E7E] text-white px-4 py-2 rounded"
                 >
                   Cancel
                 </Button>
               </DialogFooter>
-
             </DialogContent>
           </Dialog>
         )}
@@ -257,19 +287,19 @@ export function TagsPage() {
             onOpenChange={setIsToastOpen}
             open={isToastOpen}
             duration={3000} // Set duration to 3 seconds
-            className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+            className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
           >
             <div className="flex items-center">
-              {toastType === 'success' ? (
+              {toastType === "success" ? (
                 <CheckCircle className="text-green-500 mr-2" />
               ) : (
                 <XCircle className="text-red-500 mr-2" />
               )}
               <div>
-                <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
-                <ToastDescription>
-                  {toastMessage}
-                </ToastDescription>
+                <ToastTitle>
+                  {toastType === "success" ? "Success" : "Error"}
+                </ToastTitle>
+                <ToastDescription>{toastMessage}</ToastDescription>
               </div>
             </div>
             <ToastClose />
@@ -281,4 +311,3 @@ export function TagsPage() {
 }
 
 export default TagsPage;
-

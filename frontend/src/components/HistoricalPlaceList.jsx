@@ -25,7 +25,7 @@ const HistoricalPlaceList = () => {
         const token = Cookies.get("jwt");
         let role = Cookies.get("role");
         if (role === undefined) role = "guest";
-        const api = `http://localhost:4000/'${role}/historical-places`;
+        const api = `https://trip-genie-apis.vercel.app/'${role}/historical-places`;
         console.log(api);
         const response = await axios.get(api, {
           headers: {

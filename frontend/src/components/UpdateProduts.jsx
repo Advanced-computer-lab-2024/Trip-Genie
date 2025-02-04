@@ -69,7 +69,7 @@ const UpdateProduct = () => {
       try {
         const token = Cookies.get("jwt");
         const response = await fetch(
-          `http://localhost:4000/${userRole}/products/${id}`,
+          `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -178,7 +178,7 @@ const UpdateProduct = () => {
       });
 
       const response = await fetch(
-        `http://localhost:4000/${userRole}/products/${id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
         {
           method: "PUT",
           headers: {
@@ -276,10 +276,10 @@ const UpdateProduct = () => {
                   {(product.price === "" ||
                     isNaN(parseFloat(product.price)) ||
                     parseFloat(product.price) < 0) && (
-                      <p className="text-red-500 text-xs">
-                        Price must be a non-negative number
-                      </p>
-                    )}
+                    <p className="text-red-500 text-xs">
+                      Price must be a non-negative number
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="quantity" className="text-sm font-medium">
@@ -404,7 +404,6 @@ const UpdateProduct = () => {
                 Back to All Products
               </Button>
             </div>
-
           </DialogFooter>
         </DialogContent>
       </Dialog>

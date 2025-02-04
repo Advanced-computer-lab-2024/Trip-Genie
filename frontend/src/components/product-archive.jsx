@@ -100,7 +100,9 @@ export default function ProductArchive() {
         setIsLoading(true);
         const token = Cookies.get("jwt");
         const role = getUserRole();
-        const url = new URL(`http://localhost:4000/${role}/productsarchive`);
+        const url = new URL(
+          `https://trip-genie-apis.vercel.app/${role}/productsarchive`
+        );
 
         if (params.searchBy)
           url.searchParams.append("searchBy", params.searchBy);
@@ -155,7 +157,7 @@ export default function ProductArchive() {
     const role = getUserRole();
     const token = Cookies.get("jwt");
     const url = new URL(
-      `http://localhost:4000/${role}/max-price-products-archived`
+      `https://trip-genie-apis.vercel.app/${role}/max-price-products-archived`
     );
     const response = await fetch(url, {
       headers: {
@@ -216,17 +218,15 @@ export default function ProductArchive() {
 
   const backgroundImage = "url('./src/assets/images/allProducts.jpg')";
 
-
   return (
     <div className="bg-gray-100">
-
-<div
-    className="relative h-[330px] bg-cover bg-center"
-    style={{ backgroundImage }}
-  >
-    <div className="absolute inset-0"></div>
-    <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">
-    <div className="flex-1">
+      <div
+        className="relative h-[330px] bg-cover bg-center"
+        style={{ backgroundImage }}
+      >
+        <div className="absolute inset-0"></div>
+        <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">
+          <div className="flex-1">
             <h1 className="text-5xl font-bold text-white mb-4">
               Archived Products
             </h1>
@@ -240,8 +240,8 @@ export default function ProductArchive() {
               / Archived Products
             </p>
           </div>
-    </div>
-  </div>
+        </div>
+      </div>
       <div className="container py-8">
         <div className="flex gap-8">
           {/* Sidebar Filters */}

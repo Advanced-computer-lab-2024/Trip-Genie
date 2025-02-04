@@ -8,7 +8,6 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserGuide } from "@/components/UserGuide";
 
-
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
@@ -123,7 +122,6 @@ export default function CheckoutPage() {
   const [isExchangeRateLoaded, setIsExchangeRateLoaded] = useState(false);
   const [isCurrencySymbolLoaded, setIsCurrencySymbolLoaded] = useState(false);
 
-
   const form = useForm({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
@@ -149,8 +147,7 @@ export default function CheckoutPage() {
   }, []);
 
   useEffect(() => {
-    if (!isAddressDialogOpen)
-      fetchUserInfo();
+    if (!isAddressDialogOpen) fetchUserInfo();
   }, [isAddressDialogOpen]);
 
   useEffect(() => {
@@ -172,9 +169,12 @@ export default function CheckoutPage() {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const userData = response.data;
         const currencyId = userData.preferredCurrency;
         setSavedCards(userData.cards || []);
@@ -221,7 +221,7 @@ export default function CheckoutPage() {
 
         console.log("Currency ID:", currencyId);
         const response2 = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -232,13 +232,12 @@ export default function CheckoutPage() {
           response.data.currentPromoCode &&
           response.data.currentPromoCode.code
         ) {
-          await handlePromoSubmit({ preventDefault: () => { } });
+          await handlePromoSubmit({ preventDefault: () => {} });
         }
         setIsAddressLoaded(true);
       } catch (error) {
         console.error("Error fetching user profile:", error);
-      }
-      finally {
+      } finally {
         setIsAddressLoaded(true);
       }
     }
@@ -250,7 +249,7 @@ export default function CheckoutPage() {
   //     const sessionId = searchParams.get("session_id")
   //     if (sessionId) {
   //       try {
-  //         const response = await axios.get(`http://localhost:4000/check-payment-status?session_id=${sessionId}`)
+  //         const response = await axios.get(`https://trip-genie-apis.vercel.app/check-payment-status?session_id=${sessionId}`)
   //         if (response.data.status === "complete") {
   //           setPaySuccess(true)
   //           await completePurchase(form.getValues())
@@ -282,7 +281,7 @@ export default function CheckoutPage() {
         try {
           const token = Cookies.get("jwt");
           const response = await axios.get(
-            `http://localhost:4000/tourist/shippingAdds`,
+            `https://trip-genie-apis.vercel.app/tourist/shippingAdds`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -302,9 +301,12 @@ export default function CheckoutPage() {
       let cartItemsNew = null;
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist/cart", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/cart",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         cartItemsNew = response.data;
         console.log("cartitemsnew", cartItemsNew);
         setCartItems(response.data);
@@ -313,13 +315,12 @@ export default function CheckoutPage() {
         console.log("Error fetching cart items");
       }
 
-
       console.log("Session ID:", sessionId);
 
       if (sessionId && success === "true") {
         try {
           const response = await axios.get(
-            `http://localhost:4000/check-payment-status?session_id=${sessionId}`
+            `https://trip-genie-apis.vercel.app/check-payment-status?session_id=${sessionId}`
           );
 
           console.log("Payment status response:", response.data);
@@ -339,10 +340,6 @@ export default function CheckoutPage() {
               paymentMethod: "credit_card",
               promoCode,
             });
-
-
-
-
           }
         } catch (error) {
           console.error("Error checking payment status:", error);
@@ -354,12 +351,9 @@ export default function CheckoutPage() {
     fetchCart();
   }, [searchParams]);
 
-
   const completePurchase = async (data) => {
-
-
     if (purchaseProcessedRef.current) {
-      console.log('Booking already processed');
+      console.log("Booking already processed");
       return;
     }
     purchaseProcessedRef.current = true;
@@ -369,39 +363,41 @@ export default function CheckoutPage() {
       console.log("Data:", data);
 
       const token = Cookies.get("jwt");
-      const response = await fetch("http://localhost:4000/tourist/purchase", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          products: (data.cartItemsNew || cartItems).map((item) => ({
-            product: item.product._id,
-            quantity: item.quantity,
-          })),
-          totalAmount,
-          paymentMethod:
-            data.paymentMethod === "credit_card"
-              ? data.paymentMethod
-              : paymentMethod,
-          shippingAddress: data.address || selectedAddress,
-          locationType: data.address ? data.address.locationType : selectedAddress.locationType,
-          deliveryType:
-            data.paymentMethod === "credit_card"
-              ? data.deliveryType
-              : deliveryType,
-          deliveryTime:
-            data.paymentMethod === "credit_card"
-              ? data.deliveryTime
-              : deliveryTime,
-          promoCode:
-          data.paymentMethod === "credit_card"
-          ? data.promoCode
-          : promoCode,
-          
-        }),
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/tourist/purchase",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            products: (data.cartItemsNew || cartItems).map((item) => ({
+              product: item.product._id,
+              quantity: item.quantity,
+            })),
+            totalAmount,
+            paymentMethod:
+              data.paymentMethod === "credit_card"
+                ? data.paymentMethod
+                : paymentMethod,
+            shippingAddress: data.address || selectedAddress,
+            locationType: data.address
+              ? data.address.locationType
+              : selectedAddress.locationType,
+            deliveryType:
+              data.paymentMethod === "credit_card"
+                ? data.deliveryType
+                : deliveryType,
+            deliveryTime:
+              data.paymentMethod === "credit_card"
+                ? data.deliveryTime
+                : deliveryTime,
+            promoCode:
+              data.paymentMethod === "credit_card" ? data.promoCode : promoCode,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -412,7 +408,6 @@ export default function CheckoutPage() {
 
       setPurchaseStatus("success");
       setIsStatusDialogOpen(true);
-
     } catch (error) {
       console.error("Error completing purchase:", error);
       setPurchaseStatus("error");
@@ -424,9 +419,12 @@ export default function CheckoutPage() {
   const fetchCart = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await axios.get("http://localhost:4000/tourist/cart", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/tourist/cart",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setCartItems(response.data || []);
       calculateTotal(response.data);
     } catch (error) {
@@ -452,7 +450,7 @@ export default function CheckoutPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:4000/tourist/get/promo-code",
+        "https://trip-genie-apis.vercel.app/tourist/get/promo-code",
         {
           method: "POST",
           headers: {
@@ -504,8 +502,6 @@ export default function CheckoutPage() {
     }
   };
 
-
-
   const handleStripeRedirect = async () => {
     try {
       console.log("Redirecting to Stripe...");
@@ -516,7 +512,7 @@ export default function CheckoutPage() {
       console.log("discountedTotal", formatPrice2(discountAmount));
 
       const response = await fetch(
-        "http://localhost:4000/create-checkout-session",
+        "https://trip-genie-apis.vercel.app/create-checkout-session",
         {
           method: "POST",
           headers: {
@@ -547,7 +543,8 @@ export default function CheckoutPage() {
         const errorData = await response.json();
         console.error("Server response:", errorData);
         throw new Error(
-          `Failed to create checkout session: ${errorData.error || response.statusText
+          `Failed to create checkout session: ${
+            errorData.error || response.statusText
           }`
         );
       }
@@ -577,7 +574,10 @@ export default function CheckoutPage() {
   const scrollToPaymentMethod = () => {
     // Scroll to the Payment Method section if there's an error
     if (paymentMethodRef.current) {
-      paymentMethodRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      paymentMethodRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     }
   };
 
@@ -605,7 +605,7 @@ export default function CheckoutPage() {
 
       const token = Cookies.get("jwt");
       const emptyCartResponse = await fetch(
-        "http://localhost:4000/tourist/empty/cart",
+        "https://trip-genie-apis.vercel.app/tourist/empty/cart",
         {
           method: "DELETE",
           headers: {
@@ -616,7 +616,7 @@ export default function CheckoutPage() {
 
       if (emptyCartResponse.ok) {
         console.log("Cart emptied successfully.");
-        window.dispatchEvent(new Event('cartUpdated'));
+        window.dispatchEvent(new Event("cartUpdated"));
       } else {
         console.error("Failed to empty the cart.");
       }
@@ -643,8 +643,6 @@ export default function CheckoutPage() {
     setCardDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-
-
   const handleDeliveryTypeChange = (value) => {
     setDeliveryType(value);
   };
@@ -653,7 +651,7 @@ export default function CheckoutPage() {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/populate`,
+        `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
           headers: {
@@ -683,7 +681,7 @@ export default function CheckoutPage() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/${userRole}/getCurrency/${cartItems[0]?.product.currency}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${cartItems[0]?.product.currency}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -710,7 +708,12 @@ export default function CheckoutPage() {
   };
 
   const formatPrice = (price) => {
-    if (isLoading || !isAddressLoaded || !isExchangeRateLoaded || !isCurrencySymbolLoaded) {
+    if (
+      isLoading ||
+      !isAddressLoaded ||
+      !isExchangeRateLoaded ||
+      !isCurrencySymbolLoaded
+    ) {
       return (
         <div className="w-16 h-6 bg-gray-300 rounded-full animate-pulse"></div>
       );
@@ -749,32 +752,38 @@ export default function CheckoutPage() {
   const guideSteps = [
     {
       target: "body",
-      content: "You're just one step away from completing your order. Review your items and your delivery details to proceed to payment and confirm your purchase!",
+      content:
+        "You're just one step away from completing your order. Review your items and your delivery details to proceed to payment and confirm your purchase!",
       placement: "center",
     },
     {
       target: ".userInfo",
-      content: "Here you can find your personal information, including your name, email, and phone number.",
+      content:
+        "Here you can find your personal information, including your name, email, and phone number.",
       placement: "right",
     },
     {
       target: ".deliveryOptions",
-      content: "Choose your delivery option based on how quickly you would like to receive your products. Choose from Standard, Express, Next Day, or International Shipping.",
+      content:
+        "Choose your delivery option based on how quickly you would like to receive your products. Choose from Standard, Express, Next Day, or International Shipping.",
       placement: "right",
     },
     {
       target: ".deliverTime",
-      content: "Select your preferred delivery time. Choose from Morning, Afternoon, Evening, or Night.",
+      content:
+        "Select your preferred delivery time. Choose from Morning, Afternoon, Evening, or Night.",
       placement: "right",
     },
     {
       target: ".deliveryAddress",
-      content: "You can check your delievey adress from here and change it if needed!",
+      content:
+        "You can check your delievey adress from here and change it if needed!",
       placement: "right",
     },
     {
       target: ".payment",
-      content: "Choose your payment method. You can pay with a credit card, debit card, wallet, or cash on delivery.",
+      content:
+        "Choose your payment method. You can pay with a credit card, debit card, wallet, or cash on delivery.",
       placement: "right",
     },
     {
@@ -815,17 +824,13 @@ export default function CheckoutPage() {
     }
   };
 
-
-
   return (
     <div className="">
       <div className="w-full bg-[#1A3B47] py-8 top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" />
       </div>
       <div className=" mx-auto py-8 px-5">
-
         <div className="grid grid-cols-1 lg:grid-cols-[1fr,400px] max-h-[500px] overflow-y-auto">
-
           {/* Main Checkout Form */}
           <div className="space-y-8 pr-8">
             <h1 className="text-5xl font-bold ml-5 text-[#1A3B47]">Checkout</h1>
@@ -866,7 +871,9 @@ export default function CheckoutPage() {
             <div className="bg-white pr-6 pl-6 pb-4">
               <div className="flex items-center gap-4 mb-4">
                 <span className="text-3xl font-bold text-gray-400">02</span>
-                <h2 className="text-2xl font-semibold text-[#1A3B47]">Delivery Options</h2>
+                <h2 className="text-2xl font-semibold text-[#1A3B47]">
+                  Delivery Options
+                </h2>
               </div>
               <div className="grid grid-cols-2 gap-4 deliveryOptions">
                 <label className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer bg-gray-100">
@@ -874,13 +881,23 @@ export default function CheckoutPage() {
                   <Checkbox
                     checked={deliveryType === "Standard"}
                     onCheckedChange={() => handleDeliveryTypeChange("Standard")}
-                    className={`peer border-gray-400 cursor-pointer ${deliveryType === "Standard" ? 'bg-[#388A94] border-[#388A94]' : ''}`}
+                    className={`peer border-gray-400 cursor-pointer ${
+                      deliveryType === "Standard"
+                        ? "bg-[#388A94] border-[#388A94]"
+                        : ""
+                    }`}
                     id="standard"
                   />
                   <div className="flex-1">
-                    <Label className="font-medium text-[#1A3B47] text-base">Standard Delivery</Label>
-                    <p className="text-sm text-gray-400 mt-1">2–8 business days</p>
-                    <span className="text-[#1A3B47] font-semibold">{formatPrice(2.99)}</span>
+                    <Label className="font-medium text-[#1A3B47] text-base">
+                      Standard Delivery
+                    </Label>
+                    <p className="text-sm text-gray-400 mt-1">
+                      2–8 business days
+                    </p>
+                    <span className="text-[#1A3B47] font-semibold">
+                      {formatPrice(2.99)}
+                    </span>
                   </div>
                 </label>
 
@@ -892,51 +909,89 @@ export default function CheckoutPage() {
                     id="express"
                   />
                   <div className="flex-1">
-                    <Label className="font-medium text-[#1A3B47] text-base">Express Delivery</Label>
-                    <p className="text-sm text-gray-400 mt-1">1–3 business days</p>
-                    <span className="text-[#1A3B47] font-semibold">{formatPrice(4.99)}</span>
+                    <Label className="font-medium text-[#1A3B47] text-base">
+                      Express Delivery
+                    </Label>
+                    <p className="text-sm text-gray-400 mt-1">
+                      1–3 business days
+                    </p>
+                    <span className="text-[#1A3B47] font-semibold">
+                      {formatPrice(4.99)}
+                    </span>
                   </div>
                 </label>
 
                 <label className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer bg-gray-100">
                   <Checkbox
                     checked={deliveryType === "Next-Same"}
-                    onCheckedChange={() => handleDeliveryTypeChange("Next-Same")}
+                    onCheckedChange={() =>
+                      handleDeliveryTypeChange("Next-Same")
+                    }
                     className="peer border-gray-400 text-[#388A94] checked:border-[#388A94] checked:bg-[#388A94] cursor-pointer"
                     id="next-same"
                   />
                   <div className="flex-1">
-                    <Label className="font-medium text-[#1A3B47] text-base">Next Day Delivery</Label>
-                    <p className="text-sm text-gray-400 mt-1">Next business day</p>
-                    <span className="text-[#1A3B47] font-semibold">{formatPrice(6.99)}</span>
+                    <Label className="font-medium text-[#1A3B47] text-base">
+                      Next Day Delivery
+                    </Label>
+                    <p className="text-sm text-gray-400 mt-1">
+                      Next business day
+                    </p>
+                    <span className="text-[#1A3B47] font-semibold">
+                      {formatPrice(6.99)}
+                    </span>
                   </div>
                 </label>
 
                 <label className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer bg-gray-100">
                   <Checkbox
                     checked={deliveryType === "International"}
-                    onCheckedChange={() => handleDeliveryTypeChange("International")}
+                    onCheckedChange={() =>
+                      handleDeliveryTypeChange("International")
+                    }
                     className="peer border-gray-400 text-[#388A94] checked:border-[#388A94] checked:bg-[#388A94] cursor-pointer"
                     id="international"
                   />
                   <div className="flex-1">
-                    <Label className="font-medium text-[#1A3B47] text-base">International Shipping</Label>
-                    <p className="text-sm text-gray-400 mt-1">7–21 business days</p>
-                    <span className="text-[#1A3B47] font-semibold">{formatPrice(14.99)}</span>
+                    <Label className="font-medium text-[#1A3B47] text-base">
+                      International Shipping
+                    </Label>
+                    <p className="text-sm text-gray-400 mt-1">
+                      7–21 business days
+                    </p>
+                    <span className="text-[#1A3B47] font-semibold">
+                      {formatPrice(14.99)}
+                    </span>
                   </div>
                 </label>
               </div>
               <div className="mt-4 deliverTime">
-                <Label className="font-medium text-base mb-4 block text-[#1A3B47]">Delivery Time</Label>
+                <Label className="font-medium text-base mb-4 block text-[#1A3B47]">
+                  Delivery Time
+                </Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-
                   {/* Morning */}
-                  <label htmlFor="morning" className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer bg-gray-100">
-                    <RadioGroup value={deliveryTime} onValueChange={setDeliveryTime}>
+                  <label
+                    htmlFor="morning"
+                    className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer bg-gray-100"
+                  >
+                    <RadioGroup
+                      value={deliveryTime}
+                      onValueChange={setDeliveryTime}
+                    >
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="morning" id="morning" className="border-gray-400 text-[#388A94]" />
+                        <RadioGroupItem
+                          value="morning"
+                          id="morning"
+                          className="border-gray-400 text-[#388A94]"
+                        />
                         <div>
-                          <Label htmlFor="morning" className="text-base font-medium text-[#1A3B47]">Morning</Label>
+                          <Label
+                            htmlFor="morning"
+                            className="text-base font-medium text-[#1A3B47]"
+                          >
+                            Morning
+                          </Label>
                           <p className="text-sm text-[#388A94]">8am - 12pm</p>
                         </div>
                       </div>
@@ -944,12 +999,27 @@ export default function CheckoutPage() {
                   </label>
 
                   {/* Afternoon */}
-                  <label htmlFor="afternoon" className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer bg-gray-100">
-                    <RadioGroup value={deliveryTime} onValueChange={setDeliveryTime}>
+                  <label
+                    htmlFor="afternoon"
+                    className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer bg-gray-100"
+                  >
+                    <RadioGroup
+                      value={deliveryTime}
+                      onValueChange={setDeliveryTime}
+                    >
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="afternoon" id="afternoon" className="border-gray-400 text-[#388A94]" />
+                        <RadioGroupItem
+                          value="afternoon"
+                          id="afternoon"
+                          className="border-gray-400 text-[#388A94]"
+                        />
                         <div>
-                          <Label htmlFor="afternoon" className="text-base font-medium text-[#1A3B47]">Afternoon</Label>
+                          <Label
+                            htmlFor="afternoon"
+                            className="text-base font-medium text-[#1A3B47]"
+                          >
+                            Afternoon
+                          </Label>
                           <p className="text-sm text-[#388A94]">12pm - 4pm</p>
                         </div>
                       </div>
@@ -957,12 +1027,27 @@ export default function CheckoutPage() {
                   </label>
 
                   {/* Evening */}
-                  <label htmlFor="evening" className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer bg-gray-100">
-                    <RadioGroup value={deliveryTime} onValueChange={setDeliveryTime}>
+                  <label
+                    htmlFor="evening"
+                    className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer bg-gray-100"
+                  >
+                    <RadioGroup
+                      value={deliveryTime}
+                      onValueChange={setDeliveryTime}
+                    >
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="evening" id="evening" className="border-gray-400 text-[#388A94]" />
+                        <RadioGroupItem
+                          value="evening"
+                          id="evening"
+                          className="border-gray-400 text-[#388A94]"
+                        />
                         <div>
-                          <Label htmlFor="evening" className="text-base font-medium text-[#1A3B47]">Evening</Label>
+                          <Label
+                            htmlFor="evening"
+                            className="text-base font-medium text-[#1A3B47]"
+                          >
+                            Evening
+                          </Label>
                           <p className="text-sm text-[#388A94]">4pm - 8pm</p>
                         </div>
                       </div>
@@ -970,39 +1055,56 @@ export default function CheckoutPage() {
                   </label>
 
                   {/* Night */}
-                  <label htmlFor="night" className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer bg-gray-100">
-                    <RadioGroup value={deliveryTime} onValueChange={setDeliveryTime}>
+                  <label
+                    htmlFor="night"
+                    className="flex items-center gap-2 p-2 border rounded-lg cursor-pointer bg-gray-100"
+                  >
+                    <RadioGroup
+                      value={deliveryTime}
+                      onValueChange={setDeliveryTime}
+                    >
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="night" id="night" className="border-gray-400 text-[#388A94]" />
+                        <RadioGroupItem
+                          value="night"
+                          id="night"
+                          className="border-gray-400 text-[#388A94]"
+                        />
                         <div>
-                          <Label htmlFor="night" className="text-base font-medium text-[#1A3B47]">Night</Label>
+                          <Label
+                            htmlFor="night"
+                            className="text-base font-medium text-[#1A3B47]"
+                          >
+                            Night
+                          </Label>
                           <p className="text-sm text-[#388A94]">8pm - 10pm</p>
                         </div>
                       </div>
                     </RadioGroup>
                   </label>
-
                 </div>
               </div>
-
-
             </div>
-
 
             {/* Delivery Address Section */}
             <div className="bg-white  pr-6 pl-6 pb-4  deliveryAddress">
               <div className="flex items-center gap-4 mb-3">
                 <span className="text-3xl font-bold text-gray-400">03</span>
-                <h2 className="text-2xl font-semibold text-[#1A3B47]">Delivery Address</h2>
+                <h2 className="text-2xl font-semibold text-[#1A3B47]">
+                  Delivery Address
+                </h2>
               </div>
               {selectedAddress ? (
                 <div className="space-y-4">
                   <div className="">
-                    <h3 className="font-bold text-lg text-[#1A3B47]">{selectedAddress.locationType}</h3>
+                    <h3 className="font-bold text-lg text-[#1A3B47]">
+                      {selectedAddress.locationType}
+                    </h3>
                     <p className="text-gray-500 mt-1">
-                      {selectedAddress.streetNumber} {selectedAddress.streetName},
+                      {selectedAddress.streetNumber}{" "}
+                      {selectedAddress.streetName},
                       <br />
-                      {selectedAddress.city}, {selectedAddress.state} {selectedAddress.postalCode}
+                      {selectedAddress.city}, {selectedAddress.state}{" "}
+                      {selectedAddress.postalCode}
                     </p>
                     <div className="flex gap-2 mt-4 ml-0">
                       <Button
@@ -1043,10 +1145,15 @@ export default function CheckoutPage() {
             </div>
 
             {/* Payment Method Section */}
-            <div ref={paymentMethodRef} className="bg-white  pr-6 pl-6 pb-4 payment">
+            <div
+              ref={paymentMethodRef}
+              className="bg-white  pr-6 pl-6 pb-4 payment"
+            >
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-3xl font-bold text-gray-400">04</span>
-                <h2 className="text-2xl font-semibold text-[#1A3B47]">Payment Method</h2>
+                <h2 className="text-2xl font-semibold text-[#1A3B47]">
+                  Payment Method
+                </h2>
               </div>
 
               <RadioGroup
@@ -1055,42 +1162,60 @@ export default function CheckoutPage() {
                 className="grid grid-cols-1 sm:grid-cols-3 gap-4"
               >
                 {/* Wallet */}
-                <label htmlFor="wallet" className="flex items-center bg-gray-100 p-3 border rounded-lg cursor-pointer">
+                <label
+                  htmlFor="wallet"
+                  className="flex items-center bg-gray-100 p-3 border rounded-lg cursor-pointer"
+                >
                   <RadioGroupItem
                     value="wallet"
                     id="wallet"
                     className="w-4 h-4 rounded-full border-[#5D9297] text-[#5D9297] checked:ring-[#5D9297] checked:bg-[#5D9297] focus:ring-1 focus:ring-[#5D9297]"
                   />
                   <div>
-                    <Label htmlFor="wallet" className="text-base font-medium ml-4 text-[#1A3B47]">
+                    <Label
+                      htmlFor="wallet"
+                      className="text-base font-medium ml-4 text-[#1A3B47]"
+                    >
                       Wallet
                     </Label>
                   </div>
                 </label>
 
                 {/* Cash on Delivery */}
-                <label htmlFor="cash_on_delivery" className="flex items-center bg-gray-100 p-3 border rounded-lg cursor-pointer">
+                <label
+                  htmlFor="cash_on_delivery"
+                  className="flex items-center bg-gray-100 p-3 border rounded-lg cursor-pointer"
+                >
                   <RadioGroupItem
                     value="cash_on_delivery"
                     id="cash_on_delivery"
                     className="w-4 h-4 rounded-full border-[#5D9297] text-[#5D9297] checked:ring-[#5D9297] checked:bg-[#5D9297] focus:ring-1 focus:ring-[#5D9297]"
                   />
                   <div>
-                    <Label htmlFor="cash_on_delivery" className="text-base font-medium ml-4 text-[#1A3B47]">
+                    <Label
+                      htmlFor="cash_on_delivery"
+                      className="text-base font-medium ml-4 text-[#1A3B47]"
+                    >
                       Cash on Delivery
                     </Label>
                   </div>
                 </label>
 
                 {/* Credit Card */}
-                <label htmlFor="credit_card" className="flex items-center bg-gray-100 p-3 border rounded-lg cursor-pointer">
+                <label
+                  htmlFor="credit_card"
+                  className="flex items-center bg-gray-100 p-3 border rounded-lg cursor-pointer"
+                >
                   <RadioGroupItem
                     value="credit_card"
                     id="credit_card"
                     className="w-4 h-4 rounded-full border-[#5D9297] text-[#5D9297] checked:ring-[#5D9297] checked:bg-[#5D9297] focus:ring-1 focus:ring-[#5D9297]"
                   />
                   <div>
-                    <Label htmlFor="credit_card" className="text-base font-medium ml-4 text-[#1A3B47]">
+                    <Label
+                      htmlFor="credit_card"
+                      className="text-base font-medium ml-4 text-[#1A3B47]"
+                    >
                       Credit/Debit Card
                     </Label>
                   </div>
@@ -1109,10 +1234,9 @@ export default function CheckoutPage() {
               className="flex items-center mb-4 justify-center text-[#1A3B47] hover:text-[#388A94] transition-colors"
             >
               <ArrowLeft className="ml-6 mr-2 h-7 w-7 " />
-              <p className="text-2xl font-bold">Back to cart</p> {/* Added margin to separate text from the icon */}
-
+              <p className="text-2xl font-bold">Back to cart</p>{" "}
+              {/* Added margin to separate text from the icon */}
             </button>
-
           </div>
 
           {/* Order Summary */}
@@ -1125,7 +1249,9 @@ export default function CheckoutPage() {
               {cartItems.map((item, index) => (
                 <div
                   key={index}
-                  className={`flex justify-between ${index === cartItems.length - 1 ? 'pb-2' : ''}`}
+                  className={`flex justify-between ${
+                    index === cartItems.length - 1 ? "pb-2" : ""
+                  }`}
                 >
                   <div>
                     <p className="font-medium text-[#1A3B47]">
@@ -1138,18 +1264,26 @@ export default function CheckoutPage() {
                 </div>
               ))}
 
-
               {/* Delivery Information Section */}
               <div className="border-t pt-4">
                 <div className="mb-4">
-                  <h3 className="text-lg font-semibold text-[#1A3B47] mb-2">Delivery Information</h3>
+                  <h3 className="text-lg font-semibold text-[#1A3B47] mb-2">
+                    Delivery Information
+                  </h3>
                   <div className="">
-                    <p className="text-[#B0B0B0] text-sm font-semibold">Delivering to:</p>
+                    <p className="text-[#B0B0B0] text-sm font-semibold">
+                      Delivering to:
+                    </p>
                     {selectedAddress ? (
                       <>
-                        <p className="text-[#388A94] font-bold text-lg mb-0">{selectedAddress?.locationType}</p> {/* Location Type in bold */}
+                        <p className="text-[#388A94] font-bold text-lg mb-0">
+                          {selectedAddress?.locationType}
+                        </p>{" "}
+                        {/* Location Type in bold */}
                         <p className="text-[#1A3B47]">
-                          {selectedAddress?.streetNumber} {selectedAddress?.streetName}, {selectedAddress?.city}, {selectedAddress?.state}
+                          {selectedAddress?.streetNumber}{" "}
+                          {selectedAddress?.streetName}, {selectedAddress?.city}
+                          , {selectedAddress?.state}
                         </p>
                       </>
                     ) : (
@@ -1160,12 +1294,17 @@ export default function CheckoutPage() {
 
                 {/* Date & Time */}
                 <div className="mb-4">
-                  <h3 className="text-sm text-[#B0B0B0] font-semibold">Date & Time</h3>
+                  <h3 className="text-sm text-[#B0B0B0] font-semibold">
+                    Date & Time
+                  </h3>
 
                   {/* Estimated Delivery Date */}
                   <p className="text-[#1A3B47] font-semibold">
                     {calculateDeliveryTime(deliveryTime)}{" "}
-                    {format(calculateEstimatedDeliveryDate(deliveryType), "eee, dd MMM yyyy")}
+                    {format(
+                      calculateEstimatedDeliveryDate(deliveryType),
+                      "eee, dd MMM yyyy"
+                    )}
                   </p>
                 </div>
 
@@ -1184,12 +1323,12 @@ export default function CheckoutPage() {
         <p className="mt-1 text-[#388A94]">{form.watch("phone")}</p>
       </div> */}
 
-
-
                 {/* Subtotal and Delivery Charges */}
                 <div className="flex justify-between border-t pt-4">
                   <span className="text-[#1A3B47]">Subtotal</span>
-                  <span className="text-[#388A94] font-semibold">{formatPrice(totalAmount)}</span>
+                  <span className="text-[#388A94] font-semibold">
+                    {formatPrice(totalAmount)}
+                  </span>
                 </div>
                 <div className="flex justify-between mt-2">
                   <span className="text-[#1A3B47]">Delivery</span>
@@ -1198,17 +1337,19 @@ export default function CheckoutPage() {
                       form.watch("deliveryType") === "Express"
                         ? 4.99
                         : form.watch("deliveryType") === "Next-Same"
-                          ? 6.99
-                          : form.watch("deliveryType") === "International"
-                            ? 14.99
-                            : 2.99
+                        ? 6.99
+                        : form.watch("deliveryType") === "International"
+                        ? 14.99
+                        : 2.99
                     )}
                   </span>
                 </div>
                 {promoDetails && (
                   <div className="flex justify-between mt-2 text-green-600">
                     <span>Discount</span>
-                    <span className="font-semibold">-{formatPrice(discountAmount)}</span>
+                    <span className="font-semibold">
+                      -{formatPrice(discountAmount)}
+                    </span>
                   </div>
                 )}
 
@@ -1218,20 +1359,18 @@ export default function CheckoutPage() {
                   <span className="text-[#388A94]">
                     {formatPrice(
                       (promoDetails ? discountedTotal : totalAmount) +
-                      (form.watch("deliveryType") === "Express"
-                        ? 4.99
-                        : form.watch("deliveryType") === "Next-Same"
+                        (form.watch("deliveryType") === "Express"
+                          ? 4.99
+                          : form.watch("deliveryType") === "Next-Same"
                           ? 6.99
                           : form.watch("deliveryType") === "International"
-                            ? 14.99
-                            : 2.99)
+                          ? 14.99
+                          : 2.99)
                     )}
                   </span>
                 </div>
               </div>
-
             </div>
-
 
             {/* Promo Code Section */}
             <div className="mt-6">
@@ -1254,9 +1393,11 @@ export default function CheckoutPage() {
               {promoError && <p className="text-red-500 mt-2">{promoError}</p>}
               {promoDetails && (
                 <>
-                
-                 <p className="text-green-600 mt-2">Congratulations! You've saved {promoDetails.percentOff}% on this purchase!</p>
-                 </>
+                  <p className="text-green-600 mt-2">
+                    Congratulations! You've saved {promoDetails.percentOff}% on
+                    this purchase!
+                  </p>
+                </>
               )}
             </div>
 
@@ -1269,7 +1410,6 @@ export default function CheckoutPage() {
               Complete Purchase
             </Button>
           </div>
-
         </div>
       </div>
 
@@ -1322,7 +1462,10 @@ export default function CheckoutPage() {
           </div>
 
           <DialogFooter>
-            <Button className="bg-[#1A3B47]" onClick={() => setIsAddressDialogOpenDetail(false)}>
+            <Button
+              className="bg-[#1A3B47]"
+              onClick={() => setIsAddressDialogOpenDetail(false)}
+            >
               Close
             </Button>
           </DialogFooter>
@@ -1366,7 +1509,10 @@ export default function CheckoutPage() {
               ))}
             </div>
             <DialogFooter>
-              <Button className="bg-[#1A3B47]" onClick={() => setShowSavedAddresses(false)}>
+              <Button
+                className="bg-[#1A3B47]"
+                onClick={() => setShowSavedAddresses(false)}
+              >
                 Close
               </Button>
             </DialogFooter>
@@ -1408,19 +1554,21 @@ export default function CheckoutPage() {
           {purchaseStatus === "success" && paymentMethod === "wallet" && (
             <div className="mt-4 text-gray-600">
               <p>
-                <strong>Amount Paid: </strong>  {formatPrice(
-                      (promoDetails ? discountedTotal : totalAmount) +
-                      (form.watch("deliveryType") === "Express"
-                        ? 4.99
-                        : form.watch("deliveryType") === "Next-Same"
-                          ? 6.99
-                          : form.watch("deliveryType") === "International"
-                            ? 14.99
-                            : 2.99)
-                    )}
+                <strong>Amount Paid: </strong>{" "}
+                {formatPrice(
+                  (promoDetails ? discountedTotal : totalAmount) +
+                    (form.watch("deliveryType") === "Express"
+                      ? 4.99
+                      : form.watch("deliveryType") === "Next-Same"
+                      ? 6.99
+                      : form.watch("deliveryType") === "International"
+                      ? 14.99
+                      : 2.99)
+                )}
               </p>
               <p>
-                <strong>New Wallet Balance: </strong>{formatPrice(tourist.wallet)}
+                <strong>New Wallet Balance: </strong>
+                {formatPrice(tourist.wallet)}
               </p>
             </div>
           )}
@@ -1450,8 +1598,6 @@ export default function CheckoutPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-
 
       <Dialog open={isAddressDialogOpen} onOpenChange={setIsAddressDialogOpen}>
         <DialogContent className="sm:max-w-[600px]">

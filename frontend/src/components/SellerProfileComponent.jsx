@@ -16,10 +16,29 @@ import { Modal } from "@/components/Modal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Toast, ToastClose, ToastDescription, ToastTitle, ToastProvider, ToastViewport } from "@/components/ui/toast";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastTitle,
+  ToastProvider,
+  ToastViewport,
+} from "@/components/ui/toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import PasswordChanger from "@/components/Passwords";
 
 const phoneValidator = (value) => {
@@ -44,7 +63,9 @@ const SkeletonLoader = () => {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-2">Account</h1>
-      <p className="text-sm text-gray-500 mb-2">Settings and Privacy / Account</p>
+      <p className="text-sm text-gray-500 mb-2">
+        Settings and Privacy / Account
+      </p>
       <div className="container mx-auto px-4 py-8">
         <div className="animate-pulse">
           <div className="grid grid-cols-12 gap-6">
@@ -85,7 +106,6 @@ const SkeletonLoader = () => {
                       <div className="w-16 h-4 bg-gray-200 rounded-md animate-pulse"></div>
                       <div className="w-3/4 h-6 bg-gray-200 rounded-md animate-pulse"></div>
                     </div>
-
                   </div>
                 </div>
               </CardContent>
@@ -101,7 +121,10 @@ const SkeletonLoader = () => {
                 <div className="flex flex-col max-h-[230px] overflow-y-auto">
                   <div className="space-y-4 p-4">
                     {[...Array(5)].map((_, index) => (
-                      <div key={index} className="flex items-center gap-4 animate-pulse">
+                      <div
+                        key={index}
+                        className="flex items-center gap-4 animate-pulse"
+                      >
                         <div className="flex flex-col gap-2">
                           <div className="w-40 h-4 bg-gray-200 rounded-md"></div>
                           <div className="w-24 h-3 bg-gray-200 rounded-md"></div>
@@ -133,8 +156,8 @@ export function SellerProfileComponent() {
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
   const [base64Image, setBase64Image] = useState(null);
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('success');
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
   const [notifications, setNotifications] = useState([]);
   const [loadingNotifications, setLoadingNotifications] = useState(true);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -146,7 +169,7 @@ export function SellerProfileComponent() {
       try {
         const token = Cookies.get("jwt");
         const role = getUserRole();
-        const api = `http://localhost:4000/${role}`;
+        const api = `https://trip-genie-apis.vercel.app/${role}`;
         const response = await axios.get(api, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -178,7 +201,7 @@ export function SellerProfileComponent() {
     try {
       setLoadingNotifications(true);
       const response = await axios.get(
-        `http://localhost:4000/seller/notifications`,
+        `https://trip-genie-apis.vercel.app/seller/notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -202,7 +225,7 @@ export function SellerProfileComponent() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  const showToast = (message, type = 'success') => {
+  const showToast = (message, type = "success") => {
     setToastMessage(message);
     setToastType(type);
     setIsToastOpen(true);
@@ -279,7 +302,7 @@ export function SellerProfileComponent() {
       formData.append("mobile", "+" + mobile);
       formData.append("description", description || "");
 
-      const api = `http://localhost:4000/${role}`;
+      const api = `https://trip-genie-apis.vercel.app/${role}`;
       const response = await axios.put(api, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -292,7 +315,7 @@ export function SellerProfileComponent() {
         setSeller(response.data.seller);
         setIsEditing(false);
         setError("");
-        showToast("Profile updated successfully", 'success');
+        showToast("Profile updated successfully", "success");
       }
     } catch (err) {
       if (err.response.data.message === "Email already exists") {
@@ -307,7 +330,7 @@ export function SellerProfileComponent() {
 
   const handlePasswordChangeSuccess = (message) => {
     setIsPasswordModalOpen(false);
-    showToast(message, 'success');
+    showToast(message, "success");
   };
 
   if (loading) {
@@ -336,7 +359,9 @@ export function SellerProfileComponent() {
     <ToastProvider>
       <div>
         <h1 className="text-3xl font-bold mb-2">Account</h1>
-        <p className="text-sm text-gray-500 mb-2">Settings and Privacy / Account</p>
+        <p className="text-sm text-gray-500 mb-2">
+          Settings and Privacy / Account
+        </p>
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-12 gap-6">
             {/* Profile Picture and Info Card - 8 columns */}
@@ -420,10 +445,16 @@ export function SellerProfileComponent() {
                               name="username"
                               value={editedSeller.username}
                               onChange={handleInputChange}
-                              className={validationMessages.username ? "border-red-500" : ""}
+                              className={
+                                validationMessages.username
+                                  ? "border-red-500"
+                                  : ""
+                              }
                             />
                             {validationMessages.username && (
-                              <p className="text-red-500 text-xs mt-1">{validationMessages.username}</p>
+                              <p className="text-red-500 text-xs mt-1">
+                                {validationMessages.username}
+                              </p>
                             )}
                           </div>
                         ) : (
@@ -434,7 +465,9 @@ export function SellerProfileComponent() {
                               ) : (
                                 <X className="w-5 h-5 text-[#F88C33]" />
                               )}
-                              <h2 className="text-xl font-bold ml-1">{seller.username}</h2>
+                              <h2 className="text-xl font-bold ml-1">
+                                {seller.username}
+                              </h2>
                             </div>
                           </div>
                         )}
@@ -446,14 +479,20 @@ export function SellerProfileComponent() {
                             name="email"
                             value={editedSeller.email}
                             onChange={handleInputChange}
-                            className={validationMessages.email ? "border-red-500" : ""}
+                            className={
+                              validationMessages.email ? "border-red-500" : ""
+                            }
                           />
                           {validationMessages.email && (
-                            <p className="text-red-500 text-xs mt-1">{validationMessages.email}</p>
+                            <p className="text-red-500 text-xs mt-1">
+                              {validationMessages.email}
+                            </p>
                           )}
                         </div>
                       ) : (
-                        <p className="text-sm text-gray-500 mt-1">{seller.email}</p>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {seller.email}
+                        </p>
                       )}
                     </div>
                     <Separator />
@@ -503,10 +542,14 @@ export function SellerProfileComponent() {
                               name="name"
                               value={editedSeller.name}
                               onChange={handleInputChange}
-                              className={validationMessages.name ? "border-red-500" : ""}
+                              className={
+                                validationMessages.name ? "border-red-500" : ""
+                              }
                             />
                             {validationMessages.name && (
-                              <p className="text-red-500 text-xs mt-1">{validationMessages.name}</p>
+                              <p className="text-red-500 text-xs mt-1">
+                                {validationMessages.name}
+                              </p>
                             )}
                           </div>
                         ) : (
@@ -521,22 +564,32 @@ export function SellerProfileComponent() {
                               country="eg"
                               value={editedSeller.mobile}
                               onChange={(value) =>
-                                handleInputChange({ target: { name: 'mobile', value } })
+                                handleInputChange({
+                                  target: { name: "mobile", value },
+                                })
                               }
                               inputProps={{
-                                name: 'mobile',
+                                name: "mobile",
                                 required: true,
-                                className: `w-full pt-2 pb-2 pl-11 text-sm ${validationMessages.mobile ? 'border-red-500' : 'border-gray-300'}`,
+                                className: `w-full pt-2 pb-2 pl-11 text-sm ${
+                                  validationMessages.mobile
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                }`,
                               }}
                               containerClass="w-full"
                               disableDropdown={false}
                             />
                             {validationMessages.mobile && (
-                              <span className="text-red-500 text-xs">{validationMessages.mobile}</span>
+                              <span className="text-red-500 text-xs">
+                                {validationMessages.mobile}
+                              </span>
                             )}
                           </div>
                         ) : (
-                          <p className="text-sm font-medium">+{seller.mobile}</p>
+                          <p className="text-sm font-medium">
+                            +{seller.mobile}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -555,10 +608,11 @@ export function SellerProfileComponent() {
                           className="resize-none" // Prevents resizing for consistency
                         />
                       ) : (
-                        <p className="text-sm font-medium">{seller.description.substring(0, 600)}</p>
+                        <p className="text-sm font-medium">
+                          {seller.description.substring(0, 600)}
+                        </p>
                       )}
                     </div>
-
                   </div>
                 </div>
               </CardContent>
@@ -571,7 +625,9 @@ export function SellerProfileComponent() {
                     <Button
                       variant="ghost"
                       className="text-sm text-[#388A94] p-2"
-                      onClick={() => (window.location.href = "/account/notifications")}
+                      onClick={() =>
+                        (window.location.href = "/account/notifications")
+                      }
                     >
                       View All
                     </Button>
@@ -583,7 +639,10 @@ export function SellerProfileComponent() {
                   {loadingNotifications ? (
                     <div className="space-y-4 p-4">
                       {[...Array(5)].map((_, index) => (
-                        <div key={index} className="flex items-center gap-4 animate-pulse">
+                        <div
+                          key={index}
+                          className="flex items-center gap-4 animate-pulse"
+                        >
                           <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
                           <div className="flex flex-col gap-2">
                             <div className="w-40 h-4 bg-gray-200 rounded-md"></div>
@@ -602,7 +661,9 @@ export function SellerProfileComponent() {
                         <li
                           key={index}
                           className="p-2 hover:bg-gray-50 transition-colors relative cursor-pointer flex flex-col gap-1"
-                          onClick={() => (window.location.href = "/account/notifications")}
+                          onClick={() =>
+                            (window.location.href = "/account/notifications")
+                          }
                         >
                           <div
                             className="text-[#1A3B47] text-sm truncate"
@@ -610,7 +671,9 @@ export function SellerProfileComponent() {
                               __html: notification.body.slice(0, 30) + "...",
                             }}
                           ></div>
-                          <p className="text-xs text-gray-500">{formatDate(notification.date)}</p>
+                          <p className="text-xs text-gray-500">
+                            {formatDate(notification.date)}
+                          </p>
                         </li>
                       ))}
                     </ul>
@@ -629,10 +692,17 @@ export function SellerProfileComponent() {
           currentImage={logo ? (logo.public_id ? base64Image : logo) : null}
         />
         <div className="mt-4 flex justify-end space-x-2">
-          <Button onClick={handleFirstSave} className="bg-[#1A3B47] hover:bg-[#142B36] text-white px-4 py-2 rounded">
+          <Button
+            onClick={handleFirstSave}
+            className="bg-[#1A3B47] hover:bg-[#142B36] text-white px-4 py-2 rounded"
+          >
             Save
           </Button>
-          <Button onClick={closeModal} variant="destructive" className="bg-[#A3A3A3] hover:bg-[#7E7E7E] text-white px-4 py-2 rounded">
+          <Button
+            onClick={closeModal}
+            variant="destructive"
+            className="bg-[#A3A3A3] hover:bg-[#7E7E7E] text-white px-4 py-2 rounded"
+          >
             Close
           </Button>
         </div>
@@ -643,7 +713,10 @@ export function SellerProfileComponent() {
         isImageViewer={true}
         imageUrl={logo?.url || logo}
       />
-      <Modal show={isPasswordModalOpen} onClose={() => setIsPasswordModalOpen(false)}>
+      <Modal
+        show={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+      >
         <PasswordChanger onSuccess={handlePasswordChangeSuccess} />
       </Modal>
       {isToastOpen && (
@@ -651,16 +724,18 @@ export function SellerProfileComponent() {
           onOpenChange={setIsToastOpen}
           open={isToastOpen}
           duration={1500}
-          className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+          className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
         >
           <div className="flex items-center">
-            {toastType === 'success' ? (
+            {toastType === "success" ? (
               <CheckCircle className="text-green-500 mr-2" />
             ) : (
               <X className="text-red-500 mr-2" />
             )}
             <div>
-              <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
+              <ToastTitle>
+                {toastType === "success" ? "Success" : "Error"}
+              </ToastTitle>
               <ToastDescription>{toastMessage}</ToastDescription>
             </div>
           </div>

@@ -66,9 +66,8 @@ const ProductReport = () => {
   const [totalAppRevenue, setAppTotalRevenue] = useState(0);
   const [selectedPeriodRevenue, setSelectedPeriodRevenue] = useState(0);
   const [isFiltering, setIsFiltering] = useState(false);
-  const[isLoading,setIsLoading]= useState(false);
-  const[error,setError]=useState(null);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const getUserRole = () => {
     let role = Cookies.get("role");
@@ -83,7 +82,9 @@ const ProductReport = () => {
         const token = Cookies.get("jwt");
         const role = getUserRole();
         const { day, month, year } = filters;
-        const url = new URL(`http://localhost:4000/${role}/sales-report`);
+        const url = new URL(
+          `https://trip-genie-apis.vercel.app/${role}/sales-report`
+        );
         if (day) url.searchParams.append("day", day);
         if (month) url.searchParams.append("month", month);
         if (year) url.searchParams.append("year", year);
@@ -118,7 +119,7 @@ const ProductReport = () => {
             )
           : response.data.sellerProductsSales;
         setFilteredSales(filteredData);
-       setIsLoading(false);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching sales report:", error);
         setError("Error fetching sales report");
@@ -261,11 +262,8 @@ const ProductReport = () => {
       : salesReport.sellerProductsSales;
     setFilteredSales(filteredData);
   };
-  
 
-
-
-   const LoadingSkeleton = () => {
+  const LoadingSkeleton = () => {
     return (
       <div className="p-6 bg-gray-100 min-h-screen animate-pulse">
         <div className="max-w-7xl mx-auto">
@@ -277,7 +275,7 @@ const ProductReport = () => {
               <div className="h-4 w-3/4 bg-gray-300 mb-2 rounded mx-auto"></div>
               <div className="h-4 w-1/2 bg-gray-300 rounded mx-auto"></div>
             </div>
-  
+
             <div className="md:col-span-3 flex flex-col gap-4">
               {/* Monthly Sales Skeleton - This Month */}
               <div className="bg-white p-4 rounded-lg shadow">
@@ -290,14 +288,14 @@ const ProductReport = () => {
                 <div className="h-5 w-2/3 bg-gray-300 rounded"></div>
               </div>
             </div>
-  
+
             {/* Sales Analytics Skeleton */}
             <div className="md:col-span-6 bg-white p-4 rounded-lg shadow">
               <div className="h-5 w-1/4 bg-gray-300 mb-4 rounded"></div>
               <div className="h-48 w-full bg-gray-300 rounded"></div>
             </div>
           </div>
-  
+
           {/* Sales Report Skeleton */}
           <div className="bg-white rounded-lg shadow p-4">
             <div className="flex justify-between items-center mb-4">
@@ -336,11 +334,10 @@ const ProductReport = () => {
         </div>
       </div>
     );
-   }
-   //if (!salesReport) return <div className="p-6 text-center"></div>;
-   
-   if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
- 
+  };
+  //if (!salesReport) return <div className="p-6 text-center"></div>;
+
+  if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
 
   const fillPercentage = (selectedPeriodRevenue / totalAppRevenue) * 100;
 
@@ -367,196 +364,193 @@ const ProductReport = () => {
       ? 100
       : ((thisMonthSales - lastMonthSales) / lastMonthSales) * 100;
 
-      return (
-        <div className="bg-gray-100 min-h-screen">
-          <div className="">
-            <Card>
-              <CardHeader className="p-4">
-                <div className="flex justify-between items-center">
-                  <CardTitle className="text-xl font-bold text-[#1A3B47]">
-                    Sales Report
-                  </CardTitle>
-                  <button
-                    onClick={resetFilters}
-                    className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-                  >
-                    Clear all filters
-                  </button>
-                </div>
-              </CardHeader>
-              <CardContent className="">
-                <div className="flex flex-wrap gap-4 mb-4">
-                  <Select
-                    value={filters.product}
-                    onValueChange={(value) =>
-                      setFilters((prev) => ({ ...prev, product: value }))
-                    }
-                  >
-                    <SelectTrigger className="w-full sm:w-[200px]">
-                      <SelectValue placeholder="Select product" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {productNames.map((name, index) => (
-                        <SelectItem key={index} value={name}>
-                          {name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Select
-                    value={filters.year}
-                    onValueChange={(value) =>
-                      setFilters((prev) => ({
-                        ...prev,
-                        year: value,
-                        month: "",
-                        day: "",
-                      }))
-                    }
-                  >
-                    <SelectTrigger className="w-full sm:w-[200px]">
-                      <SelectValue placeholder="Select year" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Array.from(
-                        { length: 10 },
-                        (_, i) => new Date().getFullYear() - i
-                      ).map((year) => (
-                        <SelectItem key={year} value={year.toString()}>
-                          {year}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Select
-                    value={filters.month}
-                    onValueChange={(value) =>
-                      setFilters((prev) => ({ ...prev, month: value, day: "" }))
-                    }
-                    disabled={!filters.year}
-                  >
-                    <SelectTrigger className="w-full sm:w-[200px]">
-                      <SelectValue placeholder="Select month" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Array.from({ length: 12 }, (_, i) => (
-                        <SelectItem key={i + 1} value={(i + 1).toString()}>
-                          {format(new Date(2024, i), "MMMM")}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Select
-                    value={filters.day}
-                    onValueChange={(value) =>
-                      setFilters((prev) => ({ ...prev, day: value }))
-                    }
-                    disabled={!filters.year || !filters.month}
-                  >
-                    <SelectTrigger className="w-full sm:w-[200px]">
-                      <SelectValue placeholder="Select day" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Array.from(
-                        {
-                          length:
-                            filters.year && filters.month
-                              ? getDaysInMonth(
-                                  new Date(
-                                    parseInt(filters.year),
-                                    parseInt(filters.month) - 1
-                                  )
-                                )
-                              : 31,
-                        },
-                        (_, i) => (
-                          <SelectItem key={i + 1} value={(i + 1).toString()}>
-                            {i + 1}
-                          </SelectItem>
-                        )
-                      )}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="overflow-hidden">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
-                          Product
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Sales
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Revenue
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          App Revenue
-                        </th>
+  return (
+    <div className="bg-gray-100 min-h-screen">
+      <div className="">
+        <Card>
+          <CardHeader className="p-4">
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-xl font-bold text-[#1A3B47]">
+                Sales Report
+              </CardTitle>
+              <button
+                onClick={resetFilters}
+                className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                Clear all filters
+              </button>
+            </div>
+          </CardHeader>
+          <CardContent className="">
+            <div className="flex flex-wrap gap-4 mb-4">
+              <Select
+                value={filters.product}
+                onValueChange={(value) =>
+                  setFilters((prev) => ({ ...prev, product: value }))
+                }
+              >
+                <SelectTrigger className="w-full sm:w-[200px]">
+                  <SelectValue placeholder="Select product" />
+                </SelectTrigger>
+                <SelectContent>
+                  {productNames.map((name, index) => (
+                    <SelectItem key={index} value={name}>
+                      {name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={filters.year}
+                onValueChange={(value) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    year: value,
+                    month: "",
+                    day: "",
+                  }))
+                }
+              >
+                <SelectTrigger className="w-full sm:w-[200px]">
+                  <SelectValue placeholder="Select year" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Array.from(
+                    { length: 10 },
+                    (_, i) => new Date().getFullYear() - i
+                  ).map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={filters.month}
+                onValueChange={(value) =>
+                  setFilters((prev) => ({ ...prev, month: value, day: "" }))
+                }
+                disabled={!filters.year}
+              >
+                <SelectTrigger className="w-full sm:w-[200px]">
+                  <SelectValue placeholder="Select month" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <SelectItem key={i + 1} value={(i + 1).toString()}>
+                      {format(new Date(2024, i), "MMMM")}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={filters.day}
+                onValueChange={(value) =>
+                  setFilters((prev) => ({ ...prev, day: value }))
+                }
+                disabled={!filters.year || !filters.month}
+              >
+                <SelectTrigger className="w-full sm:w-[200px]">
+                  <SelectValue placeholder="Select day" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Array.from(
+                    {
+                      length:
+                        filters.year && filters.month
+                          ? getDaysInMonth(
+                              new Date(
+                                parseInt(filters.year),
+                                parseInt(filters.month) - 1
+                              )
+                            )
+                          : 31,
+                    },
+                    (_, i) => (
+                      <SelectItem key={i + 1} value={(i + 1).toString()}>
+                        {i + 1}
+                      </SelectItem>
+                    )
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="overflow-hidden">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+                      Product
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Sales
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Revenue
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      App Revenue
+                    </th>
+                  </tr>
+                </thead>
+                {isLoading ? (
+                  <thead className="bg-gray-50">
+                    {/* 6 more rows of pulsing lines with more space and bigger size */}
+                    {[...Array(6)].map((_, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {[1, 2, 3, 4].map((i) => (
+                          <th key={i} className="px-6 py-3">
+                            <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
+                          </th>
+                        ))}
                       </tr>
-                    </thead>
-                    {isLoading ? (
-  <thead className="bg-gray-50">
-    
-
-    {/* 6 more rows of pulsing lines with more space and bigger size */}
-    {[...Array(6)].map((_, rowIndex) => (
-      <tr key={rowIndex}>
-        {[1, 2, 3,4].map((i) => (
-          <th key={i} className="px-6 py-3">
-            <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
-          </th>
-        ))}
-      </tr>
-    ))}
-  </thead>
-) : (
-                    <AnimatePresence mode="wait">
-                      {!isFiltering && (
-                        <motion.tbody
-                          key="table-body"
-                          className="bg-white divide-y divide-gray-200"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          {filteredSales.map((item, index) => (
-                            <motion.tr
-                              key={index}
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -20 }}
-                              transition={{ duration: 0.2, delay: index * 0.05 }}
-                            >
-                              <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
-                                {item.product ? item.product.name : "N/A"}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {item.sales}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {item.revenue !== null &&
-                                  `$${item.revenue.toFixed(2)}`}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                ${item.appRevenue.toFixed(2)}
-                              </td>
-                            </motion.tr>
-                          ))}
-                        </motion.tbody>
-                      )}
-                    </AnimatePresence>
-)}
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      );
-    };
-    
+                    ))}
+                  </thead>
+                ) : (
+                  <AnimatePresence mode="wait">
+                    {!isFiltering && (
+                      <motion.tbody
+                        key="table-body"
+                        className="bg-white divide-y divide-gray-200"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {filteredSales.map((item, index) => (
+                          <motion.tr
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.2, delay: index * 0.05 }}
+                          >
+                            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {item.product ? item.product.name : "N/A"}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {item.sales}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {item.revenue !== null &&
+                                `$${item.revenue.toFixed(2)}`}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              ${item.appRevenue.toFixed(2)}
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </motion.tbody>
+                    )}
+                  </AnimatePresence>
+                )}
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+};
 
 export default ProductReport;

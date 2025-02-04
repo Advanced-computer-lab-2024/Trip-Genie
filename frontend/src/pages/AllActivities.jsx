@@ -71,128 +71,133 @@ const DeleteConfirmationModal = ({
 let exchangeRateForFilter = 1;
 const role = Cookies.get("role");
 
-const ActivityCard = React.memo(({
-  activity,
-  onSelect,
-  userInfo,
-  exchangeRates,
-  currencies,
-  onDeleteConfirm,
-  setShowDeleteConfirm,
-}) => {
-  const formatPrice = useCallback(
-    (price) => {
-      if (!userInfo || !price) return "";
+const ActivityCard = React.memo(
+  ({
+    activity,
+    onSelect,
+    userInfo,
+    exchangeRates,
+    currencies,
+    onDeleteConfirm,
+    setShowDeleteConfirm,
+  }) => {
+    const formatPrice = useCallback(
+      (price) => {
+        if (!userInfo || !price) return "";
 
-      if (userInfo.role === "tourist" && userInfo.preferredCurrency) {
-        const baseRate = exchangeRates[activity.currency] || 1;
-        const targetRate = exchangeRates[userInfo.preferredCurrency.code] || 1;
-        const exchangedPrice = (price / baseRate) * targetRate;
-        exchangeRateForFilter = targetRate / baseRate;
-        return `${userInfo.preferredCurrency.symbol}${exchangedPrice.toFixed(
-          2
-        )}`;
-      } else {
-        const currency = currencies.find((c) => c._id === activity.currency);
-        return `${currency ? currency.symbol : "$"}${price}`;
-      }
-    },
-    [userInfo, exchangeRates, currencies, activity.currency]
-  );
+        if (userInfo.role === "tourist" && userInfo.preferredCurrency) {
+          const baseRate = exchangeRates[activity.currency] || 1;
+          const targetRate =
+            exchangeRates[userInfo.preferredCurrency.code] || 1;
+          const exchangedPrice = (price / baseRate) * targetRate;
+          exchangeRateForFilter = targetRate / baseRate;
+          return `${userInfo.preferredCurrency.symbol}${exchangedPrice.toFixed(
+            2
+          )}`;
+        } else {
+          const currency = currencies.find((c) => c._id === activity.currency);
+          return `${currency ? currency.symbol : "$"}${price}`;
+        }
+      },
+      [userInfo, exchangeRates, currencies, activity.currency]
+    );
 
-  return (
-    <Card
-      className="overflow-hidden cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
-      onClick={() => onSelect(activity._id)}
-    >
-      <div className="relative aspect-video overflow-hidden">
-        <img
-          src={
-            activity.pictures && activity.pictures.length > 0
-              ? activity.pictures[0]?.url
-              : defaultImage
-          }
-          alt={"hiii"}
-          className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
-        />
+    return (
+      <Card
+        className="overflow-hidden cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
+        onClick={() => onSelect(activity._id)}
+      >
+        <div className="relative aspect-video overflow-hidden">
+          <img
+            src={
+              activity.pictures && activity.pictures.length > 0
+                ? activity.pictures[0]?.url
+                : defaultImage
+            }
+            alt={"hiii"}
+            className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+          />
 
-        {role === "advertiser" && userInfo.userId === activity.advertiser && (
-          <div className="absolute top-2 right-2 flex space-x-2">
-            <button
-              className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.location.href = `/update-activity/${activity._id}`;
-              }}
-              aria-label="Edit activity"
-            >
-              <Edit className="h-4 w-4" />
-            </button>
-            <button
-              className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
-              onClick={(e) => {
-                e.stopPropagation();
-                c;
-                onDeleteConfirm(activity._id, activity.name);
-              }}
-              aria-label="Delete activity"
-            >
-              <Trash2 className="h-4 w-4" />
-            </button>
+          {role === "advertiser" && userInfo.userId === activity.advertiser && (
+            <div className="absolute top-2 right-2 flex space-x-2">
+              <button
+                className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.location.href = `/update-activity/${activity._id}`;
+                }}
+                aria-label="Edit activity"
+              >
+                <Edit className="h-4 w-4" />
+              </button>
+              <button
+                className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  c;
+                  onDeleteConfirm(activity._id, activity.name);
+                }}
+                aria-label="Delete activity"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+          )}
+        </div>
+        <CardHeader className="p-4">
+          <CardTitle className="text-xl font-semibold">
+            {activity.name}
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            {activity.location.address}
+          </p>
+        </CardHeader>
+        <CardContent className="p-4 pt-0 space-y-2">
+          <div className="flex items-center space-x-1">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                className={`h-4 w-4 ${
+                  i < activity.rating
+                    ? "text-[#F88C33] fill-[#F88C33]"
+                    : "text-gray-300"
+                }`}
+              />
+            ))}
+            <span className="text-sm text-muted-foreground ml-1">
+              {activity.rating.toFixed(1)}
+            </span>
           </div>
-        )}
-      </div>
-      <CardHeader className="p-4">
-        <CardTitle className="text-xl font-semibold">{activity.name}</CardTitle>
-        <p className="text-sm text-muted-foreground">
-          {activity.location.address}
-        </p>
-      </CardHeader>
-      <CardContent className="p-4 pt-0 space-y-2">
-        <div className="flex items-center space-x-1">
-          {[...Array(5)].map((_, i) => (
-            <Star
-              key={i}
-              className={`h-4 w-4 ${
-                i < activity.rating
-                  ? "text-[#F88C33] fill-[#F88C33]"
-                  : "text-gray-300"
-              }`}
-            />
-          ))}
-          <span className="text-sm text-muted-foreground ml-1">
-            {activity.rating.toFixed(1)}
-          </span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-lg font-bold text-primary">
-            {formatPrice(activity.price)}
-          </span>
-          <span className="text-sm text-muted-foreground">
-            {activity.duration} hours
-          </span>
-        </div>
-        <p className="text-sm text-muted-foreground">
-          {new Date(activity.timing).toLocaleDateString()}
-        </p>
-      </CardContent>
-      <CardFooter className="p-4 pt-0">
-        <div className="flex flex-wrap gap-2">
-          {activity.tags.map((tag, index) => (
-            <Badge key={index} variant="outline">
-              {tag.type}
-            </Badge>
-          ))}
-          {activity.category.map((cat, index) => (
-            <Badge key={index} variant="secondary">
-              {cat.name}
-            </Badge>
-          ))}
-        </div>
-      </CardFooter>
-    </Card>
-  );
-});
+          <div className="flex justify-between items-center">
+            <span className="text-lg font-bold text-primary">
+              {formatPrice(activity.price)}
+            </span>
+            <span className="text-sm text-muted-foreground">
+              {activity.duration} hours
+            </span>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            {new Date(activity.timing).toLocaleDateString()}
+          </p>
+        </CardContent>
+        <CardFooter className="p-4 pt-0">
+          <div className="flex flex-wrap gap-2">
+            {activity.tags.map((tag, index) => (
+              <Badge key={index} variant="outline">
+                {tag.type}
+              </Badge>
+            ))}
+            {activity.category.map((cat, index) => (
+              <Badge key={index} variant="secondary">
+                {cat.name}
+              </Badge>
+            ))}
+          </div>
+        </CardFooter>
+      </Card>
+    );
+  }
+);
 
 export function AllActivitiesComponent() {
   const [activities, setActivities] = useState([]);
@@ -235,7 +240,9 @@ export function AllActivitiesComponent() {
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:4000/rates");
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/rates"
+      );
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -247,7 +254,7 @@ export function AllActivitiesComponent() {
     if (role !== "tourist") return;
     try {
       const response = await axios.get(
-        "http://localhost:4000/tourist/currencies",
+        "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -264,13 +271,16 @@ export function AllActivitiesComponent() {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -381,7 +391,7 @@ export function AllActivitiesComponent() {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/getAllCategories"
+          "https://trip-genie-apis.vercel.app/api/getAllCategories"
         );
         setCategoryOptions(response.data);
       } catch (error) {
@@ -426,7 +436,7 @@ export function AllActivitiesComponent() {
 
       if (role === "tourist" && !isInitialized) {
         const preferredActivities = await fetch(
-          "http://localhost:4000/tourist/activities-preference",
+          "https://trip-genie-apis.vercel.app/tourist/activities-preference",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -435,7 +445,7 @@ export function AllActivitiesComponent() {
         ).then((res) => res.json());
 
         const otherActivities = await fetch(
-          "http://localhost:4000/tourist/activities-not-preference",
+          "https://trip-genie-apis.vercel.app/tourist/activities-not-preference",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -447,7 +457,9 @@ export function AllActivitiesComponent() {
         setIsSortedByPreference(true);
         setIsInitialized(true);
       } else {
-        const url = new URL(`http://localhost:4000/${role}/activities`);
+        const url = new URL(
+          `https://trip-genie-apis.vercel.app/${role}/activities`
+        );
         const response = await fetch(url, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -476,7 +488,9 @@ export function AllActivitiesComponent() {
     const role = getUserRole();
     // console.log("Role:", role);
     const token = Cookies.get("jwt");
-    const url = new URL(`http://localhost:4000/${role}/maxPriceActivities`);
+    const url = new URL(
+      `https://trip-genie-apis.vercel.app/${role}/maxPriceActivities`
+    );
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -500,7 +514,9 @@ export function AllActivitiesComponent() {
 
     try {
       const role = getUserRole();
-      const url = new URL(`http://localhost:4000/${role}/activities`);
+      const url = new URL(
+        `https://trip-genie-apis.vercel.app/${role}/activities`
+      );
       if (myActivities) {
         url.searchParams.append("myActivities", myActivities);
       }
@@ -575,7 +591,7 @@ export function AllActivitiesComponent() {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${role}/activities/${activityToDelete.id}`,
+        `https://trip-genie-apis.vercel.app/${role}/activities/${activityToDelete.id}`,
         {
           method: "DELETE",
           headers: {
@@ -624,7 +640,7 @@ export function AllActivitiesComponent() {
 
       if (role === "tourist") {
         const preferredActivities = await fetch(
-          "http://localhost:4000/tourist/activities-preference",
+          "https://trip-genie-apis.vercel.app/tourist/activities-preference",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -633,7 +649,7 @@ export function AllActivitiesComponent() {
         ).then((res) => res.json());
 
         const otherActivities = await fetch(
-          "http://localhost:4000/tourist/activities-not-preference",
+          "https://trip-genie-apis.vercel.app/tourist/activities-not-preference",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -644,7 +660,9 @@ export function AllActivitiesComponent() {
         setActivities([...preferredActivities, ...otherActivities]);
         setIsSortedByPreference(true);
       } else {
-        const url = new URL(`http://localhost:4000/${role}/activities`);
+        const url = new URL(
+          `https://trip-genie-apis.vercel.app/${role}/activities`
+        );
         const response = await fetch(url, {
           headers: {
             Authorization: `Bearer ${token}`,

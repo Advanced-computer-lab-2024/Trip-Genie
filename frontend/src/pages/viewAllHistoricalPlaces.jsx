@@ -66,7 +66,7 @@ const HistoricalPlaceCard = ({
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/populate`,
+        `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
           headers: {
@@ -94,7 +94,7 @@ const HistoricalPlaceCard = ({
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/${userRole}/getCurrency/${historicalPlace.currency}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${historicalPlace.currency}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -268,13 +268,16 @@ export default function AllHistoricalPlacesComponent() {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setUserInfo(response.data);
         const currencyId = response.data.preferredCurrency;
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -291,11 +294,11 @@ export default function AllHistoricalPlacesComponent() {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      let url = `http://localhost:4000/${role}/historical-places`;
+      let url = `https://trip-genie-apis.vercel.app/${role}/historical-places`;
 
       if (sortByPreference && role === "tourist") {
         const preferredResponse = await fetch(
-          "http://localhost:4000/tourist/historical-places-preference",
+          "https://trip-genie-apis.vercel.app/tourist/historical-places-preference",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -305,7 +308,7 @@ export default function AllHistoricalPlacesComponent() {
         const preferredData = await preferredResponse.json();
 
         const notPreferredResponse = await fetch(
-          "http://localhost:4000/tourist/historical-places-not-preference",
+          "https://trip-genie-apis.vercel.app/tourist/historical-places-not-preference",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -341,7 +344,9 @@ export default function AllHistoricalPlacesComponent() {
     setIsLoading(true);
     try {
       const [typesResponse] = await Promise.all([
-        axios.get("http://localhost:4000/api/getAllHistoricalTypes"),
+        axios.get(
+          "https://trip-genie-apis.vercel.app/api/getAllHistoricalTypes"
+        ),
       ]);
       setTypesOptions(typesResponse.data);
       setIsLoading(false);
@@ -385,7 +390,7 @@ export default function AllHistoricalPlacesComponent() {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userRole}/historical-places/${historicalPlaceToDelete.id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${historicalPlaceToDelete.id}`,
         {
           method: "DELETE",
           headers: {
@@ -417,7 +422,9 @@ export default function AllHistoricalPlacesComponent() {
     setIsLoading(true);
     try {
       const role = getUserRole();
-      const url = new URL(`http://localhost:4000/${role}/historical-places`);
+      const url = new URL(
+        `https://trip-genie-apis.vercel.app/${role}/historical-places`
+      );
       if (searchTerm) url.searchParams.append("searchBy", searchTerm);
       if (selectedTypes.length > 0)
         url.searchParams.append("types", selectedTypes.join(","));

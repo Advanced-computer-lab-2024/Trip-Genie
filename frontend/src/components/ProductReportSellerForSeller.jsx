@@ -67,7 +67,7 @@ const ProductReport = () => {
     useState(0);
   const [selectedPeriodRevenue, setSelectedPeriodRevenue] = useState(0);
   const [isFiltering, setIsFiltering] = useState(false);
-  const[isLoading,setIsLoading]= useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getUserRole = () => {
     let role = Cookies.get("role");
@@ -81,7 +81,9 @@ const ProductReport = () => {
       try {
         const token = Cookies.get("jwt");
         const role = getUserRole();
-        const url = new URL(`http://localhost:4000/${role}/sales-report`);
+        const url = new URL(
+          `https://trip-genie-apis.vercel.app/${role}/sales-report`
+        );
 
         ["day", "month", "year"].forEach((key) => {
           if (filters[key]) url.searchParams.append(key, filters[key]);
@@ -294,7 +296,6 @@ const ProductReport = () => {
         <div className=""></div>
       </div>
       <div className="container p-8">
-
         <Card>
           <CardHeader className="p-4">
             <div className="flex justify-between items-center">
@@ -409,84 +410,81 @@ const ProductReport = () => {
                   </tr>
                 </thead>
                 {isLoading ? (
-  <thead className="bg-gray-50">
-    
-
-    {/* 6 more rows of pulsing lines with more space and bigger size */}
-    {[...Array(6)].map((_, rowIndex) => (
-      <tr key={rowIndex}>
-        {[1, 2, 3,4].map((i) => (
-          <th key={i} className="px-6 py-3">
-            <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
-          </th>
-        ))}
-      </tr>
-    ))}
-  </thead>
-) :(
-                <AnimatePresence mode="wait">
-                  {!isFiltering && (
-                    <motion.tbody
-                      key="table-body"
-                      className="bg-white divide-y divide-gray-200"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {filteredSales.map((item, index) => (
+                  <thead className="bg-gray-50">
+                    {/* 6 more rows of pulsing lines with more space and bigger size */}
+                    {[...Array(6)].map((_, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {[1, 2, 3, 4].map((i) => (
+                          <th key={i} className="px-6 py-3">
+                            <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                ) : (
+                  <AnimatePresence mode="wait">
+                    {!isFiltering && (
+                      <motion.tbody
+                        key="table-body"
+                        className="bg-white divide-y divide-gray-200"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {filteredSales.map((item, index) => (
+                          <motion.tr
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.2, delay: index * 0.05 }}
+                          >
+                            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {item.product ? item.product.name : "N/A"}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {item.sales}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {item.revenue !== null &&
+                                `$${item.revenue.toFixed(2)}`}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              ${item.revenueAfterCommission.toFixed(2)}
+                            </td>
+                          </motion.tr>
+                        ))}
                         <motion.tr
-                          key={index}
+                          key="total-row"
+                          className="bg-gray-50 font-semibold"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -20 }}
-                          transition={{ duration: 0.2, delay: index * 0.05 }}
+                          transition={{
+                            duration: 0.2,
+                            delay: filteredSales.length * 0.05,
+                          }}
                         >
-                          <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {item.product ? item.product.name : "N/A"}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            -
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {item.sales}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            Total:{totalSales}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {item.revenue !== null &&
-                              `$${item.revenue.toFixed(2)}`}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            Total: ${totalFilteredRevenue.toFixed(2)}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            ${item.revenueAfterCommission.toFixed(2)}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            Total: $
+                            {totalFilteredRevenueAfterCommission.toFixed(2)}
                           </td>
                         </motion.tr>
-                      ))}
-                      <motion.tr
-                        key="total-row"
-                        className="bg-gray-50 font-semibold"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{
-                          duration: 0.2,
-                          delay: filteredSales.length * 0.05,
-                        }}
-                      >
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          -
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          Total:{totalSales}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          Total: ${totalFilteredRevenue.toFixed(2)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          Total: $
-                          {totalFilteredRevenueAfterCommission.toFixed(2)}
-                        </td>
-                      </motion.tr>
-                    </motion.tbody>
-                  )}
-                </AnimatePresence>)}
-  
-  
+                      </motion.tbody>
+                    )}
+                  </AnimatePresence>
+                )}
               </table>
             </div>
           </CardContent>

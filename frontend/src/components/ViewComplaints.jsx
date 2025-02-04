@@ -1,26 +1,33 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { CheckCircle, XCircle, ArrowUpDown } from 'lucide-react';
-import { format } from 'date-fns';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { CheckCircle, XCircle, ArrowUpDown } from "lucide-react";
+import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Toast, ToastClose, ToastDescription, ToastTitle, ToastProvider, ToastViewport } from "@/components/ui/toast";
-import Cookies from 'js-cookie';
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastTitle,
+  ToastProvider,
+  ToastViewport,
+} from "@/components/ui/toast";
+import Cookies from "js-cookie";
 
 export function ViewComplaints({ onSelectComplaint }) {
   const [complaints, setComplaints] = useState([]);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState("all");
-  const [sortOrder, setSortOrder] = useState('asc');
-  const [dateSortOrder, setDateSortOrder] = useState('desc');
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [dateSortOrder, setDateSortOrder] = useState("desc");
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("all");
   const [openComplaintId, setOpenComplaintId] = useState(null);
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('success');
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
 
-  const showToast = (message, type = 'success') => {
+  const showToast = (message, type = "success") => {
     setToastMessage(message);
     setToastType(type);
     setIsToastOpen(true);
@@ -32,7 +39,7 @@ export function ViewComplaints({ onSelectComplaint }) {
         setLoading(true);
         const token = Cookies.get("jwt");
         let role = Cookies.get("role") || "guest";
-        const api = `http://localhost:4000/${role}/complaints`;
+        const api = `https://trip-genie-apis.vercel.app/${role}/complaints`;
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -44,7 +51,10 @@ export function ViewComplaints({ onSelectComplaint }) {
       } catch (err) {
         setError(err.message);
         console.error("Error fetching complaints:", err);
-        showToast("Failed to fetch complaints. Please try again later.", "error");
+        showToast(
+          "Failed to fetch complaints. Please try again later.",
+          "error"
+        );
         setLoading(false);
       }
     };
@@ -57,16 +67,16 @@ export function ViewComplaints({ onSelectComplaint }) {
   };
 
   const toggleSortOrder = () => {
-    setSortOrder(prevOrder => prevOrder === 'asc' ? 'desc' : 'asc');
+    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
 
   const toggleDateSort = () => {
-    setDateSortOrder(prevOrder => prevOrder === 'asc' ? 'desc' : 'asc');
+    setDateSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
 
   const sortComplaints = (complaintsToSort) => {
     return complaintsToSort.sort((a, b) => {
-      if (dateSortOrder === 'asc') {
+      if (dateSortOrder === "asc") {
         return new Date(a.createdAt) - new Date(b.createdAt);
       } else {
         return new Date(b.createdAt) - new Date(a.createdAt);
@@ -75,16 +85,17 @@ export function ViewComplaints({ onSelectComplaint }) {
   };
 
   const filteredComplaints = complaints
-    .filter((complaint) => activeTab === "all" || complaint.status.toLowerCase() === activeTab)
+    .filter(
+      (complaint) =>
+        activeTab === "all" || complaint.status.toLowerCase() === activeTab
+    )
     .sort((a, b) => {
-      if (dateSortOrder === 'asc') {
+      if (dateSortOrder === "asc") {
         return new Date(a.createdAt) - new Date(b.createdAt);
       } else {
         return new Date(b.createdAt) - new Date(a.createdAt);
       }
-    })
-    ;
-
+    });
   if (loading) {
     return (
       <div>
@@ -135,7 +146,14 @@ export function ViewComplaints({ onSelectComplaint }) {
           <div className="bg-white border rounded-md shadow-md p-6">
             <div className="grid grid-cols-1 items-center gap-4 mb-6">
               <div className="flex justify-between items-center w-full">
-                <Tabs value={activeTab} onValueChange={(value) => { setActiveTab(value); setStatus(value); }} className="w-full">
+                <Tabs
+                  value={activeTab}
+                  onValueChange={(value) => {
+                    setActiveTab(value);
+                    setStatus(value);
+                  }}
+                  className="w-full"
+                >
                   <TabsList className="grid grid-cols-3 bg-white w-full">
                     {["all", "pending", "resolved"].map((tab) => (
                       <TabsTrigger
@@ -152,9 +170,13 @@ export function ViewComplaints({ onSelectComplaint }) {
                     ))}
                   </TabsList>
                 </Tabs>
-                <Button onClick={toggleDateSort} variant="outline" className="flex items-center gap-2 ml-4">
+                <Button
+                  onClick={toggleDateSort}
+                  variant="outline"
+                  className="flex items-center gap-2 ml-4"
+                >
                   <ArrowUpDown className="h-4 w-4" />
-                  Sort by Date ({dateSortOrder === 'asc' ? 'Oldest' : 'Newest'})
+                  Sort by Date ({dateSortOrder === "asc" ? "Oldest" : "Newest"})
                 </Button>
               </div>
             </div>
@@ -165,15 +187,19 @@ export function ViewComplaints({ onSelectComplaint }) {
                 <div key={complaint._id} className="mb-4">
                   <div
                     className={`cursor-pointer border rounded-md p-4 transition-all duration-300 ${
-                      openComplaintId === complaint._id ? "bg-gray-50 shadow-md" : "bg-white shadow-sm"
+                      openComplaintId === complaint._id
+                        ? "bg-gray-50 shadow-md"
+                        : "bg-white shadow-sm"
                     }`}
                     onClick={() => toggleAccordion(complaint._id)}
                   >
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-teal-800">{complaint.title}</h3>
+                        <h3 className="font-semibold text-teal-800">
+                          {complaint.title}
+                        </h3>
                         <span className="text-sm text-gray-500">
-                          {format(new Date(complaint.createdAt), 'MMM d, yyyy')}
+                          {format(new Date(complaint.createdAt), "MMM d, yyyy")}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -198,7 +224,11 @@ export function ViewComplaints({ onSelectComplaint }) {
                           }`}
                         >
                           {openComplaintId === complaint._id
-                            ? `${complaint.status.charAt(0).toUpperCase()}${complaint.status.slice(1).toLowerCase()}`
+                            ? `${complaint.status
+                                .charAt(0)
+                                .toUpperCase()}${complaint.status
+                                .slice(1)
+                                .toLowerCase()}`
                             : ""}
                         </div>
                       </div>
@@ -243,16 +273,18 @@ export function ViewComplaints({ onSelectComplaint }) {
           onOpenChange={setIsToastOpen}
           open={isToastOpen}
           duration={1500}
-          className={toastType === 'success' ? 'bg-green-100' : 'bg-red-100'}
+          className={toastType === "success" ? "bg-green-100" : "bg-red-100"}
         >
           <div className="flex items-center">
-            {toastType === 'success' ? (
+            {toastType === "success" ? (
               <CheckCircle className="text-green-500 mr-2" />
             ) : (
               <XCircle className="text-red-500 mr-2" />
             )}
             <div>
-              <ToastTitle>{toastType === 'success' ? 'Success' : 'Error'}</ToastTitle>
+              <ToastTitle>
+                {toastType === "success" ? "Success" : "Error"}
+              </ToastTitle>
               <ToastDescription>{toastMessage}</ToastDescription>
             </div>
           </div>
@@ -265,4 +297,3 @@ export function ViewComplaints({ onSelectComplaint }) {
 }
 
 export default ViewComplaints;
-

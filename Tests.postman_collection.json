@@ -1,1643 +1,1539 @@
 {
-	"info": {
-		"_postman_id": "4b45eeb0-aff2-457b-aa8e-8c278217d4bd",
-		"name": "Tests",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "38513772",
-		"_collection_link": "https://sam-and-aby.postman.co/workspace/Sam-and-Aby-Workspace~71afcd01-1885-4c49-8c9e-9f419f489cae/collection/38513772-4b45eeb0-aff2-457b-aa8e-8c278217d4bd?action=share&source=collection_link&creator=38513772"
-	},
-	"item": [
-		{
-			"name": "http://localhost:4000/tourist/currencies",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.expect(pm.response.code).to.equal(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is within an acceptable range\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
-							"    responseData.forEach(function(currency) {\r",
-							"        pm.expect(currency).to.have.property('_id');\r",
-							"        pm.expect(currency).to.have.property('code');\r",
-							"        pm.expect(currency).to.have.property('name');\r",
-							"        pm.expect(currency).to.have.property('symbol');\r",
-							"        pm.expect(currency).to.have.property('__v');\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Id is in a valid format\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    responseData.forEach(function(currency) {\r",
-							"        pm.expect(currency._id).to.match(/^[0-9a-fA-F]{24}$/, \"Id should be a valid ObjectId format\");\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Symbol is a non-empty string\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData).to.be.an('array');\r",
-							"  responseData.forEach(function(currency) {\r",
-							"    pm.expect(currency.symbol).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Symbol should not be empty\");\r",
-							"  });\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"paymentType\": \"CreditCard\",\r\n  \"flightID\": \"FL12345\",\r\n  \"from\": \"Cairo\",\r\n  \"to\": \"Paris\",\r\n  \"departureDate\": \"2024-12-01\",\r\n  \"arrivalDate\": \"2024-12-02\",\r\n  \"price\": 200,\r\n  \"numberOfTickets\": 1,\r\n  \"type\": \"Round Trip\",\r\n  \"returnDepartureDate\": \"2024-12-10\",\r\n  \"returnArrivalDate\": \"2024-12-11\",\r\n  \"seatType\": \"Economy\",\r\n  \"flightType\": \"Commercial\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/tourist/currencies",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourist",
-						"currencies"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/notifications",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('success');\r",
-							"    pm.expect(responseData).to.have.property('notifications');\r",
-							"    pm.expect(responseData).to.have.property('hasUnseenNotifications');\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Notifications array should exist and be an array\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData.notifications).to.exist;\r",
-							"  pm.expect(responseData.notifications).to.be.an('array');\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"\r",
-							"pm.test(\"Notifications array should exist and be an array\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData).to.be.an('object');\r",
-							"  pm.expect(responseData.notifications).to.exist.and.to.be.an('array');\r",
-							"});\r",
-							"\r",
-							"\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/admin/notifications",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"notifications"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/products",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"\r",
-							"    pm.expect(responseData).to.be.an('array');\r",
-							"    responseData.forEach(product => {\r",
-							"        pm.expect(product).to.include.all.keys(\r",
-							"            '_id', 'name', 'pictures', 'price', 'description', 'seller', 'rating', 'allRatings',\r",
-							"            'quantity', 'sales', 'currency', 'isArchived', 'isDeleted', 'reviews', 'createdAt',\r",
-							"            'updatedAt', '__v'\r",
-							"        );\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Validate the pictures array and its elements\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"\r",
-							"    pm.expect(responseData).to.be.an('array');\r",
-							"    pm.expect(responseData).to.have.lengthOf.at.least(1, \"Array should not be empty\");\r",
-							"\r",
-							"    responseData.forEach(function(product) {\r",
-							"        pm.expect(product.pictures).to.be.an('array');\r",
-							"        pm.expect(product.pictures).to.have.lengthOf.at.least(1, \"Pictures array should not be empty\");\r",
-							"\r",
-							"        product.pictures.forEach(function(picture) {\r",
-							"            pm.expect(picture).to.be.an('object');\r",
-							"            pm.expect(picture.public_id).to.be.a('string');\r",
-							"            pm.expect(picture.url).to.be.a('string');\r",
-							"            pm.expect(picture._id).to.be.a('string');\r",
-							"        });\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/admin/products",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"products"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/products/67621071abf9dde0e0a20933",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Validate the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('_id');\r",
-							"    pm.expect(responseData).to.have.property('name');\r",
-							"    pm.expect(responseData).to.have.property('pictures');\r",
-							"    pm.expect(responseData).to.have.property('price');\r",
-							"    pm.expect(responseData).to.have.property('description');\r",
-							"    pm.expect(responseData).to.have.property('seller');\r",
-							"    pm.expect(responseData).to.have.property('rating');\r",
-							"    pm.expect(responseData).to.have.property('quantity');\r",
-							"    pm.expect(responseData).to.have.property('sales');\r",
-							"    pm.expect(responseData).to.have.property('currency');\r",
-							"    pm.expect(responseData).to.have.property('isArchived');\r",
-							"    pm.expect(responseData).to.have.property('isDeleted');\r",
-							"    pm.expect(responseData).to.have.property('reviews');\r",
-							"    pm.expect(responseData).to.have.property('createdAt');\r",
-							"    pm.expect(responseData).to.have.property('updatedAt');\r",
-							"    pm.expect(responseData).to.have.property('__v');\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Validate the seller object and its fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData.seller).to.be.an('object');\r",
-							"    pm.expect(responseData.seller.logo).to.be.an('object');\r",
-							"    pm.expect(responseData.seller.files).to.be.an('object');\r",
-							"    pm.expect(responseData.seller.email).to.be.a('string');\r",
-							"    pm.expect(responseData.seller.password).to.be.a('string');\r",
-							"    pm.expect(responseData.seller.username).to.be.a('string');\r",
-							"    pm.expect(responseData.seller.name).to.be.a('string');\r",
-							"    pm.expect(responseData.seller.description).to.be.a('string');\r",
-							"    pm.expect(responseData.seller.mobile).to.be.a('string');\r",
-							"    pm.expect(responseData.seller.isAccepted).to.be.a('boolean');\r",
-							"    pm.expect(responseData.seller.notifications).to.be.an('array');\r",
-							"    responseData.seller.notifications.forEach(function(notification) {\r",
-							"        pm.expect(notification.tags).to.be.an('array');\r",
-							"        pm.expect(notification.priority).to.be.a('string');\r",
-							"        pm.expect(notification.body).to.be.a('string');\r",
-							"        pm.expect(notification.seen).to.be.a('boolean');\r",
-							"        pm.expect(notification._id).to.be.a('string');\r",
-							"        pm.expect(notification.date).to.be.a('string');\r",
-							"    });\r",
-							"    pm.expect(responseData.seller.hasUnseenNotifications).to.be.a('boolean');\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"price\" : \"499\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/admin/products/67621071abf9dde0e0a20933",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"products",
-						"67621071abf9dde0e0a20933"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/tourist/cart",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 2000ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"// Updated schema validation test to match the provided response schema\r",
-							"pm.test(\"Validate response schema for tourist, cartId, and items\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"\r",
-							"    pm.expect(responseData).to.be.an('array');\r",
-							"    pm.expect(responseData[0]).to.have.property('product').that.is.an('object');\r",
-							"    pm.expect(responseData[0]).to.have.property('quantity').that.is.a('number');\r",
-							"    pm.expect(responseData[0]).to.have.property('totalPrice').that.is.a('number');\r",
-							"    pm.expect(responseData[0]).to.have.property('_id').that.is.a('string');\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/tourist/cart",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourist",
-						"cart"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/promo-code",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 201\", function () {\r",
-							"  pm.expect(pm.response.code).to.equal(201);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('promoCode');\r",
-							"    \r",
-							"    const promoCodeData = responseData.promoCode;\r",
-							"    pm.expect(promoCodeData).to.have.property('code');\r",
-							"    pm.expect(promoCodeData).to.have.property('status');\r",
-							"    pm.expect(promoCodeData).to.have.property('percentOff');\r",
-							"    pm.expect(promoCodeData).to.have.property('type');\r",
-							"    pm.expect(promoCodeData).to.have.property('usage_limit');\r",
-							"    pm.expect(promoCodeData).to.have.property('timesUsed');\r",
-							"    pm.expect(promoCodeData).to.have.property('dateRange');\r",
-							"    pm.expect(promoCodeData).to.have.property('_id');\r",
-							"    pm.expect(promoCodeData).to.have.property('createdAt');\r",
-							"    pm.expect(promoCodeData).to.have.property('updatedAt');\r",
-							"    pm.expect(promoCodeData).to.have.property('__v');\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"code\": \"Sam20\",\r\n  \"status\": \"active\",\r\n  \"percentOff\": 20,\r\n  \"type\": \"general\",\r\n  \"usage_limit\": 100,\r\n  \"timesUsed\": 0,\r\n  \"dateRange\": {\r\n    \"start\": \"2024-01-01T00:00:00.000Z\",\r\n    \"end\": \"2024-12-31T23:59:59.000Z\"\r\n  }\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/admin/promo-code",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"promo-code"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/promo-code/67644db0b96d209909fe7d37",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 201\", function () {\r",
-							"    pm.expect(pm.response.code).to.equal(201);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Validate the promoCode object\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.promoCode).to.exist.and.to.be.an('object');\r",
-							"    pm.expect(responseData.promoCode.dateRange).to.exist.and.to.be.an('object');\r",
-							"    pm.expect(responseData.promoCode._id).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(responseData.promoCode.code).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(responseData.promoCode.status).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(responseData.promoCode.percentOff).to.exist.and.to.be.a('number');\r",
-							"    pm.expect(responseData.promoCode.type).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(responseData.promoCode.usage_limit).to.exist.and.to.be.a('number');\r",
-							"    pm.expect(responseData.promoCode.timesUsed).to.exist.and.to.be.a('number');\r",
-							"    pm.expect(responseData.promoCode.createdAt).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(responseData.promoCode.updatedAt).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(responseData.promoCode.__v).to.exist.and.to.be.a('number');\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"DateRange has start and end fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData.promoCode.dateRange).to.exist;\r",
-							"    pm.expect(responseData.promoCode.dateRange.start).to.exist;\r",
-							"    pm.expect(responseData.promoCode.dateRange.end).to.exist;\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Verify the promoCode object contains expected fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData.promoCode).to.include.all.keys('_id', 'code', 'status', 'percentOff', 'type', 'usage_limit', 'timesUsed', 'createdAt', 'updatedAt', '__v');\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"timesUsed\": 30\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/admin/promo-code/67645215b96d209909fe7dca",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"promo-code",
-						"67645215b96d209909fe7dca"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/promo-code/67644f09b96d209909fe7d3e",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 201\", function () {\r",
-							"    pm.expect(pm.response.code).to.equal(201);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.message).to.exist;\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Message is a non-empty string\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 300ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(300);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Response status code is 201\", function () {\r",
-							"  pm.expect(pm.response.to.have.status(201));\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"\r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.message).to.exist;\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Message is a non-empty string\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData).to.be.an('object');\r",
-							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
-							"});\r",
-							"\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response schema matches the expected structure\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"\r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.message).to.exist.and.to.be.a('string');\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/admin/promo-code/67645215b96d209909fe7dca",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"promo-code",
-						"67645215b96d209909fe7dca"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/promo-code",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"  pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.promoCodes).to.be.an('array');\r",
-							"    \r",
-							"    responseData.promoCodes.forEach(function(promo) {\r",
-							"        pm.expect(promo).to.have.property('dateRange');\r",
-							"        pm.expect(promo).to.have.property('_id');\r",
-							"        pm.expect(promo).to.have.property('code');\r",
-							"        pm.expect(promo).to.have.property('status');\r",
-							"        pm.expect(promo).to.have.property('percentOff');\r",
-							"        pm.expect(promo).to.have.property('usage_limit');\r",
-							"        pm.expect(promo).to.have.property('timesUsed');\r",
-							"        pm.expect(promo).to.have.property('createdAt');\r",
-							"        pm.expect(promo).to.have.property('updatedAt');\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/admin/promo-code",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"promo-code"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/complaints",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"  pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"\r",
-							"    pm.expect(responseData).to.be.an('array');\r",
-							"\r",
-							"    responseData.forEach(function(complaint) {\r",
-							"        pm.expect(complaint).to.include.all.keys('_id', 'title', 'body', 'status', 'replies', 'createdAt', 'updatedAt', 'number', '__v');\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"CreatedAt and updatedAt fields are in a valid date format\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('array');\r",
-							"    responseData.forEach(function(complaint) {\r",
-							"        pm.expect(complaint.createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"CreatedAt field is not in valid date format\");\r",
-							"        pm.expect(complaint.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"UpdatedAt field is not in valid date format\");\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is within an acceptable range\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/admin/complaints",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"complaints"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/complaint/675f3c15d6eb9d2870030e41/reply",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"  pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Content-Type is application/json\", function () {\r",
-							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Validate the complaint object\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"\r",
-							"  pm.expect(responseData).to.be.an('object');\r",
-							"  pm.expect(responseData.complaint).to.exist.and.to.be.an('object');\r",
-							"  pm.expect(responseData.complaint._id).to.exist.and.to.be.a('string');\r",
-							"  pm.expect(responseData.complaint.title).to.exist.and.to.be.a('string');\r",
-							"  pm.expect(responseData.complaint.body).to.exist.and.to.be.a('string');\r",
-							"  pm.expect(responseData.complaint.status).to.exist.and.to.be.a('string');\r",
-							"  pm.expect(responseData.complaint.tourist).to.exist.and.to.be.a('string');\r",
-							"  pm.expect(responseData.complaint.replies).to.exist.and.to.be.an('array');\r",
-							"  responseData.complaint.replies.forEach(function(reply) {\r",
-							"    pm.expect(reply.content).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(reply._id).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(reply.createdAt).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(reply.updatedAt).to.exist.and.to.be.a('string');\r",
-							"  });\r",
-							"  pm.expect(responseData.complaint.createdAt).to.exist.and.to.be.a('string');\r",
-							"  pm.expect(responseData.complaint.updatedAt).to.exist.and.to.be.a('string');\r",
-							"  pm.expect(responseData.complaint.number).to.exist.and.to.be.a('number');\r",
-							"  pm.expect(responseData.complaint.__v).to.exist.and.to.be.a('number');\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Validate the replies array\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.complaint.replies).to.be.an('array');\r",
-							"\r",
-							"    responseData.complaint.replies.forEach(function(reply) {\r",
-							"        pm.expect(reply).to.have.property('content');\r",
-							"        pm.expect(reply).to.have.property('_id');\r",
-							"        pm.expect(reply).to.have.property('createdAt');\r",
-							"        pm.expect(reply).to.have.property('updatedAt');\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is within an acceptable range\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Content-Type is application/json\", function () {\r",
-							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Validate the replies array\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.complaint.replies).to.be.an('array');\r",
-							"    responseData.complaint.replies.forEach(function(reply) {\r",
-							"        pm.expect(reply).to.be.an('object');\r",
-							"        pm.expect(reply.content).to.be.a('string');\r",
-							"        pm.expect(reply._id).to.be.a('string');\r",
-							"        pm.expect(reply.createdAt).to.be.a('string');\r",
-							"        pm.expect(reply.updatedAt).to.be.a('string');\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is within an acceptable range\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"content\" : \"I hate graphics too\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/admin/complaint/675f3c15d6eb9d2870030e41/reply",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"complaint",
-						"675f3c15d6eb9d2870030e41",
-						"reply"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/admin/complaint/675f3c15d6eb9d2870030e41",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData).to.be.an('object');\r",
-							"  pm.expect(responseData).to.have.property('_id');\r",
-							"  pm.expect(responseData).to.have.property('title');\r",
-							"  pm.expect(responseData).to.have.property('body');\r",
-							"  pm.expect(responseData).to.have.property('status');\r",
-							"  pm.expect(responseData).to.have.property('tourist');\r",
-							"  pm.expect(responseData).to.have.property('replies');\r",
-							"  pm.expect(responseData).to.have.property('createdAt');\r",
-							"  pm.expect(responseData).to.have.property('updatedAt');\r",
-							"  pm.expect(responseData).to.have.property('number');\r",
-							"  pm.expect(responseData).to.have.property('__v');\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Content in replies is a non-empty string\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData.replies).to.be.an('array');\r",
-							"    responseData.replies.forEach(function(reply) {\r",
-							"        pm.expect(reply.content).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Content should not be empty\");\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"pm.test(\"createdAt and updatedAt are in valid date format\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData.createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"createdAt should be in valid date format\");\r",
-							"    pm.expect(responseData.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"updatedAt should be in valid date format\");\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/admin/complaint/675f3c15d6eb9d2870030e41",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"admin",
-						"complaint",
-						"675f3c15d6eb9d2870030e41"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/tourist/",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response schema matches expected fields and data types\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData).to.be.an('object');\r",
-							"  pm.expect(responseData.tourist).to.have.property('_id').that.is.a('string');\r",
-							"  pm.expect(responseData.tourist).to.have.property('username').that.is.a('string');\r",
-							"  pm.expect(responseData.tourist).to.have.property('email').that.is.a('string');\r",
-							"  pm.expect(responseData.tourist).to.have.property('dateOfBirth').that.is.a('string');\r",
-							"  pm.expect(responseData.tourist).to.have.property('mobile').that.is.a('string');\r",
-							"  pm.expect(responseData.tourist).to.have.property('nationality').that.is.a('object');\r",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"fname\":\"Abdelrahman\",\r\n    \"lname\":\"Elaby\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/tourist/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourist",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/tourist/activityBooking",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 201\", function () {\r",
-							"  pm.response.to.have.status(201);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response body schema validation\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"\r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.booking).to.have.property('paymentType').that.is.a('string');\r",
-							"    pm.expect(responseData.booking).to.have.property('paymentAmount').that.is.a('number');\r",
-							"    pm.expect(responseData.booking).to.have.property('numberOfTickets').that.is.a('number');\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"paymentType\": \"CreditCard\",\r\n  \"paymentAmount\": 35,\r\n  \"numberOfTickets\": 1,\r\n  \"activity\":\"6756ce113920f45d86dfd304\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/tourist/activityBooking",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourist",
-						"activityBooking"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/tourism-governor/historical-places",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.expect(pm.response.code).to.equal(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 400ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(400);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Validate the response schema\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData).to.be.an('array');\r",
-							"  responseData.forEach(function(item) {\r",
-							"    pm.expect(item).to.be.an('object');\r",
-							"    pm.expect(item.location).to.exist.and.to.be.an('object');\r",
-							"    pm.expect(item.openingHours).to.exist.and.to.be.an('object');\r",
-							"    pm.expect(item.ticketPrices).to.exist.and.to.be.an('object');\r",
-							"    pm.expect(item.title).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(item.description).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(item.historicalTag).to.exist.and.to.be.an('array');\r",
-							"    pm.expect(item.currency).to.exist.and.to.be.a('string');\r",
-							"    pm.expect(item.pictures).to.exist.and.to.be.an('array');\r",
-							"    pm.expect(item.governor).to.exist.and.to.be.a('string');\r",
-							"  });\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDI2YzI1ZDJmNDhlZjMwZWJlZGI0NCIsInJvbGUiOiJ0b3VyaXNtLWdvdmVybm9yIiwiaWF0IjoxNzM0NjI4MDE1LCJleHAiOjE3MzQ4ODcyMTV9.nVz4xKAoT0_vvP8nq-pm33tRJ2NlKSmmhYIDcWsTc8Q",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/tourism-governor/historical-places",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourism-governor",
-						"historical-places"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/tourist/activityBooking/6748fd5ef77e66b4aa5f959c",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.expect(pm.response.code).to.equal(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response schema for the deleted activity booking\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"\r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('message');\r",
-							"    pm.expect(responseData).to.have.property('wallet');\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/tourist/activityBooking/6748fd5ef77e66b4aa5f959c",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourist",
-						"activityBooking",
-						"6748fd5ef77e66b4aa5f959c"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/tourism-governor/historical-tag",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 201\", function () {\r",
-							"  pm.response.to.have.status(201);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData).to.have.property('historicalTag');\r",
-							"    \r",
-							"    const historicalTag = responseData.historicalTag;\r",
-							"    pm.expect(historicalTag).to.have.property('type').that.is.a('string');\r",
-							"    pm.expect(historicalTag).to.have.property('_id').that.is.a('string');\r",
-							"    pm.expect(historicalTag).to.have.property('createdAt').that.is.a('string');\r",
-							"    pm.expect(historicalTag).to.have.property('updatedAt').that.is.a('string');\r",
-							"    pm.expect(historicalTag).to.have.property('__v').that.is.a('number');\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Type is a non-empty string\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData.historicalTag.type).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Type should be a non-empty string\");\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 300ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(300);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDI2YzI1ZDJmNDhlZjMwZWJlZGI0NCIsInJvbGUiOiJ0b3VyaXNtLWdvdmVybm9yIiwiaWF0IjoxNzM0NjI4MDE1LCJleHAiOjE3MzQ4ODcyMTV9.nVz4xKAoT0_vvP8nq-pm33tRJ2NlKSmmhYIDcWsTc8Q",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"type\" : \"Stolen\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/tourism-governor/historical-tag",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourism-governor",
-						"historical-tag"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/tourism-governor/historical-tag",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Content-Type is application/json\", function () {\r",
-							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
-							"    \r",
-							"    responseData.forEach(item => {\r",
-							"        pm.expect(item).to.include.all.keys('_id', 'type', 'createdAt', 'updatedAt', '__v');\r",
-							"    });\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Verify response fields for data types and formats\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('array');\r",
-							"\r",
-							"    responseData.forEach(function(item) {\r",
-							"        pm.expect(item).to.be.an('object');\r",
-							"        pm.expect(item._id).to.be.a('string');\r",
-							"        pm.expect(item.type).to.be.a('string');\r",
-							"        pm.expect(item.createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
-							"        pm.expect(item.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
-							"        pm.expect(item.__v).to.be.a('number');\r",
-							"    });\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDI2YzI1ZDJmNDhlZjMwZWJlZGI0NCIsInJvbGUiOiJ0b3VyaXNtLWdvdmVybm9yIiwiaWF0IjoxNzM0NjI4MDE1LCJleHAiOjE3MzQ4ODcyMTV9.nVz4xKAoT0_vvP8nq-pm33tRJ2NlKSmmhYIDcWsTc8Q",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/tourism-governor/historical-tag",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourism-governor",
-						"historical-tag"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/tourism-governor/historical-tag/67645468b96d209909fe8063",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"  pm.expect(pm.response.code).to.equal(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response has the required fields\", function () {\r",
-							"    const responseData = pm.response.json();\r",
-							"    \r",
-							"    pm.expect(responseData).to.be.an('object');\r",
-							"    pm.expect(responseData.message).to.exist;\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Message is a non-empty string\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData).to.be.an('object');\r",
-							"  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Content-Type header is set to application/json\", function () {\r",
-							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDI2YzI1ZDJmNDhlZjMwZWJlZGI0NCIsInJvbGUiOiJ0b3VyaXNtLWdvdmVybm9yIiwiaWF0IjoxNzM0NjI4MDE1LCJleHAiOjE3MzQ4ODcyMTV9.nVz4xKAoT0_vvP8nq-pm33tRJ2NlKSmmhYIDcWsTc8Q",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/tourism-governor/historical-tag/67645468b96d209909fe8063",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourism-governor",
-						"historical-tag",
-						"67645468b96d209909fe8063"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:4000/tourist/itineraries",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Response status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Response schema for tourist/itineraries API endpoint\", function () {\r",
-							"  const responseData = pm.response.json();\r",
-							"  \r",
-							"  pm.expect(responseData).to.be.an('array');\r",
-							"  responseData.forEach(function(itinerary) {\r",
-							"    pm.expect(itinerary).to.have.property(\"title\").that.is.a('string');\r",
-							"    pm.expect(itinerary).to.have.property(\"activities\").that.is.an('array');\r",
-							"    pm.expect(itinerary).to.have.property(\"price\").that.is.a('number');\r",
-							"    pm.expect(itinerary).to.have.property(\"tourGuide\").that.is.a('object');\r",
-							"  });\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/tourist/itineraries",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"tourist",
-						"itineraries"
-					]
-				}
-			},
-			"response": []
-		}
-	]
+  "info": {
+    "_postman_id": "4b45eeb0-aff2-457b-aa8e-8c278217d4bd",
+    "name": "Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "38513772",
+    "_collection_link": "https://sam-and-aby.postman.co/workspace/Sam-and-Aby-Workspace~71afcd01-1885-4c49-8c9e-9f419f489cae/collection/38513772-4b45eeb0-aff2-457b-aa8e-8c278217d4bd?action=share&source=collection_link&creator=38513772"
+  },
+  "item": [
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourist/currencies",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.expect(pm.response.code).to.equal(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is within an acceptable range\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+              "    responseData.forEach(function(currency) {\r",
+              "        pm.expect(currency).to.have.property('_id');\r",
+              "        pm.expect(currency).to.have.property('code');\r",
+              "        pm.expect(currency).to.have.property('name');\r",
+              "        pm.expect(currency).to.have.property('symbol');\r",
+              "        pm.expect(currency).to.have.property('__v');\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Id is in a valid format\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    responseData.forEach(function(currency) {\r",
+              "        pm.expect(currency._id).to.match(/^[0-9a-fA-F]{24}$/, \"Id should be a valid ObjectId format\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Symbol is a non-empty string\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData).to.be.an('array');\r",
+              "  responseData.forEach(function(currency) {\r",
+              "    pm.expect(currency.symbol).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Symbol should not be empty\");\r",
+              "  });\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"paymentType\": \"CreditCard\",\r\n  \"flightID\": \"FL12345\",\r\n  \"from\": \"Cairo\",\r\n  \"to\": \"Paris\",\r\n  \"departureDate\": \"2024-12-01\",\r\n  \"arrivalDate\": \"2024-12-02\",\r\n  \"price\": 200,\r\n  \"numberOfTickets\": 1,\r\n  \"type\": \"Round Trip\",\r\n  \"returnDepartureDate\": \"2024-12-10\",\r\n  \"returnArrivalDate\": \"2024-12-11\",\r\n  \"seatType\": \"Economy\",\r\n  \"flightType\": \"Commercial\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourist/currencies",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["tourist", "currencies"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/notifications",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData).to.have.property('success');\r",
+              "    pm.expect(responseData).to.have.property('notifications');\r",
+              "    pm.expect(responseData).to.have.property('hasUnseenNotifications');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Notifications array should exist and be an array\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData.notifications).to.exist;\r",
+              "  pm.expect(responseData.notifications).to.be.an('array');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              "pm.test(\"Notifications array should exist and be an array\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData).to.be.an('object');\r",
+              "  pm.expect(responseData.notifications).to.exist.and.to.be.an('array');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/notifications",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "notifications"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/products",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseData).to.be.an('array');\r",
+              "    responseData.forEach(product => {\r",
+              "        pm.expect(product).to.include.all.keys(\r",
+              "            '_id', 'name', 'pictures', 'price', 'description', 'seller', 'rating', 'allRatings',\r",
+              "            'quantity', 'sales', 'currency', 'isArchived', 'isDeleted', 'reviews', 'createdAt',\r",
+              "            'updatedAt', '__v'\r",
+              "        );\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Validate the pictures array and its elements\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseData).to.be.an('array');\r",
+              "    pm.expect(responseData).to.have.lengthOf.at.least(1, \"Array should not be empty\");\r",
+              "\r",
+              "    responseData.forEach(function(product) {\r",
+              "        pm.expect(product.pictures).to.be.an('array');\r",
+              "        pm.expect(product.pictures).to.have.lengthOf.at.least(1, \"Pictures array should not be empty\");\r",
+              "\r",
+              "        product.pictures.forEach(function(picture) {\r",
+              "            pm.expect(picture).to.be.an('object');\r",
+              "            pm.expect(picture.public_id).to.be.a('string');\r",
+              "            pm.expect(picture.url).to.be.a('string');\r",
+              "            pm.expect(picture._id).to.be.a('string');\r",
+              "        });\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/products",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "products"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/products/67621071abf9dde0e0a20933",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Validate the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData).to.have.property('_id');\r",
+              "    pm.expect(responseData).to.have.property('name');\r",
+              "    pm.expect(responseData).to.have.property('pictures');\r",
+              "    pm.expect(responseData).to.have.property('price');\r",
+              "    pm.expect(responseData).to.have.property('description');\r",
+              "    pm.expect(responseData).to.have.property('seller');\r",
+              "    pm.expect(responseData).to.have.property('rating');\r",
+              "    pm.expect(responseData).to.have.property('quantity');\r",
+              "    pm.expect(responseData).to.have.property('sales');\r",
+              "    pm.expect(responseData).to.have.property('currency');\r",
+              "    pm.expect(responseData).to.have.property('isArchived');\r",
+              "    pm.expect(responseData).to.have.property('isDeleted');\r",
+              "    pm.expect(responseData).to.have.property('reviews');\r",
+              "    pm.expect(responseData).to.have.property('createdAt');\r",
+              "    pm.expect(responseData).to.have.property('updatedAt');\r",
+              "    pm.expect(responseData).to.have.property('__v');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Validate the seller object and its fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData.seller).to.be.an('object');\r",
+              "    pm.expect(responseData.seller.logo).to.be.an('object');\r",
+              "    pm.expect(responseData.seller.files).to.be.an('object');\r",
+              "    pm.expect(responseData.seller.email).to.be.a('string');\r",
+              "    pm.expect(responseData.seller.password).to.be.a('string');\r",
+              "    pm.expect(responseData.seller.username).to.be.a('string');\r",
+              "    pm.expect(responseData.seller.name).to.be.a('string');\r",
+              "    pm.expect(responseData.seller.description).to.be.a('string');\r",
+              "    pm.expect(responseData.seller.mobile).to.be.a('string');\r",
+              "    pm.expect(responseData.seller.isAccepted).to.be.a('boolean');\r",
+              "    pm.expect(responseData.seller.notifications).to.be.an('array');\r",
+              "    responseData.seller.notifications.forEach(function(notification) {\r",
+              "        pm.expect(notification.tags).to.be.an('array');\r",
+              "        pm.expect(notification.priority).to.be.a('string');\r",
+              "        pm.expect(notification.body).to.be.a('string');\r",
+              "        pm.expect(notification.seen).to.be.a('boolean');\r",
+              "        pm.expect(notification._id).to.be.a('string');\r",
+              "        pm.expect(notification.date).to.be.a('string');\r",
+              "    });\r",
+              "    pm.expect(responseData.seller.hasUnseenNotifications).to.be.a('boolean');\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"price\" : \"499\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/products/67621071abf9dde0e0a20933",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "products", "67621071abf9dde0e0a20933"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourist/cart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 2000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "// Updated schema validation test to match the provided response schema\r",
+              "pm.test(\"Validate response schema for tourist, cartId, and items\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseData).to.be.an('array');\r",
+              "    pm.expect(responseData[0]).to.have.property('product').that.is.an('object');\r",
+              "    pm.expect(responseData[0]).to.have.property('quantity').that.is.a('number');\r",
+              "    pm.expect(responseData[0]).to.have.property('totalPrice').that.is.a('number');\r",
+              "    pm.expect(responseData[0]).to.have.property('_id').that.is.a('string');\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourist/cart",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["tourist", "cart"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/promo-code",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 201\", function () {\r",
+              "  pm.expect(pm.response.code).to.equal(201);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData).to.have.property('promoCode');\r",
+              "    \r",
+              "    const promoCodeData = responseData.promoCode;\r",
+              "    pm.expect(promoCodeData).to.have.property('code');\r",
+              "    pm.expect(promoCodeData).to.have.property('status');\r",
+              "    pm.expect(promoCodeData).to.have.property('percentOff');\r",
+              "    pm.expect(promoCodeData).to.have.property('type');\r",
+              "    pm.expect(promoCodeData).to.have.property('usage_limit');\r",
+              "    pm.expect(promoCodeData).to.have.property('timesUsed');\r",
+              "    pm.expect(promoCodeData).to.have.property('dateRange');\r",
+              "    pm.expect(promoCodeData).to.have.property('_id');\r",
+              "    pm.expect(promoCodeData).to.have.property('createdAt');\r",
+              "    pm.expect(promoCodeData).to.have.property('updatedAt');\r",
+              "    pm.expect(promoCodeData).to.have.property('__v');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"code\": \"Sam20\",\r\n  \"status\": \"active\",\r\n  \"percentOff\": 20,\r\n  \"type\": \"general\",\r\n  \"usage_limit\": 100,\r\n  \"timesUsed\": 0,\r\n  \"dateRange\": {\r\n    \"start\": \"2024-01-01T00:00:00.000Z\",\r\n    \"end\": \"2024-12-31T23:59:59.000Z\"\r\n  }\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/promo-code",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "promo-code"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/promo-code/67644db0b96d209909fe7d37",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 201\", function () {\r",
+              "    pm.expect(pm.response.code).to.equal(201);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Validate the promoCode object\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData.promoCode).to.exist.and.to.be.an('object');\r",
+              "    pm.expect(responseData.promoCode.dateRange).to.exist.and.to.be.an('object');\r",
+              "    pm.expect(responseData.promoCode._id).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(responseData.promoCode.code).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(responseData.promoCode.status).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(responseData.promoCode.percentOff).to.exist.and.to.be.a('number');\r",
+              "    pm.expect(responseData.promoCode.type).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(responseData.promoCode.usage_limit).to.exist.and.to.be.a('number');\r",
+              "    pm.expect(responseData.promoCode.timesUsed).to.exist.and.to.be.a('number');\r",
+              "    pm.expect(responseData.promoCode.createdAt).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(responseData.promoCode.updatedAt).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(responseData.promoCode.__v).to.exist.and.to.be.a('number');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"DateRange has start and end fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData.promoCode.dateRange).to.exist;\r",
+              "    pm.expect(responseData.promoCode.dateRange.start).to.exist;\r",
+              "    pm.expect(responseData.promoCode.dateRange.end).to.exist;\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Verify the promoCode object contains expected fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData.promoCode).to.include.all.keys('_id', 'code', 'status', 'percentOff', 'type', 'usage_limit', 'timesUsed', 'createdAt', 'updatedAt', '__v');\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"timesUsed\": 30\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/promo-code/67645215b96d209909fe7dca",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "promo-code", "67645215b96d209909fe7dca"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/promo-code/67644f09b96d209909fe7d3e",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 201\", function () {\r",
+              "    pm.expect(pm.response.code).to.equal(201);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData.message).to.exist;\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Message is a non-empty string\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 300ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(300);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response status code is 201\", function () {\r",
+              "  pm.expect(pm.response.to.have.status(201));\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData.message).to.exist;\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Message is a non-empty string\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData).to.be.an('object');\r",
+              "  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response schema matches the expected structure\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData.message).to.exist.and.to.be.a('string');\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/promo-code/67645215b96d209909fe7dca",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "promo-code", "67645215b96d209909fe7dca"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/promo-code",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "  pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData.promoCodes).to.be.an('array');\r",
+              "    \r",
+              "    responseData.promoCodes.forEach(function(promo) {\r",
+              "        pm.expect(promo).to.have.property('dateRange');\r",
+              "        pm.expect(promo).to.have.property('_id');\r",
+              "        pm.expect(promo).to.have.property('code');\r",
+              "        pm.expect(promo).to.have.property('status');\r",
+              "        pm.expect(promo).to.have.property('percentOff');\r",
+              "        pm.expect(promo).to.have.property('usage_limit');\r",
+              "        pm.expect(promo).to.have.property('timesUsed');\r",
+              "        pm.expect(promo).to.have.property('createdAt');\r",
+              "        pm.expect(promo).to.have.property('updatedAt');\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/promo-code",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "promo-code"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/complaints",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "  pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseData).to.be.an('array');\r",
+              "\r",
+              "    responseData.forEach(function(complaint) {\r",
+              "        pm.expect(complaint).to.include.all.keys('_id', 'title', 'body', 'status', 'replies', 'createdAt', 'updatedAt', 'number', '__v');\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"CreatedAt and updatedAt fields are in a valid date format\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('array');\r",
+              "    responseData.forEach(function(complaint) {\r",
+              "        pm.expect(complaint.createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"CreatedAt field is not in valid date format\");\r",
+              "        pm.expect(complaint.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"UpdatedAt field is not in valid date format\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is within an acceptable range\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/complaints",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "complaints"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/complaint/675f3c15d6eb9d2870030e41/reply",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "  pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Content-Type is application/json\", function () {\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Validate the complaint object\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "\r",
+              "  pm.expect(responseData).to.be.an('object');\r",
+              "  pm.expect(responseData.complaint).to.exist.and.to.be.an('object');\r",
+              "  pm.expect(responseData.complaint._id).to.exist.and.to.be.a('string');\r",
+              "  pm.expect(responseData.complaint.title).to.exist.and.to.be.a('string');\r",
+              "  pm.expect(responseData.complaint.body).to.exist.and.to.be.a('string');\r",
+              "  pm.expect(responseData.complaint.status).to.exist.and.to.be.a('string');\r",
+              "  pm.expect(responseData.complaint.tourist).to.exist.and.to.be.a('string');\r",
+              "  pm.expect(responseData.complaint.replies).to.exist.and.to.be.an('array');\r",
+              "  responseData.complaint.replies.forEach(function(reply) {\r",
+              "    pm.expect(reply.content).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(reply._id).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(reply.createdAt).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(reply.updatedAt).to.exist.and.to.be.a('string');\r",
+              "  });\r",
+              "  pm.expect(responseData.complaint.createdAt).to.exist.and.to.be.a('string');\r",
+              "  pm.expect(responseData.complaint.updatedAt).to.exist.and.to.be.a('string');\r",
+              "  pm.expect(responseData.complaint.number).to.exist.and.to.be.a('number');\r",
+              "  pm.expect(responseData.complaint.__v).to.exist.and.to.be.a('number');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Validate the replies array\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData.complaint.replies).to.be.an('array');\r",
+              "\r",
+              "    responseData.complaint.replies.forEach(function(reply) {\r",
+              "        pm.expect(reply).to.have.property('content');\r",
+              "        pm.expect(reply).to.have.property('_id');\r",
+              "        pm.expect(reply).to.have.property('createdAt');\r",
+              "        pm.expect(reply).to.have.property('updatedAt');\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is within an acceptable range\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Content-Type is application/json\", function () {\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Validate the replies array\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData.complaint.replies).to.be.an('array');\r",
+              "    responseData.complaint.replies.forEach(function(reply) {\r",
+              "        pm.expect(reply).to.be.an('object');\r",
+              "        pm.expect(reply.content).to.be.a('string');\r",
+              "        pm.expect(reply._id).to.be.a('string');\r",
+              "        pm.expect(reply.createdAt).to.be.a('string');\r",
+              "        pm.expect(reply.updatedAt).to.be.a('string');\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is within an acceptable range\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"content\" : \"I hate graphics too\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/complaint/675f3c15d6eb9d2870030e41/reply",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "complaint", "675f3c15d6eb9d2870030e41", "reply"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/admin/complaint/675f3c15d6eb9d2870030e41",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData).to.be.an('object');\r",
+              "  pm.expect(responseData).to.have.property('_id');\r",
+              "  pm.expect(responseData).to.have.property('title');\r",
+              "  pm.expect(responseData).to.have.property('body');\r",
+              "  pm.expect(responseData).to.have.property('status');\r",
+              "  pm.expect(responseData).to.have.property('tourist');\r",
+              "  pm.expect(responseData).to.have.property('replies');\r",
+              "  pm.expect(responseData).to.have.property('createdAt');\r",
+              "  pm.expect(responseData).to.have.property('updatedAt');\r",
+              "  pm.expect(responseData).to.have.property('number');\r",
+              "  pm.expect(responseData).to.have.property('__v');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Content in replies is a non-empty string\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData.replies).to.be.an('array');\r",
+              "    responseData.replies.forEach(function(reply) {\r",
+              "        pm.expect(reply.content).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Content should not be empty\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"createdAt and updatedAt are in valid date format\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData.createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"createdAt should be in valid date format\");\r",
+              "    pm.expect(responseData.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"updatedAt should be in valid date format\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjMzNjRhOGQ0NWQ0ZmIwZjY5OGY5NCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDYyNTU4MiwiZXhwIjoxNzM0ODg0NzgyfQ.HI-EekRjKZR9p4cRExQ0Dh9pTgmObT_5IQzXOhhvDCk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/admin/complaint/675f3c15d6eb9d2870030e41",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["admin", "complaint", "675f3c15d6eb9d2870030e41"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourist/",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response schema matches expected fields and data types\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData).to.be.an('object');\r",
+              "  pm.expect(responseData.tourist).to.have.property('_id').that.is.a('string');\r",
+              "  pm.expect(responseData.tourist).to.have.property('username').that.is.a('string');\r",
+              "  pm.expect(responseData.tourist).to.have.property('email').that.is.a('string');\r",
+              "  pm.expect(responseData.tourist).to.have.property('dateOfBirth').that.is.a('string');\r",
+              "  pm.expect(responseData.tourist).to.have.property('mobile').that.is.a('string');\r",
+              "  pm.expect(responseData.tourist).to.have.property('nationality').that.is.a('object');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"fname\":\"Abdelrahman\",\r\n    \"lname\":\"Elaby\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourist/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["tourist", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourist/activityBooking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 201\", function () {\r",
+              "  pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response body schema validation\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData.booking).to.have.property('paymentType').that.is.a('string');\r",
+              "    pm.expect(responseData.booking).to.have.property('paymentAmount').that.is.a('number');\r",
+              "    pm.expect(responseData.booking).to.have.property('numberOfTickets').that.is.a('number');\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"paymentType\": \"CreditCard\",\r\n  \"paymentAmount\": 35,\r\n  \"numberOfTickets\": 1,\r\n  \"activity\":\"6756ce113920f45d86dfd304\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourist/activityBooking",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["tourist", "activityBooking"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourism-governor/historical-places",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.expect(pm.response.code).to.equal(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 400ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(400);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Validate the response schema\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData).to.be.an('array');\r",
+              "  responseData.forEach(function(item) {\r",
+              "    pm.expect(item).to.be.an('object');\r",
+              "    pm.expect(item.location).to.exist.and.to.be.an('object');\r",
+              "    pm.expect(item.openingHours).to.exist.and.to.be.an('object');\r",
+              "    pm.expect(item.ticketPrices).to.exist.and.to.be.an('object');\r",
+              "    pm.expect(item.title).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(item.description).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(item.historicalTag).to.exist.and.to.be.an('array');\r",
+              "    pm.expect(item.currency).to.exist.and.to.be.a('string');\r",
+              "    pm.expect(item.pictures).to.exist.and.to.be.an('array');\r",
+              "    pm.expect(item.governor).to.exist.and.to.be.a('string');\r",
+              "  });\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDI2YzI1ZDJmNDhlZjMwZWJlZGI0NCIsInJvbGUiOiJ0b3VyaXNtLWdvdmVybm9yIiwiaWF0IjoxNzM0NjI4MDE1LCJleHAiOjE3MzQ4ODcyMTV9.nVz4xKAoT0_vvP8nq-pm33tRJ2NlKSmmhYIDcWsTc8Q",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourism-governor/historical-places",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["tourism-governor", "historical-places"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourist/activityBooking/6748fd5ef77e66b4aa5f959c",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.expect(pm.response.code).to.equal(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response schema for the deleted activity booking\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "\r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData).to.have.property('message');\r",
+              "    pm.expect(responseData).to.have.property('wallet');\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourist/activityBooking/6748fd5ef77e66b4aa5f959c",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["tourist", "activityBooking", "6748fd5ef77e66b4aa5f959c"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 201\", function () {\r",
+              "  pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData).to.have.property('historicalTag');\r",
+              "    \r",
+              "    const historicalTag = responseData.historicalTag;\r",
+              "    pm.expect(historicalTag).to.have.property('type').that.is.a('string');\r",
+              "    pm.expect(historicalTag).to.have.property('_id').that.is.a('string');\r",
+              "    pm.expect(historicalTag).to.have.property('createdAt').that.is.a('string');\r",
+              "    pm.expect(historicalTag).to.have.property('updatedAt').that.is.a('string');\r",
+              "    pm.expect(historicalTag).to.have.property('__v').that.is.a('number');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Type is a non-empty string\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData.historicalTag.type).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Type should be a non-empty string\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 300ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(300);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDI2YzI1ZDJmNDhlZjMwZWJlZGI0NCIsInJvbGUiOiJ0b3VyaXNtLWdvdmVybm9yIiwiaWF0IjoxNzM0NjI4MDE1LCJleHAiOjE3MzQ4ODcyMTV9.nVz4xKAoT0_vvP8nq-pm33tRJ2NlKSmmhYIDcWsTc8Q",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"type\" : \"Stolen\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["tourism-governor", "historical-tag"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Content-Type is application/json\", function () {\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+              "    \r",
+              "    responseData.forEach(item => {\r",
+              "        pm.expect(item).to.include.all.keys('_id', 'type', 'createdAt', 'updatedAt', '__v');\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Verify response fields for data types and formats\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('array');\r",
+              "\r",
+              "    responseData.forEach(function(item) {\r",
+              "        pm.expect(item).to.be.an('object');\r",
+              "        pm.expect(item._id).to.be.a('string');\r",
+              "        pm.expect(item.type).to.be.a('string');\r",
+              "        pm.expect(item.createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+              "        pm.expect(item.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+              "        pm.expect(item.__v).to.be.a('number');\r",
+              "    });\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDI2YzI1ZDJmNDhlZjMwZWJlZGI0NCIsInJvbGUiOiJ0b3VyaXNtLWdvdmVybm9yIiwiaWF0IjoxNzM0NjI4MDE1LCJleHAiOjE3MzQ4ODcyMTV9.nVz4xKAoT0_vvP8nq-pm33tRJ2NlKSmmhYIDcWsTc8Q",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["tourism-governor", "historical-tag"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag/67645468b96d209909fe8063",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "  pm.expect(pm.response.code).to.equal(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response has the required fields\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    \r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(responseData.message).to.exist;\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Message is a non-empty string\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData).to.be.an('object');\r",
+              "  pm.expect(responseData.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Content-Type header is set to application/json\", function () {\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDI2YzI1ZDJmNDhlZjMwZWJlZGI0NCIsInJvbGUiOiJ0b3VyaXNtLWdvdmVybm9yIiwiaWF0IjoxNzM0NjI4MDE1LCJleHAiOjE3MzQ4ODcyMTV9.nVz4xKAoT0_vvP8nq-pm33tRJ2NlKSmmhYIDcWsTc8Q",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag/67645468b96d209909fe8063",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": [
+            "tourism-governor",
+            "historical-tag",
+            "67645468b96d209909fe8063"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "https://trip-genie-apis.vercel.app/tourist/itineraries",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Response schema for tourist/itineraries API endpoint\", function () {\r",
+              "  const responseData = pm.response.json();\r",
+              "  \r",
+              "  pm.expect(responseData).to.be.an('array');\r",
+              "  responseData.forEach(function(itinerary) {\r",
+              "    pm.expect(itinerary).to.have.property(\"title\").that.is.a('string');\r",
+              "    pm.expect(itinerary).to.have.property(\"activities\").that.is.an('array');\r",
+              "    pm.expect(itinerary).to.have.property(\"price\").that.is.a('number');\r",
+              "    pm.expect(itinerary).to.have.property(\"tourGuide\").that.is.a('object');\r",
+              "  });\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NjMxOGU5NTVkYzljMDUzYTFlNTU3MiIsInJvbGUiOiJ0b3VyaXN0IiwiaWF0IjoxNzM0NTQ3NzAwLCJleHAiOjE3MzQ4MDY5MDB9.VUwbkZyMpAJ82V530FLDOm-K7gEYybrkp90M22h9KiY",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://trip-genie-apis.vercel.app/tourist/itineraries",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["tourist", "itineraries"]
+        }
+      },
+      "response": []
+    }
+  ]
 }

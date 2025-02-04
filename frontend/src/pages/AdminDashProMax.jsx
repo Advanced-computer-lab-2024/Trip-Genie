@@ -12,7 +12,7 @@ import {
   ArcElement,
   BarElement,
 } from "chart.js";
-import { Bell, LogOut, Mail, CheckCircle, X } from 'lucide-react';
+import { Bell, LogOut, Mail, CheckCircle, X } from "lucide-react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { NotificationsDropdownAdmin } from "@/components/AdminNotificationsDropdown";
@@ -158,7 +158,8 @@ export function Dashboard() {
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
-  const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] = useState(false);
+  const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] =
+    useState(false);
   const [notificationId, setNotificationId] = useState(null);
 
   useEffect(() => {
@@ -169,7 +170,7 @@ export function Dashboard() {
   const checkUnseenNotificationsAdmin = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/admin/unseen-notifications`,
+        `https://trip-genie-apis.vercel.app/admin/unseen-notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -186,7 +187,7 @@ export function Dashboard() {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          "http://localhost:4000/admin/admin-info",
+          "https://trip-genie-apis.vercel.app/admin/admin-info",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -215,7 +216,9 @@ export function Dashboard() {
   const handleConfirmLogout = async () => {
     console.log("Logging out...");
     try {
-      const response = await fetch("http://localhost:4000/auth/logout");
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/auth/logout"
+      );
       if (response.ok) {
         Cookies.remove("jwt");
         Cookies.remove("role");
@@ -323,7 +326,10 @@ export function Dashboard() {
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
-            <NotificationsDropdownAdmin setActiveTabNav={setActiveTab} handleNotificationClick={setNotificationId} />
+            <NotificationsDropdownAdmin
+              setActiveTabNav={setActiveTab}
+              handleNotificationClick={setNotificationId}
+            />
           </div>
         </div>
         <div className="flex bg-gray-100 relative">
@@ -333,8 +339,9 @@ export function Dashboard() {
             onToggleCollapse={handleToggleCollapse}
           />
           <div
-            className={`flex flex-col flex-1 transition-all duration-300 ease-in-out ${isSidebarCollapsed ? "ml-16" : "ml-64"
-              }`}
+            className={`flex flex-col flex-1 transition-all duration-300 ease-in-out ${
+              isSidebarCollapsed ? "ml-16" : "ml-64"
+            }`}
           >
             <main className="flex-1 overflow-y-auto transition-all duration-1000 ease-in-out transform">
               <DashboardContent
@@ -427,4 +434,3 @@ export function Dashboard() {
     </div>
   );
 }
-

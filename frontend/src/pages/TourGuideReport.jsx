@@ -70,7 +70,7 @@ const TourGuideItineraryReport = () => {
       const token = Cookies.get("jwt");
 
       const response = await axios.get(
-        `http://localhost:4000/tour-guide/itineraries-report`,
+        `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -114,7 +114,7 @@ const TourGuideItineraryReport = () => {
       if (day) queryParams.append("day", day);
 
       const response = await axios.get(
-        `http://localhost:4000/tour-guide/itineraries-report?${queryParams.toString()}`,
+        `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report?${queryParams.toString()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -153,7 +153,7 @@ const TourGuideItineraryReport = () => {
 
       for (let month = 1; month <= 12; month++) {
         const response = await axios.get(
-          `http://localhost:4000/tour-guide/itineraries-report?year=${currentYear}&month=${month}`,
+          `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report?year=${currentYear}&month=${month}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -163,10 +163,13 @@ const TourGuideItineraryReport = () => {
         monthlyData.push(response.data);
       }
 
-      const combinedData = monthlyData.flatMap(data => data.itineraryReport);
+      const combinedData = monthlyData.flatMap((data) => data.itineraryReport);
       setReportData({ itineraryReport: combinedData });
 
-      const totalRevenue = monthlyData.reduce((sum, data) => sum + (data.totalRevenue || 0), 0);
+      const totalRevenue = monthlyData.reduce(
+        (sum, data) => sum + (data.totalRevenue || 0),
+        0
+      );
       setTotalRevenue(totalRevenue);
       setInitialTotalRevenue(totalRevenue);
 
@@ -211,10 +214,10 @@ const TourGuideItineraryReport = () => {
       setGraphData(initialGraphDataRef.current);
       return;
     }
-  
+
     const now = new Date();
     let startDate, dateFormat, groupingFunction, data;
-  
+
     switch (period) {
       case "week":
         startDate = subDays(now, 6);
@@ -247,7 +250,7 @@ const TourGuideItineraryReport = () => {
         }));
         break;
     }
-  
+
     reportData.forEach((item) => {
       const date = new Date(item.itinerary.createdAt);
       if (date >= startDate && date <= now) {
@@ -261,11 +264,10 @@ const TourGuideItineraryReport = () => {
         }
       }
     });
-  
+
     initialGraphDataRef.current = data;
     setGraphData(data);
   };
-  
 
   const calculatePeriodRevenue = (reportData, period) => {
     if (!Array.isArray(reportData)) return 0;
@@ -399,21 +401,21 @@ const TourGuideItineraryReport = () => {
                     />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  {isLoading ? (<div className="h-4 w-1/2 bg-gray-200 rounded mb-4 animate-pulse"></div>):(
-                    <span className="text-lg font-bold text-[#1A3B47]">
-                      ${totalRevenue?.toFixed(2)}
-                    </span>)}
+                    {isLoading ? (
+                      <div className="h-4 w-1/2 bg-gray-200 rounded mb-4 animate-pulse"></div>
+                    ) : (
+                      <span className="text-lg font-bold text-[#1A3B47]">
+                        ${totalRevenue?.toFixed(2)}
+                      </span>
+                    )}
                     <span className="text-sm text-[#5D9297]">
                       {selectedPeriod.charAt(0).toUpperCase() +
                         selectedPeriod.slice(1)}
                     </span>
                   </div>
                 </div>
-                
               </CardContent>
             </Card>
-
-
 
             {/* Revenue Analytics Card */}
             <Card className="md:col-span-8 h-[300px]">
@@ -424,72 +426,71 @@ const TourGuideItineraryReport = () => {
                   </CardTitle>
                 </div>
               </CardHeader>
-              {isLoading ?(
-                      <div className="md:col-span-8 bg-transparent">
-                      <div className="p-3 mb-2"></div>
-                      <div className="pl-0">
-                        {/* Reduced width for the chart skeleton */}
-                        <div className="h-[160px] bg-gray-300 rounded animate-pulse mx-auto w-[90%] translate-y-[-30px]"></div>
-                      </div>
-                    </div>
-                    
-                    
-                    ):(
-              <CardContent className="pl-0">
-                <div className="h-[210px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart
-                      data={graphData}
-                      margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
-                    >
-                      <defs>
-                        <linearGradient
-                          id="colorRevenue"
-                          x1="0"
-                          y1="0"
-                          x2="0"
-                          y2="1"
-                        >
-                          <stop
-                            offset="5%"
-                            stopColor="#B5D3D1"
-                            stopOpacity={0.8}
-                          />
-                          <stop
-                            offset="95%"
-                            stopColor="#B5D3D1"
-                            stopOpacity={0}
-                          />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-                      <YAxis tick={{ fontSize: 10 }} />
-                      <Tooltip />
-                      <Area
-                        type="monotone"
-                        dataKey="revenue"
-                        stroke="#B5D3D1"
-                        fillOpacity={1}
-                        fill="url(#colorRevenue)"
-                        strokeWidth={2}
-                        dot={{
-                          r: 3,
-                          strokeWidth: 2,
-                          stroke: "#B5D3D1",
-                          fill: "white",
-                        }}
-                        activeDot={{
-                          r: 5,
-                          strokeWidth: 2,
-                          stroke: "#B5D3D1",
-                          fill: "white",
-                        }}
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
+              {isLoading ? (
+                <div className="md:col-span-8 bg-transparent">
+                  <div className="p-3 mb-2"></div>
+                  <div className="pl-0">
+                    {/* Reduced width for the chart skeleton */}
+                    <div className="h-[160px] bg-gray-300 rounded animate-pulse mx-auto w-[90%] translate-y-[-30px]"></div>
+                  </div>
                 </div>
-              </CardContent>)}
+              ) : (
+                <CardContent className="pl-0">
+                  <div className="h-[210px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart
+                        data={graphData}
+                        margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+                      >
+                        <defs>
+                          <linearGradient
+                            id="colorRevenue"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor="#B5D3D1"
+                              stopOpacity={0.8}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor="#B5D3D1"
+                              stopOpacity={0}
+                            />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+                        <YAxis tick={{ fontSize: 10 }} />
+                        <Tooltip />
+                        <Area
+                          type="monotone"
+                          dataKey="revenue"
+                          stroke="#B5D3D1"
+                          fillOpacity={1}
+                          fill="url(#colorRevenue)"
+                          strokeWidth={2}
+                          dot={{
+                            r: 3,
+                            strokeWidth: 2,
+                            stroke: "#B5D3D1",
+                            fill: "white",
+                          }}
+                          activeDot={{
+                            r: 5,
+                            strokeWidth: 2,
+                            stroke: "#B5D3D1",
+                            fill: "white",
+                          }}
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              )}
             </Card>
           </div>
 
@@ -641,79 +642,81 @@ const TourGuideItineraryReport = () => {
                         Revenue
                       </th>
                     </tr>
-                  </thead>{isLoading ? (
-  <thead className="bg-gray-50">
-    
-
-    {/* 6 more rows of pulsing lines with more space and bigger size */}
-    {[...Array(6)].map((_, rowIndex) => (
-      <tr key={rowIndex}>
-        {[1, 2, 3].map((i) => (
-          <th key={i} className="px-6 py-3">
-            <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
-          </th>
-        ))}
-      </tr>
-    ))}
-  </thead>
-) : (
-                  <AnimatePresence mode="wait">
-                    {!isLoading && (
-                      <motion.tbody
-                        key="table-body"
-                        className="bg-white divide-y divide-gray-200"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        {filteredReport.map((item, index) => (
+                  </thead>
+                  {isLoading ? (
+                    <thead className="bg-gray-50">
+                      {/* 6 more rows of pulsing lines with more space and bigger size */}
+                      {[...Array(6)].map((_, rowIndex) => (
+                        <tr key={rowIndex}>
+                          {[1, 2, 3].map((i) => (
+                            <th key={i} className="px-6 py-3">
+                              <div className="h-6 w-full bg-gray-300 rounded animate-pulse mb-4"></div>
+                            </th>
+                          ))}
+                        </tr>
+                      ))}
+                    </thead>
+                  ) : (
+                    <AnimatePresence mode="wait">
+                      {!isLoading && (
+                        <motion.tbody
+                          key="table-body"
+                          className="bg-white divide-y divide-gray-200"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {filteredReport.map((item, index) => (
+                            <motion.tr
+                              key={index}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -20 }}
+                              transition={{
+                                duration: 0.2,
+                                delay: index * 0.05,
+                              }}
+                            >
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {item.itinerary.title}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {item.tickets}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                ${parseFloat(item.revenue).toFixed(2)}
+                              </td>
+                            </motion.tr>
+                          ))}
                           <motion.tr
-                            key={index}
+                            key="total-row"
+                            className="bg-gray-50 font-semibold"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.2, delay: index * 0.05 }}
+                            transition={{
+                              duration: 0.2,
+                              delay: filteredReport.length * 0.05,
+                            }}
                           >
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {item.itinerary.title}
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                              Total
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {item.tickets}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              ${parseFloat(item.revenue).toFixed(2)}
-                            </td>
-                          </motion.tr>
-                        ))}
-                        <motion.tr
-                          key="total-row"
-                          className="bg-gray-50 font-semibold"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -20 }}
-                          transition={{
-                            duration: 0.2,
-                            delay: filteredReport.length * 0.05,
-                          }}
-                        >
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            Total
-                          </td>
-                          {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             -
                           </td> */}
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {totalTickets}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${totalRevenue.toFixed(2)}
-                          </td>
-                        </motion.tr>
-                      </motion.tbody>
-                    )}
-                  </AnimatePresence>
-)}
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                              {totalTickets}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                              ${totalRevenue.toFixed(2)}
+                            </td>
+                          </motion.tr>
+                        </motion.tbody>
+                      )}
+                    </AnimatePresence>
+                  )}
                 </table>
               </div>
             </CardContent>
