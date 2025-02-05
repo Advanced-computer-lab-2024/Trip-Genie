@@ -372,7 +372,7 @@ const getSalesReport = async (req, res) => {
 
     const productSales = await ProductSales.find(query).populate("product");
     let sellerProductsSales = productSales
-      .filter((sale) => sale.product.seller?.toString() === res.locals.user_id)
+      .filter((sale) => sale.product?.seller?.toString() === res.locals.user_id)
       .map((sale) => {
         const pureSale = sale.toObject();
         return { ...pureSale, revenueAfterCommission: sale.revenue * 0.9 };
@@ -392,8 +392,10 @@ const getSalesReport = async (req, res) => {
       return acc;
     }, []);
 
-    if(year){
-      sellerProductsSales = sellerProductsSales.filter(sale => sale.revenue > 0);
+    if (year) {
+      sellerProductsSales = sellerProductsSales.filter(
+        (sale) => sale.revenue > 0
+      );
     }
 
     const totalSellerSalesRevenue = sellerProductsSales.reduce(

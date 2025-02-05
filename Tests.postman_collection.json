@@ -8,7 +8,7 @@
   },
   "item": [
     {
-      "name": "http://localhost:4000/tourist/currencies",
+      "name": "https://trip-genie-apis.vercel.app/tourist/currencies",
       "event": [
         {
           "listen": "test",
@@ -88,7 +88,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:4000/tourist/currencies",
+          "raw": "https://trip-genie-apis.vercel.app/tourist/currencies",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -98,7 +98,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/notifications",
+      "name": "https://trip-genie-apis.vercel.app/admin/notifications",
       "event": [
         {
           "listen": "test",
@@ -172,7 +172,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/admin/notifications",
+          "raw": "https://trip-genie-apis.vercel.app/admin/notifications",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -182,7 +182,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/products",
+      "name": "https://trip-genie-apis.vercel.app/admin/products",
       "event": [
         {
           "listen": "test",
@@ -251,7 +251,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/admin/products",
+          "raw": "https://trip-genie-apis.vercel.app/admin/products",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -261,7 +261,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/products/67621071abf9dde0e0a20933",
+      "name": "https://trip-genie-apis.vercel.app/admin/products/67621071abf9dde0e0a20933",
       "event": [
         {
           "listen": "test",
@@ -357,7 +357,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:4000/admin/products/67621071abf9dde0e0a20933",
+          "raw": "https://trip-genie-apis.vercel.app/admin/products/67621071abf9dde0e0a20933",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -367,7 +367,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/tourist/cart",
+      "name": "https://trip-genie-apis.vercel.app/tourist/cart",
       "event": [
         {
           "listen": "test",
@@ -414,7 +414,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/tourist/cart",
+          "raw": "https://trip-genie-apis.vercel.app/tourist/cart",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -424,7 +424,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/promo-code",
+      "name": "https://trip-genie-apis.vercel.app/admin/promo-code",
       "event": [
         {
           "listen": "test",
@@ -489,7 +489,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:4000/admin/promo-code",
+          "raw": "https://trip-genie-apis.vercel.app/admin/promo-code",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -499,7 +499,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/promo-code/67644db0b96d209909fe7d37",
+      "name": "https://trip-genie-apis.vercel.app/admin/promo-code/67644db0b96d209909fe7d37",
       "event": [
         {
           "listen": "test",
@@ -578,7 +578,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:4000/admin/promo-code/67645215b96d209909fe7dca",
+          "raw": "https://trip-genie-apis.vercel.app/admin/promo-code/67645215b96d209909fe7dca",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -588,7 +588,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/promo-code/67644f09b96d209909fe7d3e",
+      "name": "https://trip-genie-apis.vercel.app/admin/promo-code/67644f09b96d209909fe7d3e",
       "event": [
         {
           "listen": "test",
@@ -677,7 +677,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:4000/admin/promo-code/67645215b96d209909fe7dca",
+          "raw": "https://trip-genie-apis.vercel.app/admin/promo-code/67645215b96d209909fe7dca",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -687,7 +687,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/promo-code",
+      "name": "https://trip-genie-apis.vercel.app/admin/promo-code",
       "event": [
         {
           "listen": "test",
@@ -743,7 +743,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/admin/promo-code",
+          "raw": "https://trip-genie-apis.vercel.app/admin/promo-code",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -753,7 +753,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/complaints",
+      "name": "https://trip-genie-apis.vercel.app/admin/complaints",
       "event": [
         {
           "listen": "test",
@@ -811,7 +811,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/admin/complaints",
+          "raw": "https://trip-genie-apis.vercel.app/admin/complaints",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -821,7 +821,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/complaint/675f3c15d6eb9d2870030e41/reply",
+      "name": "https://trip-genie-apis.vercel.app/admin/complaint/675f3c15d6eb9d2870030e41/reply",
       "event": [
         {
           "listen": "test",
@@ -938,7 +938,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:4000/admin/complaint/675f3c15d6eb9d2870030e41/reply",
+          "raw": "https://trip-genie-apis.vercel.app/admin/complaint/675f3c15d6eb9d2870030e41/reply",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -948,7 +948,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/admin/complaint/675f3c15d6eb9d2870030e41",
+      "name": "https://trip-genie-apis.vercel.app/admin/complaint/675f3c15d6eb9d2870030e41",
       "event": [
         {
           "listen": "test",
@@ -1017,7 +1017,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/admin/complaint/675f3c15d6eb9d2870030e41",
+          "raw": "https://trip-genie-apis.vercel.app/admin/complaint/675f3c15d6eb9d2870030e41",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -1027,7 +1027,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/tourist/",
+      "name": "https://trip-genie-apis.vercel.app/tourist/",
       "event": [
         {
           "listen": "test",
@@ -1078,7 +1078,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:4000/tourist/",
+          "raw": "https://trip-genie-apis.vercel.app/tourist/",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -1088,7 +1088,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/tourist/activityBooking",
+      "name": "https://trip-genie-apis.vercel.app/tourist/activityBooking",
       "event": [
         {
           "listen": "test",
@@ -1137,7 +1137,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:4000/tourist/activityBooking",
+          "raw": "https://trip-genie-apis.vercel.app/tourist/activityBooking",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -1147,7 +1147,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/tourism-governor/historical-places",
+      "name": "https://trip-genie-apis.vercel.app/tourism-governor/historical-places",
       "event": [
         {
           "listen": "test",
@@ -1201,7 +1201,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/tourism-governor/historical-places",
+          "raw": "https://trip-genie-apis.vercel.app/tourism-governor/historical-places",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -1211,7 +1211,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/tourist/activityBooking/6748fd5ef77e66b4aa5f959c",
+      "name": "https://trip-genie-apis.vercel.app/tourist/activityBooking/6748fd5ef77e66b4aa5f959c",
       "event": [
         {
           "listen": "test",
@@ -1250,7 +1250,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/tourist/activityBooking/6748fd5ef77e66b4aa5f959c",
+          "raw": "https://trip-genie-apis.vercel.app/tourist/activityBooking/6748fd5ef77e66b4aa5f959c",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -1260,7 +1260,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/tourism-governor/historical-tag",
+      "name": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag",
       "event": [
         {
           "listen": "test",
@@ -1326,7 +1326,7 @@
           }
         },
         "url": {
-          "raw": "http://localhost:4000/tourism-governor/historical-tag",
+          "raw": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -1336,7 +1336,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/tourism-governor/historical-tag",
+      "name": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag",
       "event": [
         {
           "listen": "test",
@@ -1403,7 +1403,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/tourism-governor/historical-tag",
+          "raw": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -1413,7 +1413,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/tourism-governor/historical-tag/67645468b96d209909fe8063",
+      "name": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag/67645468b96d209909fe8063",
       "event": [
         {
           "listen": "test",
@@ -1469,7 +1469,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/tourism-governor/historical-tag/67645468b96d209909fe8063",
+          "raw": "https://trip-genie-apis.vercel.app/tourism-governor/historical-tag/67645468b96d209909fe8063",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",
@@ -1483,7 +1483,7 @@
       "response": []
     },
     {
-      "name": "http://localhost:4000/tourist/itineraries",
+      "name": "https://trip-genie-apis.vercel.app/tourist/itineraries",
       "event": [
         {
           "listen": "test",
@@ -1526,7 +1526,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:4000/tourist/itineraries",
+          "raw": "https://trip-genie-apis.vercel.app/tourist/itineraries",
           "protocol": "http",
           "host": ["localhost"],
           "port": "4000",

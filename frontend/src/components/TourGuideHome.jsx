@@ -10,11 +10,14 @@ const TourGuideHome = () => {
   const viewProfile = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await fetch("http://localhost:4000/tour-guide", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }); // Adjust URL based on your server
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/tour-guide",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ); // Adjust URL based on your server
 
       if (response.ok) {
         const data = await response.json();
@@ -33,7 +36,7 @@ const TourGuideHome = () => {
       const token = Cookies.get("jwt");
       if (response.role === "tourGuide") {
         const response = await fetch(
-          "http://localhost:4000/tour-guide/itinerary",
+          "https://trip-genie-apis.vercel.app/tour-guide/itinerary",
           {
             headers: {
               Authorization: `Bearer ${token}`,

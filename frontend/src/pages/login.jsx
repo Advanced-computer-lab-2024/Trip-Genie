@@ -54,7 +54,9 @@ const Login = () => {
   const logOut = async () => {
     console.log("Logging out...");
     try {
-      const response = await fetch("http://localhost:4000/auth/logout");
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/auth/logout"
+      );
 
       if (response.ok) {
         Cookies.set("jwt", "");
@@ -102,14 +104,17 @@ const Login = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:4000/auth/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/auth/login",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -147,7 +152,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:4000/auth/forgot-password",
+        "https://trip-genie-apis.vercel.app/auth/forgot-password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -175,11 +180,14 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/auth/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp: otpString }),
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/auth/verify-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp: otpString }),
+        }
+      );
 
       if (response.ok) {
         setForgotPasswordStep(3);
@@ -204,7 +212,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:4000/auth/reset-password",
+        "https://trip-genie-apis.vercel.app/auth/reset-password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

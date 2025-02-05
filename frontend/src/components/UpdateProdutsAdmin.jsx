@@ -106,7 +106,7 @@ const UpdateProduct = ({ id, onBack }) => {
       try {
         const token = Cookies.get("jwt");
         const response = await fetch(
-          `http://localhost:4000/${userRole}/products/${id}`,
+          `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -219,7 +219,7 @@ const UpdateProduct = ({ id, onBack }) => {
       });
 
       const response = await fetch(
-        `http://localhost:4000/${userRole}/products/${id}`,
+        `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
         {
           method: "PUT",
           headers: {

@@ -48,7 +48,9 @@ const WishlistPage = () => {
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:4000/rates");
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/rates"
+      );
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -59,7 +61,7 @@ const WishlistPage = () => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/tourist/currencies",
+        "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -104,14 +106,17 @@ const WishlistPage = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
 
         if (currencyId) {
           const response2 = await axios.get(
-            `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+            `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -142,11 +147,14 @@ const WishlistPage = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:4000/tourist/wishlist", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/tourist/wishlist",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch wishlist items");
       }
@@ -201,7 +209,7 @@ const WishlistPage = () => {
       }
 
       const response = await fetch(
-        `http://localhost:4000/tourist/remove/wishlist/${productId}`,
+        `https://trip-genie-apis.vercel.app/tourist/remove/wishlist/${productId}`,
         {
           method: "DELETE",
           headers: {
@@ -236,7 +244,7 @@ const WishlistPage = () => {
       }
 
       const response = await fetch(
-        `http://localhost:4000/tourist/move/wishlist/${productId}`,
+        `https://trip-genie-apis.vercel.app/tourist/move/wishlist/${productId}`,
         {
           method: "PUT",
           headers: {
@@ -266,7 +274,7 @@ const WishlistPage = () => {
       }
 
       const response = await fetch(
-        "http://localhost:4000/tourist/move/all/wishlist",
+        "https://trip-genie-apis.vercel.app/tourist/move/all/wishlist",
         {
           method: "PUT",
           headers: {
@@ -296,7 +304,7 @@ const WishlistPage = () => {
       }
 
       const response = await fetch(
-        "http://localhost:4000/tourist/remove/all/wishlist",
+        "https://trip-genie-apis.vercel.app/tourist/remove/all/wishlist",
         {
           method: "DELETE",
           headers: {

@@ -169,7 +169,7 @@ export function SellerProfileComponent() {
       try {
         const token = Cookies.get("jwt");
         const role = getUserRole();
-        const api = `http://localhost:4000/${role}`;
+        const api = `https://trip-genie-apis.vercel.app/${role}`;
         const response = await axios.get(api, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -201,7 +201,7 @@ export function SellerProfileComponent() {
     try {
       setLoadingNotifications(true);
       const response = await axios.get(
-        `http://localhost:4000/seller/notifications`,
+        `https://trip-genie-apis.vercel.app/seller/notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -302,7 +302,7 @@ export function SellerProfileComponent() {
       formData.append("mobile", "+" + mobile);
       formData.append("description", description || "");
 
-      const api = `http://localhost:4000/${role}`;
+      const api = `https://trip-genie-apis.vercel.app/${role}`;
       const response = await axios.put(api, formData, {
         headers: {
           Authorization: `Bearer ${token}`,

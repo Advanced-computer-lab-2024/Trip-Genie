@@ -83,7 +83,9 @@ const ProductReport = () => {
       const currentYear = new Date().getFullYear();
       const monthlyDataPromises = Array.from({ length: 12 }, (_, i) => {
         const month = i + 1;
-        const url = new URL(`http://localhost:4000/${role}/sales-report`);
+        const url = new URL(
+          `https://trip-genie-apis.vercel.app/${role}/sales-report`
+        );
         url.searchParams.append("year", currentYear);
         url.searchParams.append("month", month);
         return axios.get(url.toString(), {
@@ -146,7 +148,9 @@ const ProductReport = () => {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const url = new URL(`http://localhost:4000/${role}/sales-report`);
+      const url = new URL(
+        `https://trip-genie-apis.vercel.app/${role}/sales-report`
+      );
       if (newFilters.day) url.searchParams.append("day", newFilters.day);
       if (newFilters.month) url.searchParams.append("month", newFilters.month);
       if (newFilters.year) url.searchParams.append("year", newFilters.year);

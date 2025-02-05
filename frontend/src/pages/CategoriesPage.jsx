@@ -41,7 +41,7 @@ export default function CategoriesPage() {
       setLoading(true);
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "http://localhost:4000/admin/categories",
+        "https://trip-genie-apis.vercel.app/admin/categories",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ export default function CategoriesPage() {
       try {
         const token = Cookies.get("jwt");
         await axios.post(
-          "http://localhost:4000/admin/categories",
+          "https://trip-genie-apis.vercel.app/admin/categories",
           { name: newCategory },
           {
             headers: {
@@ -95,7 +95,7 @@ export default function CategoriesPage() {
       try {
         const token = Cookies.get("jwt");
         await axios.put(
-          `http://localhost:4000/admin/categories/${selectedCategoryId}`,
+          `https://trip-genie-apis.vercel.app/admin/categories/${selectedCategoryId}`,
           { name: updatedCategory },
           {
             headers: {
@@ -119,7 +119,7 @@ export default function CategoriesPage() {
     try {
       const token = Cookies.get("jwt");
       await axios.delete(
-        `http://localhost:4000/admin/categories/${categoryId}`,
+        `https://trip-genie-apis.vercel.app/admin/categories/${categoryId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

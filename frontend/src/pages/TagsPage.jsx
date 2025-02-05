@@ -36,11 +36,14 @@ export function TagsPage() {
   const fetchTags = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await axios.get("http://localhost:4000/admin/tags", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/admin/tags",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setTags(response.data);
     } catch (error) {
       console.error("Error fetching Tags:", error);
@@ -63,7 +66,7 @@ export function TagsPage() {
       try {
         const token = Cookies.get("jwt");
         await axios.post(
-          "http://localhost:4000/admin/tags",
+          "https://trip-genie-apis.vercel.app/admin/tags",
           { type: newTag },
           {
             headers: {
@@ -87,7 +90,7 @@ export function TagsPage() {
       try {
         const token = Cookies.get("jwt");
         await axios.put(
-          `http://localhost:4000/admin/tags/${editTagId}`,
+          `https://trip-genie-apis.vercel.app/admin/tags/${editTagId}`,
           { type: editTagName },
           {
             headers: {
@@ -110,11 +113,14 @@ export function TagsPage() {
   const deleteTag = async (tagId) => {
     try {
       const token = Cookies.get("jwt");
-      await axios.delete(`http://localhost:4000/admin/tags/${tagId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://trip-genie-apis.vercel.app/admin/tags/${tagId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       showToast("Tag deleted successfully!", "success");
       fetchTags();
     } catch (error) {

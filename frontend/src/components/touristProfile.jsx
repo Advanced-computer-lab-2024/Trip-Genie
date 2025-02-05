@@ -470,7 +470,7 @@ export function TouristProfileComponent() {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const api = `http://localhost:4000/${role}`;
+      const api = `https://trip-genie-apis.vercel.app/${role}`;
       const response = await axios.get(api, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -499,7 +499,7 @@ export function TouristProfileComponent() {
     const fetchNationalities = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/nationalities"
+          "https://trip-genie-apis.vercel.app/api/nationalities"
         );
         setNationalities(response.data);
       } catch (error) {
@@ -515,10 +515,10 @@ export function TouristProfileComponent() {
         try {
           const token = Cookies.get("jwt");
           const [ratesResponse, currenciesResponse] = await Promise.all([
-            axios.get("http://localhost:4000/rates", {
+            axios.get("https://trip-genie-apis.vercel.app/rates", {
               headers: { Authorization: `Bearer ${token}` },
             }),
-            axios.get("http://localhost:4000/tourist/currencies", {
+            axios.get("https://trip-genie-apis.vercel.app/tourist/currencies", {
               headers: { Authorization: `Bearer ${token}` },
             }),
           ]);
@@ -545,17 +545,20 @@ export function TouristProfileComponent() {
     if (tourist) {
       try {
         const token = Cookies.get("jwt");
-        const response = await fetch(`http://localhost:4000/tourist/populate`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            base: "67140446ee157ee4f239d523",
-            target: tourist.preferredCurrency,
-          }),
-        });
+        const response = await fetch(
+          `https://trip-genie-apis.vercel.app/tourist/populate`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              base: "67140446ee157ee4f239d523",
+              target: tourist.preferredCurrency,
+            }),
+          }
+        );
         const data = await response.json();
         if (response.ok) {
           setExchangeRate(data.conversion_rate);
@@ -572,7 +575,7 @@ export function TouristProfileComponent() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/tourist/getCurrency/${tourist.preferredCurrency}`,
+        `https://trip-genie-apis.vercel.app/tourist/getCurrency/${tourist.preferredCurrency}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -672,7 +675,7 @@ export function TouristProfileComponent() {
 
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const api = `http://localhost:4000/${role}`;
+      const api = `https://trip-genie-apis.vercel.app/${role}`;
       finalTourist.profilePicture = selectedImage;
       setDropdownOpen(false);
       console.log(finalTourist);
@@ -704,7 +707,7 @@ export function TouristProfileComponent() {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const api = `http://localhost:4000/${role}/redeem-points`;
+      const api = `https://trip-genie-apis.vercel.app/${role}/redeem-points`;
       const response = await axios.post(
         api,
         {},
@@ -745,14 +748,17 @@ export function TouristProfileComponent() {
               console.error("No JWT token found");
               return;
             }
-            const response = await axios.get("http://localhost:4000/tourist/", {
-              headers: { Authorization: `Bearer ${token}` },
-            });
+            const response = await axios.get(
+              "https://trip-genie-apis.vercel.app/tourist/",
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
             const currencyId = response.data.preferredCurrency;
 
             if (currencyId) {
               const response2 = await axios.get(
-                `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+                `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
                 {
                   headers: { Authorization: `Bearer ${token}` },
                 }
@@ -855,7 +861,7 @@ export function TouristProfileComponent() {
       try {
         const token = Cookies.get("jwt");
         const codeResponse = await axios.get(
-          "http://localhost:4000/tourist/currencies/idd",
+          "https://trip-genie-apis.vercel.app/tourist/currencies/idd",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -864,7 +870,7 @@ export function TouristProfileComponent() {
         const preferredCurrencyCode = codeResponse.data;
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${preferredCurrencyCode}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${preferredCurrencyCode}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -880,7 +886,7 @@ export function TouristProfileComponent() {
         try {
           const token = Cookies.get("jwt");
           const response = await axios.get(
-            "http://localhost:4000/tourist/currencies",
+            "https://trip-genie-apis.vercel.app/tourist/currencies",
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -899,7 +905,7 @@ export function TouristProfileComponent() {
       try {
         const token = Cookies.get("jwt");
         await axios.post(
-          "http://localhost:4000/tourist/currencies/set",
+          "https://trip-genie-apis.vercel.app/tourist/currencies/set",
           { currencyId: selectedCurrency },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -1029,7 +1035,7 @@ export function TouristProfileComponent() {
   const checkUnseenNotifications = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/tourist/unseen-notifications`,
+        `https://trip-genie-apis.vercel.app/tourist/unseen-notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -1044,7 +1050,7 @@ export function TouristProfileComponent() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:4000/tourist/notifications`,
+        `https://trip-genie-apis.vercel.app/tourist/notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -1065,7 +1071,7 @@ export function TouristProfileComponent() {
   const markNotificationAsSeen = async (notificationID) => {
     try {
       await axios.post(
-        `http://localhost:4000/tourist/notifications/markAsSeen/${notificationID}`,
+        `https://trip-genie-apis.vercel.app/tourist/notifications/markAsSeen/${notificationID}`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },

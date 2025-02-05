@@ -39,7 +39,7 @@ export function ViewComplaints({ onSelectComplaint }) {
         setLoading(true);
         const token = Cookies.get("jwt");
         let role = Cookies.get("role") || "guest";
-        const api = `http://localhost:4000/${role}/complaints`;
+        const api = `https://trip-genie-apis.vercel.app/${role}/complaints`;
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,

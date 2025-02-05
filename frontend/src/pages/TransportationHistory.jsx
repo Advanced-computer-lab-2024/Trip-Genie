@@ -29,7 +29,7 @@ import TransportationCard from "@/components/transportationCardAttended";
 const fetchData = async (userRole, dataType) => {
   try {
     const response = await axios.get(
-      `http://localhost:4000/${userRole}/history-transportation`,
+      `https://trip-genie-apis.vercel.app/${userRole}/history-transportation`,
       {
         headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
       }
@@ -186,14 +186,17 @@ export default function TouristTransportationHistory() {
   const fetchUserInfo = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await axios.get("http://localhost:4000/tourist/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/tourist/",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const currencyId = response.data.preferredCurrency;
       setTourist(response.data);
 
       const response2 = await axios.get(
-        `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+        `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -207,17 +210,20 @@ export default function TouristTransportationHistory() {
   const fetchExchangeRate = async (booking) => {
     try {
       const token = Cookies.get("jwt");
-      const response = await fetch(`http://localhost:4000/tourist/populate`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json", // Ensure content type is set to JSON
-        },
-        body: JSON.stringify({
-          base: "67140446ee157ee4f239d523", // Sending base currency ID
-          target: userPreferredCurrency._id, // Sending target currency ID
-        }),
-      });
+      const response = await fetch(
+        `https://trip-genie-apis.vercel.app/tourist/populate`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json", // Ensure content type is set to JSON
+          },
+          body: JSON.stringify({
+            base: "67140446ee157ee4f239d523", // Sending base currency ID
+            target: userPreferredCurrency._id, // Sending target currency ID
+          }),
+        }
+      );
       // Parse the response JSON
       const data = await response.json();
       console.log(data);

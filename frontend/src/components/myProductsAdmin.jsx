@@ -49,7 +49,7 @@ const ProductCard = ({ product, onSelect, userInfo }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `http://localhost:4000/${userInfo.role}/getCurrency/${product.currency}`,
+        `https://trip-genie-apis.vercel.app/${userInfo.role}/getCurrency/${product.currency}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -135,9 +135,12 @@ export function MyProducts() {
 
     if (role === "admin" || role === "seller") {
       try {
-        const response = await axios.get(`http://localhost:4000/${role}/`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          `https://trip-genie-apis.vercel.app/${role}/`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setUserInfo({ ...response.data, role });
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -157,7 +160,9 @@ export function MyProducts() {
   const fetchMaxPrice = async () => {
     const role = getUserRole();
     const token = Cookies.get("jwt");
-    const url = new URL(`http://localhost:4000/${role}/max-price-products-my`);
+    const url = new URL(
+      `https://trip-genie-apis.vercel.app/${role}/max-price-products-my`
+    );
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -176,7 +181,7 @@ export function MyProducts() {
         const token = Cookies.get("jwt");
         const role = getUserRole();
         const url = new URL(
-          `http://localhost:4000/${role}/products?myproducts=true`
+          `https://trip-genie-apis.vercel.app/${role}/products?myproducts=true`
         );
 
         if (params.searchBy)

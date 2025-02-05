@@ -70,7 +70,7 @@ const TourGuideItineraryReport = () => {
       const token = Cookies.get("jwt");
 
       const response = await axios.get(
-        `http://localhost:4000/tour-guide/itineraries-report`,
+        `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -114,7 +114,7 @@ const TourGuideItineraryReport = () => {
       if (day) queryParams.append("day", day);
 
       const response = await axios.get(
-        `http://localhost:4000/tour-guide/itineraries-report?${queryParams.toString()}`,
+        `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report?${queryParams.toString()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -153,7 +153,7 @@ const TourGuideItineraryReport = () => {
 
       for (let month = 1; month <= 12; month++) {
         const response = await axios.get(
-          `http://localhost:4000/tour-guide/itineraries-report?year=${currentYear}&month=${month}`,
+          `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report?year=${currentYear}&month=${month}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

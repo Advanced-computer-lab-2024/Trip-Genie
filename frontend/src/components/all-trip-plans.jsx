@@ -103,7 +103,7 @@ const ItineraryCard = ({
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${userInfo.role}/populate`,
+        `https://trip-genie-apis.vercel.app/${userInfo.role}/populate`,
         {
           method: "POST",
           headers: {
@@ -133,7 +133,7 @@ const ItineraryCard = ({
     // try {
     //   const token = Cookies.get("jwt");
     //   const response = await axios.get(
-    //     `http://localhost:4000/${userInfo.role}/getCurrency/${itinerary.currency}`,
+    //     `https://trip-genie-apis.vercel.app/${userInfo.role}/getCurrency/${itinerary.currency}`,
     //     {
     //       headers: { Authorization: `Bearer ${token}` },
     //     }
@@ -163,7 +163,7 @@ const ItineraryCard = ({
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        `http://localhost:4000/tourist/save-itinerary/${itinerary._id}`,
+        `https://trip-genie-apis.vercel.app/tourist/save-itinerary/${itinerary._id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -410,13 +410,16 @@ export function AllItinerariesComponent() {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get("http://localhost:4000/tourist/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist/",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const currencyId = response.data.preferredCurrency;
 
         const currencyResponse = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -461,7 +464,7 @@ export function AllItinerariesComponent() {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          "http://localhost:4000/tourist/saved-itineraries",
+          "https://trip-genie-apis.vercel.app/tourist/saved-itineraries",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -499,7 +502,9 @@ export function AllItinerariesComponent() {
   const fetchMaxPrice = async () => {
     const role = getUserRole();
     const token = Cookies.get("jwt");
-    const url = new URL(`http://localhost:4000/${role}/max-price-itinerary`);
+    const url = new URL(
+      `https://trip-genie-apis.vercel.app/${role}/max-price-itinerary`
+    );
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -521,8 +526,8 @@ export function AllItinerariesComponent() {
 
       const token = Cookies.get("jwt");
       const url = newSortedByPreference
-        ? "http://localhost:4000/tourist/itineraries-preference"
-        : "http://localhost:4000/tourist/itineraries";
+        ? "https://trip-genie-apis.vercel.app/tourist/itineraries-preference"
+        : "https://trip-genie-apis.vercel.app/tourist/itineraries";
 
       const response = await fetch(url, {
         headers: {
@@ -539,7 +544,7 @@ export function AllItinerariesComponent() {
 
       if (newSortedByPreference) {
         const otherItineraries = await fetch(
-          "http://localhost:4000/tourist/itineraries-not-preference",
+          "https://trip-genie-apis.vercel.app/tourist/itineraries-not-preference",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -574,7 +579,7 @@ export function AllItinerariesComponent() {
 
       if (role === "tourist" && !searchTerm && !sortBy && !myItineraries) {
         const preferredItineraries = await fetch(
-          "http://localhost:4000/tourist/itineraries-preference",
+          "https://trip-genie-apis.vercel.app/tourist/itineraries-preference",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -583,7 +588,7 @@ export function AllItinerariesComponent() {
         ).then((res) => res.json());
 
         const otherItineraries = await fetch(
-          "http://localhost:4000/tourist/itineraries-not-preference",
+          "https://trip-genie-apis.vercel.app/tourist/itineraries-not-preference",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -594,7 +599,9 @@ export function AllItinerariesComponent() {
         setItineraries([...preferredItineraries, ...otherItineraries]);
         setIsSortedByPreference(true);
       } else {
-        const url = new URL(`http://localhost:4000/${role}/itineraries`);
+        const url = new URL(
+          `https://trip-genie-apis.vercel.app/${role}/itineraries`
+        );
         const response = await fetch(url, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -636,7 +643,9 @@ export function AllItinerariesComponent() {
     setIsSortedByPreference(false);
     try {
       const role = getUserRole();
-      const url = new URL(`http://localhost:4000/${role}/itineraries`);
+      const url = new URL(
+        `https://trip-genie-apis.vercel.app/${role}/itineraries`
+      );
 
       if (priceRange[0] !== 0 || priceRange[1] !== maxPrice) {
         url.searchParams.append("minPrice", priceRange[0].toString());
@@ -704,8 +713,8 @@ export function AllItinerariesComponent() {
   const fetchData = async () => {
     try {
       const [typesResponse, languagesResponse] = await Promise.all([
-        axios.get("http://localhost:4000/api/getAllTypes"),
-        axios.get("http://localhost:4000/api/getAllLanguages"),
+        axios.get("https://trip-genie-apis.vercel.app/api/getAllTypes"),
+        axios.get("https://trip-genie-apis.vercel.app/api/getAllLanguages"),
       ]);
       setTypesOptions(typesResponse.data);
       setLanguagesOptions(languagesResponse.data);
@@ -779,7 +788,7 @@ export function AllItinerariesComponent() {
   //   try {
   //     const token = Cookies.get("jwt");
   //     const response = await fetch(
-  //       `http://localhost:4000/${getUserRole()}/itineraries/${selectedItinerary}`,
+  //       `https://trip-genie-apis.vercel.app/${getUserRole()}/itineraries/${selectedItinerary}`,
   //       {
   //         method: "DELETE",
   //         headers: {
@@ -834,7 +843,7 @@ export function AllItinerariesComponent() {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `http://localhost:4000/${getUserRole()}/itineraries/${
+        `https://trip-genie-apis.vercel.app/${getUserRole()}/itineraries/${
           itineraryToDelete.id
         }`,
 

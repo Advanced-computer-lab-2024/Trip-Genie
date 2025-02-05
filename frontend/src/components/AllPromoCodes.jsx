@@ -38,7 +38,7 @@ const AllPromoCodes = () => {
         setLoading(true);
         const token = Cookies.get("jwt");
         let role = Cookies.get("role") || "guest";
-        const api = `http://localhost:4000/${role}/promo-code`;
+        const api = `https://trip-genie-apis.vercel.app/${role}/promo-code`;
         const response = await axios.get(api, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -75,7 +75,7 @@ const AllPromoCodes = () => {
   const handleEdit = async (id) => {
     try {
       const token = Cookies.get("jwt");
-      const api = `http://localhost:4000/promo-code/${id}`;
+      const api = `https://trip-genie-apis.vercel.app/promo-code/${id}`;
       await axios.put(
         api,
         {},
@@ -101,7 +101,7 @@ const AllPromoCodes = () => {
     if (promoCodeToDelete) {
       try {
         const token = Cookies.get("jwt");
-        const api = `http://localhost:4000/admin/promo-code/${promoCodeToDelete._id}`;
+        const api = `https://trip-genie-apis.vercel.app/admin/promo-code/${promoCodeToDelete._id}`;
         await axios.delete(api, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -129,7 +129,7 @@ const AllPromoCodes = () => {
     const newStatus = currentStatus === "active" ? "inactive" : "active";
     try {
       const token = Cookies.get("jwt");
-      const api = `http://localhost:4000/admin/promo-code/${id}`;
+      const api = `https://trip-genie-apis.vercel.app/admin/promo-code/${id}`;
       await axios.put(
         api,
         { status: newStatus },

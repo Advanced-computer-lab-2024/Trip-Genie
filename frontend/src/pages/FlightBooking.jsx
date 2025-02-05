@@ -258,14 +258,17 @@ function BookingPage() {
     const fetchTouristData = async () => {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get("http://localhost:4000/tourist", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://trip-genie-apis.vercel.app/tourist",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setTourist(response.data);
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
+          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -322,7 +325,7 @@ function BookingPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:4000/tourist/get/promo-code",
+        "https://trip-genie-apis.vercel.app/tourist/get/promo-code",
         {
           method: "POST",
           headers: {
@@ -442,7 +445,7 @@ function BookingPage() {
 
       // Make the request to create the checkout session
       const response = await fetch(
-        "http://localhost:4000/create-flight-checkout-session",
+        "https://trip-genie-apis.vercel.app/create-flight-checkout-session",
         {
           method: "POST",
           headers: {
@@ -510,7 +513,7 @@ function BookingPage() {
         if (sessionId) {
           try {
             const response = await axios.get(
-              `http://localhost:4000/check-payment-status?session_id=${sessionId}`
+              `https://trip-genie-apis.vercel.app/check-payment-status?session_id=${sessionId}`
             );
 
             console.log("Payment status response:", response.data);
@@ -526,7 +529,7 @@ function BookingPage() {
                 "USD"
               );
               const response = await fetch(
-                "http://localhost:4000/tourist/book-flight",
+                "https://trip-genie-apis.vercel.app/tourist/book-flight",
                 {
                   method: "POST",
                   headers: {
@@ -616,7 +619,7 @@ function BookingPage() {
           "USD"
         );
         const response = await fetch(
-          "http://localhost:4000/tourist/book-flight",
+          "https://trip-genie-apis.vercel.app/tourist/book-flight",
           {
             method: "POST",
             headers: {
@@ -687,7 +690,7 @@ function BookingPage() {
 
   const fetchExchangeRates = async () => {
     try {
-      const response = await fetch("http://localhost:4000/rates");
+      const response = await fetch("https://trip-genie-apis.vercel.app/rates");
       if (!response.ok) {
         throw new Error("Failed to fetch exchange rates");
       }
@@ -701,11 +704,14 @@ function BookingPage() {
   const fetchCurrencies = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await fetch("http://localhost:4000/tourist/currencies", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/tourist/currencies",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch currencies");
       }
@@ -779,7 +785,7 @@ function BookingPage() {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        "http://localhost:4000/tourist/currencies/code",
+        "https://trip-genie-apis.vercel.app/tourist/currencies/code",
         {
           method: "GET",
           headers: {

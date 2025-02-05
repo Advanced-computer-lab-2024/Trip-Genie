@@ -170,7 +170,7 @@ export function Dashboard() {
   const checkUnseenNotificationsAdmin = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/admin/unseen-notifications`,
+        `https://trip-genie-apis.vercel.app/admin/unseen-notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -187,7 +187,7 @@ export function Dashboard() {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          "http://localhost:4000/admin/admin-info",
+          "https://trip-genie-apis.vercel.app/admin/admin-info",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -216,7 +216,9 @@ export function Dashboard() {
   const handleConfirmLogout = async () => {
     console.log("Logging out...");
     try {
-      const response = await fetch("http://localhost:4000/auth/logout");
+      const response = await fetch(
+        "https://trip-genie-apis.vercel.app/auth/logout"
+      );
       if (response.ok) {
         Cookies.remove("jwt");
         Cookies.remove("role");

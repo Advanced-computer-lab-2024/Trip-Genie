@@ -52,7 +52,7 @@ export default function CreateHtForm() {
 
     try {
       const response = await fetch(
-        `http://localhost:4000/tourism-governor/historical-tag`,
+        `https://trip-genie-apis.vercel.app/tourism-governor/historical-tag`,
         {
           method: "POST",
           headers: {

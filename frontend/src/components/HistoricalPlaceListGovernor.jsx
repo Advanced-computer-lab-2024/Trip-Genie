@@ -12,7 +12,7 @@ const HistoricalPlaceList = () => {
       try {
         const token = Cookies.get("jwt"); // Replace with your actual token
         const response = await axios.get(
-          "http://localhost:4000/tourism-governor/my-historical-places",
+          "https://trip-genie-apis.vercel.app/tourism-governor/my-historical-places",
           {
             headers: {
               Authorization: `Bearer ${token}`,

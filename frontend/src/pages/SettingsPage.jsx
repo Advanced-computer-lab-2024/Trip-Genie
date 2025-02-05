@@ -66,7 +66,7 @@ export default function SettingsPage() {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/${role}/password`,
+        `https://trip-genie-apis.vercel.app/${role}/password`,
         {
           oldPassword,
           newPassword,

@@ -26,9 +26,12 @@ export default function AddCard() {
   const fetchCards = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await axios.get("http://localhost:4000/tourist/cards", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "https://trip-genie-apis.vercel.app/tourist/cards",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setCards(Array.isArray(response.data.cards) ? response.data.cards : []);
     } catch (error) {
       console.error("Error fetching cards:", error);
@@ -100,9 +103,13 @@ export default function AddCard() {
 
     try {
       const token = Cookies.get("jwt");
-      await axios.put("http://localhost:4000/tourist/add-card", cardDetails, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.put(
+        "https://trip-genie-apis.vercel.app/tourist/add-card",
+        cardDetails,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       setMessage({ text: "Card added successfully", type: "success" });
       hideMessageAfterDelay();
@@ -133,7 +140,7 @@ export default function AddCard() {
     try {
       const token = Cookies.get("jwt");
       await axios.put(
-        `http://localhost:4000/tourist/add-default-card/${cardId}`,
+        `https://trip-genie-apis.vercel.app/tourist/add-default-card/${cardId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -155,9 +162,12 @@ export default function AddCard() {
   const handleRemoveCard = async (cardId) => {
     try {
       const token = Cookies.get("jwt");
-      await axios.delete(`http://localhost:4000/tourist/card/${cardId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://trip-genie-apis.vercel.app/tourist/card/${cardId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       fetchCards();
       setMessage({ text: "Card removed successfully", type: "success" });
       hideMessageAfterDelay();

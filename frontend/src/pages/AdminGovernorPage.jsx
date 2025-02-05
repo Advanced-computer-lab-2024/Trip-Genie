@@ -77,23 +77,29 @@ const AdminGovernorPage = () => {
       const token = Cookies.get("jwt");
 
       if (values.type === "admin") {
-        response = await fetch("http://localhost:4000/admin/admins", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, email, password }),
-        });
+        response = await fetch(
+          "https://trip-genie-apis.vercel.app/admin/admins",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, email, password }),
+          }
+        );
       } else {
-        response = await fetch("http://localhost:4000/admin/governors", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, email, password }),
-        });
+        response = await fetch(
+          "https://trip-genie-apis.vercel.app/admin/governors",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, email, password }),
+          }
+        );
       }
 
       if (!response.ok) {

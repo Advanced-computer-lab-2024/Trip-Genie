@@ -81,7 +81,7 @@ export default function TGNotificationsPage() {
       setLoading(true);
       setError(null);
       const response = await axios.get(
-        `http://localhost:4000/tour-guide/notifications`,
+        `https://trip-genie-apis.vercel.app/tour-guide/notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -125,7 +125,7 @@ export default function TGNotificationsPage() {
   const markNotificationsAsSeen = async () => {
     try {
       await axios.post(
-        `http://localhost:4000/tour-guide/mark-notifications-seen`,
+        `https://trip-genie-apis.vercel.app/tour-guide/mark-notifications-seen`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
@@ -147,7 +147,7 @@ export default function TGNotificationsPage() {
   const markNotificationAsSeen = async (notificationId) => {
     try {
       await axios.post(
-        `http://localhost:4000/tour-guide/notifications/markAsSeen/${notificationId}`,
+        `https://trip-genie-apis.vercel.app/tour-guide/notifications/markAsSeen/${notificationId}`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
