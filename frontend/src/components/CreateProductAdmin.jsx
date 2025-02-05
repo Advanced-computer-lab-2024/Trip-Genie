@@ -91,7 +91,7 @@ const CreateProductForm = () => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          `https://trip-genie-apis.vercel.app/${userRole}/currencies`,
+          `http://localhost:4000/${userRole}/currencies`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -158,7 +158,7 @@ const CreateProductForm = () => {
     const token = Cookies.get("jwt");
     try {
       const response = await axios.post(
-        `https://trip-genie-apis.vercel.app/${userRole}/products`,
+        `http://localhost:4000/${userRole}/products`,
         formData,
         {
           headers: {

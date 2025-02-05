@@ -206,14 +206,11 @@ const ExternalFlightBookings = ({ user }) => {
   const fetchCurrencies = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await fetch(
-        "https://trip-genie-apis.vercel.app/tourist/currencies",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:4000/tourist/currencies", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch currencies");
       }
@@ -235,7 +232,7 @@ const ExternalFlightBookings = ({ user }) => {
 
   const fetchExchangeRate = async () => {
     try {
-      const response = await fetch("https://trip-genie-apis.vercel.app/rates");
+      const response = await fetch("http://localhost:4000/rates");
       if (!response.ok) {
         throw new Error("Failed to fetch exchange rates");
       }
@@ -252,17 +249,14 @@ const ExternalFlightBookings = ({ user }) => {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setTourist(response.data);
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -287,10 +281,10 @@ const ExternalFlightBookings = ({ user }) => {
     try {
       const token = Cookies.get("jwt");
       const [flightsResponse] = await Promise.all([
-        axios.get("https://trip-genie-apis.vercel.app/tourist/my-flights", {
+        axios.get("http://localhost:4000/tourist/my-flights", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("https://trip-genie-apis.vercel.app/tourist/", {
+        axios.get("http://localhost:4000/tourist/", {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -308,7 +302,7 @@ const ExternalFlightBookings = ({ user }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        `https://trip-genie-apis.vercel.app/tourist/cancel-flight/${selectedFlight}`,
+        `http://localhost:4000/tourist/cancel-flight/${selectedFlight}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -837,14 +831,11 @@ const ExternalHotelBookings = ({ user }) => {
   const fetchCurrencies = async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await fetch(
-        "https://trip-genie-apis.vercel.app/tourist/currencies",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:4000/tourist/currencies", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch currencies");
       }
@@ -971,17 +962,14 @@ const ExternalHotelBookings = ({ user }) => {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setTourist(response.data);
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -1004,7 +992,7 @@ const ExternalHotelBookings = ({ user }) => {
 
   const fetchExchangeRate = async () => {
     try {
-      const response = await fetch("https://trip-genie-apis.vercel.app/rates");
+      const response = await fetch("http://localhost:4000/rates");
       if (!response.ok) {
         throw new Error("Failed to fetch exchange rates");
       }
@@ -1019,10 +1007,10 @@ const ExternalHotelBookings = ({ user }) => {
     try {
       const token = Cookies.get("jwt");
       const [hotelsResponse, currencyResponse] = await Promise.all([
-        axios.get("https://trip-genie-apis.vercel.app/tourist/my-hotels", {
+        axios.get("http://localhost:4000/tourist/my-hotels", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("https://trip-genie-apis.vercel.app/tourist/", {
+        axios.get("http://localhost:4000/tourist/", {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -1040,7 +1028,7 @@ const ExternalHotelBookings = ({ user }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        `https://trip-genie-apis.vercel.app/tourist/cancel-hotel/${selectedHotel}`,
+        `http://localhost:4000/tourist/cancel-hotel/${selectedHotel}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -1433,10 +1421,10 @@ const RedeemPoints = ({ user, onRedeemPoints }) => {
       try {
         const token = Cookies.get("jwt");
         const [ratesResponse, currenciesResponse] = await Promise.all([
-          axios.get("https://trip-genie-apis.vercel.app/rates", {
+          axios.get("http://localhost:4000/rates", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("https://trip-genie-apis.vercel.app/tourist/currencies", {
+          axios.get("http://localhost:4000/tourist/currencies", {
             headers: { Authorization: `Bearer ${token}` },
           }),
           fetchUserInfo(),
@@ -1507,17 +1495,14 @@ const RedeemPoints = ({ user, onRedeemPoints }) => {
           return;
         }
 
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const currencyId = response.data.preferredCurrency;
 
         if (currencyId) {
           const response2 = await axios.get(
-            `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+            `http://localhost:4000/tourist/getCurrency/${currencyId}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -1613,7 +1598,7 @@ const CurrencyApp = ({ user }) => {
       try {
         const token = Cookies.get("jwt");
         const codeResponse = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/currencies/idd",
+          "http://localhost:4000/tourist/currencies/idd",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -1623,7 +1608,7 @@ const CurrencyApp = ({ user }) => {
         console.log("Preferred Currency Code:", preferredCurrencyCode);
 
         const currencyResponse = await axios.get(
-          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${preferredCurrencyCode}`,
+          `http://localhost:4000/tourist/getCurrency/${preferredCurrencyCode}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -1641,7 +1626,7 @@ const CurrencyApp = ({ user }) => {
         try {
           const token = Cookies.get("jwt");
           const response = await axios.get(
-            "https://trip-genie-apis.vercel.app/tourist/currencies",
+            "http://localhost:4000/tourist/currencies",
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -1662,7 +1647,7 @@ const CurrencyApp = ({ user }) => {
       try {
         const token = Cookies.get("jwt");
         await axios.post(
-          "https://trip-genie-apis.vercel.app/tourist/currencies/set",
+          "http://localhost:4000/tourist/currencies/set",
           { currencyId: selectedCurrency },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -1780,7 +1765,7 @@ const DeleteAccount = ({ onClose }) => {
       const token = Cookies.get("jwt");
       const role = Cookies.get("role");
       const response = await axios.delete(
-        `https://trip-genie-apis.vercel.app/${role}/delete-account`,
+        `http://localhost:4000/${role}/delete-account`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -1874,7 +1859,7 @@ export default function AccountManagement() {
       try {
         const token = Cookies.get("jwt");
         const role = getUserRole();
-        const api = `https://trip-genie-apis.vercel.app/${role}`;
+        const api = `http://localhost:4000/${role}`;
         const response = await axios.get(api, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -1907,7 +1892,7 @@ export default function AccountManagement() {
     try {
       const token = Cookies.get("jwt");
       const role = getUserRole();
-      const api = `https://trip-genie-apis.vercel.app/${role}/redeem-points`;
+      const api = `http://localhost:4000/${role}/redeem-points`;
       const response = await axios.post(
         api,
         {},
@@ -2205,9 +2190,7 @@ export default function AccountManagement() {
   const logOut = async () => {
     console.log("Logging out...");
     try {
-      const response = await fetch(
-        "https://trip-genie-apis.vercel.app/auth/logout"
-      );
+      const response = await fetch("http://localhost:4000/auth/logout");
       if (response.ok) {
         Cookies.set("jwt", "");
         Cookies.set("role", "");

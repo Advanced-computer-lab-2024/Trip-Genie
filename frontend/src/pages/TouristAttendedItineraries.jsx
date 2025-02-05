@@ -207,7 +207,7 @@ const SkeletonDialog = () => {
 const fetchData = async (userRole, dataType) => {
   try {
     const response = await axios.get(
-      `https://trip-genie-apis.vercel.app/${userRole}/${dataType}`,
+      `http://localhost:4000/${userRole}/${dataType}`,
       {
         headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
       }
@@ -238,9 +238,7 @@ export default function TouristAttendedItineraries() {
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/rates"
-      );
+      const response = await axios.get("http://localhost:4000/rates");
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -253,17 +251,14 @@ export default function TouristAttendedItineraries() {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const currencyId = response.data.preferredCurrency;
         setTourist(response.data);
 
         const currencyResponse = await axios.get(
-          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -315,7 +310,7 @@ export default function TouristAttendedItineraries() {
     try {
       // fetch the activity from the backend
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/tourist/itineraries/${id}`,
+        `http://localhost:4000/tourist/itineraries/${id}`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }

@@ -404,7 +404,7 @@ export function SignupForm() {
     const fetchNationalities = async () => {
       try {
         const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/api/nationalities"
+          "http://localhost:4000/api/nationalities"
         );
         setNationalities(response.data);
       } catch (error) {
@@ -503,7 +503,7 @@ export function SignupForm() {
       const { username, email } = values;
       try {
         await axios.get(
-          `https://trip-genie-apis.vercel.app/auth/check-unique?username=${username}&email=${email}`
+          `http://localhost:4000/auth/check-unique?username=${username}&email=${email}`
         );
       } catch (error) {
         const response = error.response;
@@ -590,7 +590,7 @@ export function SignupForm() {
       });
 
       await axios.post(
-        `https://trip-genie-apis.vercel.app/auth/sign-up/${userType}`,
+        `http://localhost:4000/auth/sign-up/${userType}`,
         finalData,
         {
           headers: {

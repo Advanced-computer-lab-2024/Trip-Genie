@@ -42,7 +42,7 @@ const ItineraryCard = ({
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        `https://trip-genie-apis.vercel.app/tourist/save-itinerary/${itinerary._id}`,
+        `http://localhost:4000/tourist/save-itinerary/${itinerary._id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -246,9 +246,7 @@ export default function SavedItineraries() {
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/rates"
-      );
+      const response = await axios.get("http://localhost:4000/rates");
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -261,16 +259,13 @@ export default function SavedItineraries() {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const currencyId = response.data.preferredCurrency;
 
         const currencyResponse = await axios.get(
-          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -306,7 +301,7 @@ export default function SavedItineraries() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/tourist/saved-itineraries",
+        "http://localhost:4000/tourist/saved-itineraries",
         {
           headers: { Authorization: `Bearer ${token}` },
         }

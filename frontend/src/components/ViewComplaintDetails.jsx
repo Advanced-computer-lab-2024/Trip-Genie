@@ -30,7 +30,7 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
     try {
       const token = Cookies.get("jwt");
       let role = Cookies.get("role") || "guest";
-      const api = `https://trip-genie-apis.vercel.app/${role}/complaint/${complaintId}`;
+      const api = `http://localhost:4000/${role}/complaint/${complaintId}`;
       const response = await axios.get(api, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -54,7 +54,7 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
         return;
       }
       await axios.post(
-        `https://trip-genie-apis.vercel.app/admin/complaint/${complaintId}/reply`,
+        `http://localhost:4000/admin/complaint/${complaintId}/reply`,
         { content: replyContent },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -72,7 +72,7 @@ export const ViewComplaintDetails = ({ complaintId, onBack }) => {
     try {
       const token = Cookies.get("jwt");
       await axios.put(
-        `https://trip-genie-apis.vercel.app/admin/complaint/${complaintId}/status`,
+        `http://localhost:4000/admin/complaint/${complaintId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );

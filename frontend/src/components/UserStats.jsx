@@ -68,7 +68,7 @@ export default function UserStats() {
       setIsLoading(true);
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/admin/users-report",
+        "http://localhost:4000/admin/users-report",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -89,7 +89,7 @@ export default function UserStats() {
 
       // Get current month stats
       const currentMonthResponse = await axios.get(
-        `https://trip-genie-apis.vercel.app/admin/users-report?month=${
+        `http://localhost:4000/admin/users-report?month=${
           currentDate.getMonth() + 1
         }&year=${currentDate.getFullYear()}`,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -97,7 +97,7 @@ export default function UserStats() {
 
       // Get last month stats
       const lastMonthResponse = await axios.get(
-        `https://trip-genie-apis.vercel.app/admin/users-report?month=${
+        `http://localhost:4000/admin/users-report?month=${
           lastMonth.getMonth() + 1
         }&year=${lastMonth.getFullYear()}`,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -120,7 +120,7 @@ export default function UserStats() {
       setIsFiltering(true);
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/admin/users-report?month=${filters.month}&year=${filters.year}`,
+        `http://localhost:4000/admin/users-report?month=${filters.month}&year=${filters.year}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setFilteredStats(response.data);
@@ -482,7 +482,7 @@ export function UserGrowthChart() {
 
       for (let month = 0; month < 12; month++) {
         const response = await axios.get(
-          `https://trip-genie-apis.vercel.app/admin/users-report?month=${
+          `http://localhost:4000/admin/users-report?month=${
             month + 1
           }&year=${currentYear}`,
           { headers: { Authorization: `Bearer ${token}` } }

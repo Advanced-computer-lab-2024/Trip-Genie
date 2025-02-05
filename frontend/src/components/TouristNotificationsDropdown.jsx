@@ -61,7 +61,7 @@ export function NotificationsDropdownTourist() {
   const checkUnseenNotifications = async () => {
     try {
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/tourist/unseen-notifications`,
+        `http://localhost:4000/tourist/unseen-notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -76,7 +76,7 @@ export function NotificationsDropdownTourist() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/tourist/notifications`,
+        `http://localhost:4000/tourist/notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -100,7 +100,7 @@ export function NotificationsDropdownTourist() {
   const markNotificationsAsSeen = async () => {
     try {
       await axios.post(
-        `https://trip-genie-apis.vercel.app/tourist/mark-dropdown-opened`,
+        `http://localhost:4000/tourist/mark-dropdown-opened`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
@@ -116,7 +116,7 @@ export function NotificationsDropdownTourist() {
   const markNotificationAsSeen = async (notificationId) => {
     try {
       await axios.post(
-        `https://trip-genie-apis.vercel.app/tourist/notifications/markAsSeen/${notificationId}`,
+        `http://localhost:4000/tourist/notifications/markAsSeen/${notificationId}`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
@@ -137,7 +137,7 @@ export function NotificationsDropdownTourist() {
   const markAllAsSeen = async () => {
     try {
       await axios.post(
-        `https://trip-genie-apis.vercel.app/tourist/mark-notifications-seen`,
+        `http://localhost:4000/tourist/mark-notifications-seen`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },

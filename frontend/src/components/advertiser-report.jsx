@@ -72,7 +72,7 @@ const AdvertiserReport = () => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/advertiser/activities-report`,
+        `http://localhost:4000/advertiser/activities-report`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -99,7 +99,7 @@ const AdvertiserReport = () => {
       const monthlyDataPromises = Array.from({ length: 12 }, (_, i) => {
         const month = i + 1;
         return axios.get(
-          `https://trip-genie-apis.vercel.app/advertiser/activities-report?year=${currentYear}&month=${month}`,
+          `http://localhost:4000/advertiser/activities-report?year=${currentYear}&month=${month}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -158,7 +158,7 @@ const AdvertiserReport = () => {
       if (day) queryParams.append("day", day);
 
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/advertiser/activities-report?${queryParams.toString()}`,
+        `http://localhost:4000/advertiser/activities-report?${queryParams.toString()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

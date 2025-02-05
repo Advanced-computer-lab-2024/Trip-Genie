@@ -128,12 +128,9 @@ export default function TransportationPage() {
     const fetchTouristData = async () => {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setTourist(response.data);
       } catch (error) {
         console.error("Error fetching tourist data:", error);
@@ -171,16 +168,13 @@ export default function TransportationPage() {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -194,9 +188,7 @@ export default function TransportationPage() {
 
   const fetchRates = async () => {
     try {
-      const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/rates"
-      );
+      const response = await axios.get("http://localhost:4000/rates");
       setRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching rates:", error);
@@ -209,7 +201,7 @@ export default function TransportationPage() {
       const token = Cookies.get("jwt");
       const role = Cookies.get("role");
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/${role}/transportations`,
+        `http://localhost:4000/${role}/transportations`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -298,7 +290,7 @@ export default function TransportationPage() {
       bookingProcessedRef.current = true;
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        "https://trip-genie-apis.vercel.app/tourist/book-transportation",
+        "http://localhost:4000/tourist/book-transportation",
         {
           transportationID: selectedTransportID,
           seatsToBook: seatsToBook,
@@ -368,7 +360,7 @@ export default function TransportationPage() {
       if (sessionId && success === "true") {
         try {
           const response = await axios.get(
-            `https://trip-genie-apis.vercel.app/check-payment-status?session_id=${sessionId}`
+            `http://localhost:4000/check-payment-status?session_id=${sessionId}`
           );
 
           console.log("Payment status response:", response.data);
@@ -424,7 +416,7 @@ export default function TransportationPage() {
       data.isStandAlone = true;
 
       const response = await axios.post(
-        `https://trip-genie-apis.vercel.app/${role}/transportations`,
+        `http://localhost:4000/${role}/transportations`,
         data,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -456,7 +448,7 @@ export default function TransportationPage() {
       const role = Cookies.get("role");
 
       const response = await axios.put(
-        `https://trip-genie-apis.vercel.app/${role}/transportations/${editingTransportation._id}`,
+        `http://localhost:4000/${role}/transportations/${editingTransportation._id}`,
         data,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -514,7 +506,7 @@ export default function TransportationPage() {
       const token = Cookies.get("jwt");
       const role = Cookies.get("role");
       await axios.delete(
-        `https://trip-genie-apis.vercel.app/${role}/transportations/${id}`,
+        `http://localhost:4000/${role}/transportations/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -1193,7 +1185,7 @@ export default function TransportationPage() {
                 ).toFixed(2)}
                 currency={userPreferredCurrency.code}
                 symbol={userPreferredCurrency.symbol}
-                returnLoc={"http://localhost:3000/transportation"}
+                returnLoc={"https://trip-genie-acl.vercel.app/transportation"}
                 error={bookingError}
                 setError={setBookingError}
                 selectedTransportID={selectedTransportation._id}

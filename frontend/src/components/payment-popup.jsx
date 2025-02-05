@@ -103,7 +103,7 @@ const PaymentPopup = ({
 
     try {
       const response = await fetch(
-        "https://trip-genie-apis.vercel.app/tourist/get/promo-code",
+        "http://localhost:4000/tourist/get/promo-code",
         {
           method: "POST",
           headers: {
@@ -201,7 +201,7 @@ const PaymentPopup = ({
         }
 
         const response = await fetch(
-          "https://trip-genie-apis.vercel.app/create-booking-session",
+          "http://localhost:4000/create-booking-session",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

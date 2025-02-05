@@ -317,17 +317,13 @@ const ActivityForm = ({
   }, [initialData, setValue]);
 
   const fetchTags = async () => {
-    const response = await fetch(
-      "https://trip-genie-apis.vercel.app/api/getAllTags"
-    );
+    const response = await fetch("http://localhost:4000/api/getAllTags");
     const data = await response.json();
     setTags(data.map((tag) => ({ value: tag._id, label: tag.type })));
   };
 
   const fetchCategories = async () => {
-    const response = await fetch(
-      "https://trip-genie-apis.vercel.app/api/getAllCategories"
-    );
+    const response = await fetch("http://localhost:4000/api/getAllCategories");
     const data = await response.json();
     setCategory(data.map((cat) => ({ value: cat._id, label: cat.name })));
   };
@@ -702,7 +698,7 @@ const ItineraryForm = () => {
       console.log("Form data prepared:", formData);
 
       const response = await axios.post(
-        `https://trip-genie-apis.vercel.app/${role}/itineraries`,
+        `http://localhost:4000/${role}/itineraries`,
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },

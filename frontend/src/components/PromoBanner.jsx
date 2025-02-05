@@ -17,7 +17,7 @@ const PromoBanner = ({ setPromoMargin }) => {
         const token = Cookies.get("jwt");
         const role = Cookies.get("role");
         if (role !== "tourist") return;
-        const api = `https://trip-genie-apis.vercel.app/tourist/promo-codes`;
+        const api = `http://localhost:4000/tourist/promo-codes`;
         const response = await axios.get(api, {
           headers: { Authorization: `Bearer ${token}` },
         });

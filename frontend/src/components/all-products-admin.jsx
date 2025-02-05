@@ -117,7 +117,7 @@ const ProductCard = ({
       try {
         const token = Cookies.get("jwt");
         const response = await fetch(
-          `https://trip-genie-apis.vercel.app/${userInfo.role}/populate`,
+          `http://localhost:4000/${userInfo.role}/populate`,
           {
             method: "POST",
             headers: {
@@ -364,16 +364,13 @@ export function AllProducts({ notificationId }) {
 
     if (role === "tourist") {
       try {
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const currencyId = response.data.preferredCurrency;
 
         const currencyResponse = await axios.get(
-          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -406,9 +403,7 @@ export function AllProducts({ notificationId }) {
       try {
         const token = Cookies.get("jwt");
         const role = getUserRole();
-        const url = new URL(
-          `https://trip-genie-apis.vercel.app/${role}/products`
-        );
+        const url = new URL(`http://localhost:4000/${role}/products`);
 
         if (params.searchBy)
           url.searchParams.append("searchBy", params.searchBy);
@@ -463,9 +458,7 @@ export function AllProducts({ notificationId }) {
   const fetchMaxPrice = async () => {
     const role = getUserRole();
     const token = Cookies.get("jwt");
-    const url = new URL(
-      `https://trip-genie-apis.vercel.app/${role}/max-price-products`
-    );
+    const url = new URL(`http://localhost:4000/${role}/max-price-products`);
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -482,14 +475,11 @@ export function AllProducts({ notificationId }) {
     if (role == "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await fetch(
-          "https://trip-genie-apis.vercel.app/tourist/cart",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch("http://localhost:4000/tourist/cart", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           setCartItems(data);
@@ -504,14 +494,11 @@ export function AllProducts({ notificationId }) {
     if (userInfo?.role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await fetch(
-          "https://trip-genie-apis.vercel.app/tourist/wishlist",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch("http://localhost:4000/tourist/wishlist", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           console.log("Fetched wishlist items:", data);
@@ -607,7 +594,7 @@ export function AllProducts({ notificationId }) {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        "https://trip-genie-apis.vercel.app/tourist/product/addToCart",
+        "http://localhost:4000/tourist/product/addToCart",
         {
           method: "POST",
           headers: {
@@ -643,7 +630,7 @@ export function AllProducts({ notificationId }) {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/tourist/product/addToWishlist/${product._id}`,
+        `http://localhost:4000/tourist/product/addToWishlist/${product._id}`,
         {
           method: "POST",
           headers: {
@@ -674,7 +661,7 @@ export function AllProducts({ notificationId }) {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/tourist/remove/wishlist/${product._id}`,
+        `http://localhost:4000/tourist/remove/wishlist/${product._id}`,
         {
           method: "DELETE",
           headers: {
@@ -707,31 +694,28 @@ export function AllProducts({ notificationId }) {
 
       const totalAmount = selectedProduct.price * quantity;
 
-      const response = await fetch(
-        "https://trip-genie-apis.vercel.app/tourist/purchase",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            products: [
-              {
-                product: selectedProduct._id,
-                quantity: quantity,
-              },
-            ],
-            totalAmount,
-            paymentMethod: paymentMethod,
-            shippingAddress: location,
-            locationType: locationType,
-            deliveryType: deliveryType,
-            deliveryTime: deliveryTime,
-            deliveryDate: deliveryDate,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:4000/tourist/purchase", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          products: [
+            {
+              product: selectedProduct._id,
+              quantity: quantity,
+            },
+          ],
+          totalAmount,
+          paymentMethod: paymentMethod,
+          shippingAddress: location,
+          locationType: locationType,
+          deliveryType: deliveryType,
+          deliveryTime: deliveryTime,
+          deliveryDate: deliveryDate,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

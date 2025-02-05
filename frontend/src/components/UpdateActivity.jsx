@@ -195,16 +195,11 @@ export default function UpdateActivity() {
 
         const [activityResponse, categoriesResponse, tagsResponse] =
           await Promise.all([
-            axios.get(
-              `https://trip-genie-apis.vercel.app/${role}/activities/${id}`,
-              {
-                headers: { Authorization: `Bearer ${token}` },
-              }
-            ),
-            axios.get(
-              "https://trip-genie-apis.vercel.app/api/getAllCategories"
-            ),
-            axios.get("https://trip-genie-apis.vercel.app/api/getAllTags"),
+            axios.get(`http://localhost:4000/${role}/activities/${id}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            axios.get("http://localhost:4000/api/getAllCategories"),
+            axios.get("http://localhost:4000/api/getAllTags"),
           ]);
 
         const activityData = activityResponse.data;
@@ -311,7 +306,7 @@ export default function UpdateActivity() {
     try {
       console.log("Location coordinates:", data.location.coordinates);
       const response = await axios.put(
-        `https://trip-genie-apis.vercel.app/${role}/activities/${id}`,
+        `http://localhost:4000/${role}/activities/${id}`,
         formData,
         {
           headers: {
@@ -352,7 +347,7 @@ export default function UpdateActivity() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/advertiser/currencies`,
+        `http://localhost:4000/advertiser/currencies`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -418,7 +413,7 @@ export default function UpdateActivity() {
   //     if (editingTransportationIndex !== null) {
   //       // Update existing transportation
   //       response = await axios.put(
-  //         `https://trip-genie-apis.vercel.app/advertiser/transportations/${transportations[editingTransportationIndex]._id}`,
+  //         `http://localhost:4000/advertiser/transportations/${transportations[editingTransportationIndex]._id}`,
   //         data,
   //         {
   //           headers: { Authorization: `Bearer ${token}` },
@@ -430,7 +425,7 @@ export default function UpdateActivity() {
   //     } else {
   //       // Create new transportation
   //       response = await axios.post(
-  //         "https://trip-genie-apis.vercel.app/advertiser/transportations",
+  //         "http://localhost:4000/advertiser/transportations",
   //         data,
   //         {
   //           headers: { Authorization: `Bearer ${token}` },
@@ -471,7 +466,7 @@ export default function UpdateActivity() {
   //   try {
   //     const token = Cookies.get("jwt");
   //     await axios.delete(
-  //       `https://trip-genie-apis.vercel.app/advertiser/transportations/${transportations[index]._id}`,
+  //       `http://localhost:4000/advertiser/transportations/${transportations[index]._id}`,
   //       {
   //         headers: { Authorization: `Bearer ${token}` },
   //       }

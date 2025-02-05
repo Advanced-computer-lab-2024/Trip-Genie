@@ -114,7 +114,7 @@ export default function CreateActivity() {
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/api/getAllCategories"
+        "http://localhost:4000/api/getAllCategories"
       );
       setCategories(
         response.data.map((cat) => ({ value: cat._id, label: cat.name }))
@@ -122,9 +122,7 @@ export default function CreateActivity() {
     };
 
     const fetchTags = async () => {
-      const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/api/getAllTags"
-      );
+      const response = await axios.get("http://localhost:4000/api/getAllTags");
       setTags(
         response.data.map((tag) => ({ value: tag._id, label: tag.type }))
       );
@@ -220,7 +218,7 @@ export default function CreateActivity() {
 
     try {
       const response = await axios.post(
-        `https://trip-genie-apis.vercel.app/${role}/activities`,
+        `http://localhost:4000/${role}/activities`,
         formData,
         {
           headers: {

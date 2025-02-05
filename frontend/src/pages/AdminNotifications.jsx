@@ -85,7 +85,7 @@ export default function NotificationsPage({
       setLoading(true);
       setError(null);
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/admin/notifications`,
+        `http://localhost:4000/admin/notifications`,
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -123,7 +123,7 @@ export default function NotificationsPage({
   const markNotificationsAsSeen = async () => {
     try {
       await axios.post(
-        `https://trip-genie-apis.vercel.app/admin/mark-notifications-seen`,
+        `http://localhost:4000/admin/mark-notifications-seen`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
@@ -145,7 +145,7 @@ export default function NotificationsPage({
   const markNotificationAsSeen = async (notificationId) => {
     try {
       await axios.post(
-        `https://trip-genie-apis.vercel.app/admin/notifications/markAsSeen/${notificationId}`,
+        `http://localhost:4000/admin/notifications/markAsSeen/${notificationId}`,
         {},
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },

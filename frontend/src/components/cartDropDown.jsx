@@ -24,9 +24,7 @@ export default function CartDropdown({
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/rates"
-      );
+      const response = await axios.get("http://localhost:4000/rates");
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -36,7 +34,7 @@ export default function CartDropdown({
   const fetchCurrencies = useCallback(async () => {
     try {
       const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/tourist/currencies",
+        "http://localhost:4000/tourist/currencies",
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -54,16 +52,13 @@ export default function CartDropdown({
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -93,7 +88,7 @@ export default function CartDropdown({
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/tourist/update/cart`,
+        `http://localhost:4000/tourist/update/cart`,
         {
           method: "PUT",
           headers: {
@@ -115,7 +110,7 @@ export default function CartDropdown({
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/tourist/remove/cart/${productId}`,
+        `http://localhost:4000/tourist/remove/cart/${productId}`,
         {
           method: "DELETE",
           headers: {

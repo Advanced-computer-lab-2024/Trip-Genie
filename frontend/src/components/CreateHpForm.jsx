@@ -117,7 +117,7 @@ export default function CreateHpForm() {
         const token = Cookies.get("jwt");
         const role = Cookies.get("role") || "guest";
         const response = await axios.get(
-          `https://trip-genie-apis.vercel.app/${role}/currencies`,
+          `http://localhost:4000/${role}/currencies`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -140,7 +140,7 @@ export default function CreateHpForm() {
       const role = Cookies.get("role") || "guest";
 
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/${role}/historical-tag`,
+        `http://localhost:4000/${role}/historical-tag`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -225,7 +225,7 @@ export default function CreateHpForm() {
 
     try {
       const response = await axios.post(
-        `https://trip-genie-apis.vercel.app/tourism-governor/historical-places`,
+        `http://localhost:4000/tourism-governor/historical-places`,
         formData,
         {
           headers: {

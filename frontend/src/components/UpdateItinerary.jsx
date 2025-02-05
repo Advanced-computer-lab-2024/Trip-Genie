@@ -339,9 +339,7 @@ const ActivityForm = ({
 
   const fetchTags = async () => {
     try {
-      const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/api/getAllTags"
-      );
+      const response = await axios.get("http://localhost:4000/api/getAllTags");
       setTags(
         response.data.map((tag) => ({ value: tag._id, label: tag.type }))
       );
@@ -353,7 +351,7 @@ const ActivityForm = ({
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/api/getAllCategories"
+        "http://localhost:4000/api/getAllCategories"
       );
       setCategories(
         response.data.map((cat) => ({ value: cat._id, label: cat.name }))
@@ -612,7 +610,7 @@ export default function UpdateItinerary() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/tour-guide/itineraries/${id}`,
+        `http://localhost:4000/tour-guide/itineraries/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -851,7 +849,7 @@ export default function UpdateItinerary() {
       }
 
       await axios.put(
-        `https://trip-genie-apis.vercel.app/tour-guide/itineraries/${id}`,
+        `http://localhost:4000/tour-guide/itineraries/${id}`,
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },

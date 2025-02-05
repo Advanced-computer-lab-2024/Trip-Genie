@@ -152,7 +152,7 @@ const ShoppingCart = () => {
 
     try {
       const response = await fetch(
-        "https://trip-genie-apis.vercel.app/tourist/get/promo-code",
+        "http://localhost:4000/tourist/get/promo-code",
         {
           method: "POST",
           headers: {
@@ -207,9 +207,7 @@ const ShoppingCart = () => {
 
   const fetchExchangeRates = useCallback(async () => {
     try {
-      const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/rates"
-      );
+      const response = await axios.get("http://localhost:4000/rates");
       setExchangeRates(response.data.rates);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -219,7 +217,7 @@ const ShoppingCart = () => {
   const fetchCurrencies = useCallback(async () => {
     try {
       const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/tourist/currencies",
+        "http://localhost:4000/tourist/currencies",
         {
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
@@ -236,18 +234,15 @@ const ShoppingCart = () => {
 
     try {
       const token = Cookies.get("jwt");
-      const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/tourist/",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axios.get("http://localhost:4000/tourist/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const currencyId = response.data.preferredCurrency;
       console.log("userperfeered", currencyId);
       setCurrentPromoCode(response.data.currentPromoCode || "");
 
       const response2 = await axios.get(
-        `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+        `http://localhost:4000/tourist/getCurrency/${currencyId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -278,14 +273,11 @@ const ShoppingCart = () => {
   const fetchCartItems = useCallback(async () => {
     try {
       const token = Cookies.get("jwt");
-      const response = await fetch(
-        "https://trip-genie-apis.vercel.app/tourist/cart",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:4000/tourist/cart", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.ok) {
         const data = await response.json();
         setCartItems(data);
@@ -336,7 +328,7 @@ const ShoppingCart = () => {
       setCartItems([]);
       const token = Cookies.get("jwt");
       const emptyCartResponse = await fetch(
-        "https://trip-genie-apis.vercel.app/tourist/empty/cart",
+        "http://localhost:4000/tourist/empty/cart",
         {
           method: "DELETE",
           headers: {
@@ -362,7 +354,7 @@ const ShoppingCart = () => {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/tourist/remove/cart/${productId}`,
+        `http://localhost:4000/tourist/remove/cart/${productId}`,
         {
           method: "DELETE",
           headers: {
@@ -390,7 +382,7 @@ const ShoppingCart = () => {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/tourist/update/cart`,
+        `http://localhost:4000/tourist/update/cart`,
         {
           method: "PUT",
           headers: {
@@ -446,26 +438,23 @@ const ShoppingCart = () => {
         quantity: item.quantity,
       }));
 
-      const response = await fetch(
-        "https://trip-genie-apis.vercel.app/tourist/purchase",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            products,
-            totalAmount,
-            paymentMethod,
-            shippingAddress: location,
-            locationType,
-            deliveryType,
-            deliveryTime,
-            deliveryDate,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:4000/tourist/purchase", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          products,
+          totalAmount,
+          paymentMethod,
+          shippingAddress: location,
+          locationType,
+          deliveryType,
+          deliveryTime,
+          deliveryDate,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

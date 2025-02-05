@@ -41,7 +41,7 @@ export function MyComplaintsComponent() {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        "https://trip-genie-apis.vercel.app/tourist/complaints",
+        "http://localhost:4000/tourist/complaints",
         {
           headers: { Authorization: `Bearer ${token}` },
         }

@@ -24,7 +24,7 @@ export default function Home() {
 
   const incrementVisitCount = async () => {
     const response = await fetch(
-      "https://trip-genie-apis.vercel.app/increment-visit-count",
+      "http://localhost:4000/increment-visit-count",
       {
         method: "POST",
       }

@@ -64,7 +64,7 @@ export default function PasswordChanger({ onSuccess }) {
 
     try {
       const response = await axios.post(
-        `https://trip-genie-apis.vercel.app/${role}/password`,
+        `http://localhost:4000/${role}/password`,
         {
           oldPassword,
           newPassword,

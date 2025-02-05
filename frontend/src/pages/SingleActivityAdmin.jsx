@@ -235,7 +235,7 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.post(
-        "https://trip-genie-apis.vercel.app/tourist/book-transportation",
+        "http://localhost:4000/tourist/book-transportation",
         {
           touristID: currentUser,
           transportationID: selectedTransportation._id,
@@ -401,7 +401,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       const token = Cookies.get("jwt");
 
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/activities/${activity._id}`,
+        `http://localhost:4000/${userRole}/activities/${activity._id}`,
         {
           method: "PUT",
           headers: {
@@ -427,7 +427,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       const totalPrice = calculateTotalPrice();
 
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/activityBooking`,
+        `http://localhost:4000/${userRole}/activityBooking`,
         {
           method: "POST",
           headers: {
@@ -493,7 +493,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       try {
         const token = Cookies.get("jwt");
         const response = await fetch(
-          `https://trip-genie-apis.vercel.app/${userRole}/activities/${activityIdToUse}`,
+          `http://localhost:4000/${userRole}/activities/${activityIdToUse}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -557,7 +557,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          `https://trip-genie-apis.vercel.app/${userRole}/touristActivityAttendedBookings`,
+          `http://localhost:4000/${userRole}/touristActivityAttendedBookings`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -574,7 +574,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       try {
         const token = Cookies.get("jwt");
         const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/touristActivityBookings",
+          "http://localhost:4000/tourist/touristActivityBookings",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -604,7 +604,7 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/populate`,
+        `http://localhost:4000/${userRole}/populate`,
         {
           method: "POST",
           headers: {
@@ -635,7 +635,7 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${activity.currency}`,
+        `http://localhost:4000/${userRole}/getCurrency/${activity.currency}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -671,16 +671,13 @@ const SingleActivityAdmin = ({ activityId }) => {
     if (role === "tourist") {
       try {
         const token = Cookies.get("jwt");
-        const response = await axios.get(
-          "https://trip-genie-apis.vercel.app/tourist/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get("http://localhost:4000/tourist/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const currencyId = response.data.preferredCurrency;
 
         const response2 = await axios.get(
-          `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
+          `http://localhost:4000/tourist/getCurrency/${currencyId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -726,7 +723,7 @@ const SingleActivityAdmin = ({ activityId }) => {
           additionalTickets;
 
       const response = await axios.put(
-        `https://trip-genie-apis.vercel.app/${userRole}/activityBooking/${userBooking._id}`,
+        `http://localhost:4000/${userRole}/activityBooking/${userBooking._id}`,
         {
           numberOfTickets,
           paymentAmount: additionalPrice,
@@ -760,7 +757,7 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/activities/${id}`,
+        `http://localhost:4000/${userRole}/activities/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -817,7 +814,7 @@ const SingleActivityAdmin = ({ activityId }) => {
   const handleActivityRating = async () => {
     try {
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/activities/rate/${id}`,
+        `http://localhost:4000/${userRole}/activities/rate/${id}`,
         {
           method: "POST",
           headers: {
@@ -857,8 +854,8 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const method = userComment ? "PUT" : "POST";
       const url = userComment
-        ? `https://trip-genie-apis.vercel.app/${userRole}/activities/updateComment/${id}`
-        : `https://trip-genie-apis.vercel.app/${userRole}/activities/comment/${id}`;
+        ? `http://localhost:4000/${userRole}/activities/updateComment/${id}`
+        : `http://localhost:4000/${userRole}/activities/comment/${id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -888,8 +885,8 @@ const SingleActivityAdmin = ({ activityId }) => {
     try {
       const method = userComment ? "PUT" : "POST";
       const url = userComment
-        ? `https://trip-genie-apis.vercel.app/${userRole}/activities/updateComment/${id}`
-        : `https://trip-genie-apis.vercel.app/${userRole}/activities/comment/${id}`;
+        ? `http://localhost:4000/${userRole}/activities/updateComment/${id}`
+        : `http://localhost:4000/${userRole}/activities/comment/${id}`;
 
       const response = await fetch(url, {
         method: method,

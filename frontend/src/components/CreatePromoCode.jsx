@@ -105,17 +105,14 @@ export function CreatePromoCode() {
           end: values.dateRange.end.toISOString(),
         },
       };
-      const response = await fetch(
-        "https://trip-genie-apis.vercel.app/admin/promo-code",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formattedValues),
-        }
-      );
+      const response = await fetch("http://localhost:4000/admin/promo-code", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formattedValues),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

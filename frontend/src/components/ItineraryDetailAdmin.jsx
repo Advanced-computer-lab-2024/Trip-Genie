@@ -722,8 +722,8 @@ const ItineraryDetail = ({ id, onBack }) => {
     try {
       const method = userTourGuideReview ? "PUT" : "POST";
       const url = userTourGuideReview
-        ? `https://trip-genie-apis.vercel.app/${userRole}/tourguide/updateComment/${tourGuideProfile._id}`
-        : `https://trip-genie-apis.vercel.app/${userRole}/tourguide/comment/${tourGuideProfile._id}`;
+        ? `http://localhost:4000/${userRole}/tourguide/updateComment/${tourGuideProfile._id}`
+        : `http://localhost:4000/${userRole}/tourguide/comment/${tourGuideProfile._id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -755,8 +755,8 @@ const ItineraryDetail = ({ id, onBack }) => {
     try {
       const method = userTourGuideReview ? "PUT" : "POST";
       const url = userTourGuideReview
-        ? `https://trip-genie-apis.vercel.app/${userRole}/tourguide/updateComment/${tourGuideProfile._id}`
-        : `https://trip-genie-apis.vercel.app/${userRole}/tourguide/comment/${tourGuideProfile._id}`;
+        ? `http://localhost:4000/${userRole}/tourguide/updateComment/${tourGuideProfile._id}`
+        : `http://localhost:4000/${userRole}/tourguide/comment/${tourGuideProfile._id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -793,8 +793,8 @@ const ItineraryDetail = ({ id, onBack }) => {
     try {
       const method = userComment ? "PUT" : "POST";
       const url = userComment
-        ? `https://trip-genie-apis.vercel.app/${userRole}/itinerary/updateComment/${itinerary._id}`
-        : `https://trip-genie-apis.vercel.app/${userRole}/itinerary/comment/${itinerary._id}`;
+        ? `http://localhost:4000/${userRole}/itinerary/updateComment/${itinerary._id}`
+        : `http://localhost:4000/${userRole}/itinerary/comment/${itinerary._id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -866,7 +866,7 @@ const ItineraryDetail = ({ id, onBack }) => {
       const token = Cookies.get("jwt");
       const totalPrice = calculateTotalPrice();
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/itineraryBooking`,
+        `http://localhost:4000/${userRole}/itineraryBooking`,
         {
           method: "POST",
           headers: {
@@ -917,14 +917,11 @@ const ItineraryDetail = ({ id, onBack }) => {
   };
   const fetchUsername = async (userId) => {
     try {
-      const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("jwt")}`,
-          },
-        }
-      );
+      const response = await fetch(`http://localhost:4000/${userRole}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("jwt")}`,
+        },
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch username");
       }
@@ -944,7 +941,7 @@ const ItineraryDetail = ({ id, onBack }) => {
       const token = Cookies.get("jwt");
 
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/itineraries/${itinerary._id}`,
+        `http://localhost:4000/${userRole}/itineraries/${itinerary._id}`,
         {
           method: "PUT",
           headers: {
@@ -984,7 +981,7 @@ const ItineraryDetail = ({ id, onBack }) => {
         const token = Cookies.get("jwt");
 
         const itineraryFetch = fetch(
-          `https://trip-genie-apis.vercel.app/${userRole}/itineraries/${id}`,
+          `http://localhost:4000/${userRole}/itineraries/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -1001,7 +998,7 @@ const ItineraryDetail = ({ id, onBack }) => {
           userRole === "tourist"
             ? axios
                 .get(
-                  `https://trip-genie-apis.vercel.app/${userRole}/touristItineraryAttendedBookings`,
+                  `http://localhost:4000/${userRole}/touristItineraryAttendedBookings`,
                   {
                     headers: { Authorization: `Bearer ${token}` },
                   }
@@ -1068,7 +1065,7 @@ const ItineraryDetail = ({ id, onBack }) => {
       const token = Cookies.get("jwt");
       setIsActivated((prevState) => !prevState); // Immediately update the state
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/itineraries-activation/${id}`,
+        `http://localhost:4000/${userRole}/itineraries-activation/${id}`,
         {
           method: "PUT",
           headers: {
@@ -1103,7 +1100,7 @@ const ItineraryDetail = ({ id, onBack }) => {
     try {
       const token = Cookies.get("jwt");
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/itineraries/${id}`,
+        `http://localhost:4000/${userRole}/itineraries/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -1138,7 +1135,7 @@ const ItineraryDetail = ({ id, onBack }) => {
   const submitRating = async () => {
     try {
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/tourguide/rate/${tourGuideProfile._id}`,
+        `http://localhost:4000/${userRole}/tourguide/rate/${tourGuideProfile._id}`,
         {
           method: "POST",
           headers: {
@@ -1170,7 +1167,7 @@ const ItineraryDetail = ({ id, onBack }) => {
         date: new Date(),
       };
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/tourguide/comment/${tourGuideProfile._id}`,
+        `http://localhost:4000/${userRole}/tourguide/comment/${tourGuideProfile._id}`,
         {
           method: "POST",
           headers: {
@@ -1237,8 +1234,8 @@ const ItineraryDetail = ({ id, onBack }) => {
     try {
       const method = userComment ? "PUT" : "POST";
       const url = userComment
-        ? `https://trip-genie-apis.vercel.app/${userRole}/itinerary/updateComment/${itinerary._id}`
-        : `https://trip-genie-apis.vercel.app/${userRole}/itinerary/comment/${itinerary._id}`;
+        ? `http://localhost:4000/${userRole}/itinerary/updateComment/${itinerary._id}`
+        : `http://localhost:4000/${userRole}/itinerary/comment/${itinerary._id}`;
 
       const response = await fetch(url, {
         method: method,
@@ -1276,7 +1273,7 @@ const ItineraryDetail = ({ id, onBack }) => {
   const handleActivityRating = async () => {
     try {
       const response = await fetch(
-        `https://trip-genie-apis.vercel.app/${userRole}/itinerary/rate/${itinerary._id}`,
+        `http://localhost:4000/${userRole}/itinerary/rate/${itinerary._id}`,
         {
           method: "POST",
           headers: {

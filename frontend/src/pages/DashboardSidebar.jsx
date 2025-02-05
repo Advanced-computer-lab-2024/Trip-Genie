@@ -127,9 +127,7 @@ export function DashboardSidebar({
   const handleConfirmLogout = async () => {
     console.log("Logging out...");
     try {
-      const response = await fetch(
-        "https://trip-genie-apis.vercel.app/auth/logout"
-      );
+      const response = await fetch("http://localhost:4000/auth/logout");
 
       if (response.ok) {
         Cookies.remove("jwt");

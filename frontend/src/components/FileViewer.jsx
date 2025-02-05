@@ -10,7 +10,7 @@ const FileViewer = ({ filename }) => {
       const token = Cookies.get("jwt");
       setError(null); // Clear previous errors
       const response = await axios.get(
-        `https://trip-genie-apis.vercel.app/admin/files/${filename}`,
+        `http://localhost:4000/admin/files/${filename}`,
         {
           headers: { Authorization: `Bearer ${token}` },
           responseType: "blob", // Important for binary data
