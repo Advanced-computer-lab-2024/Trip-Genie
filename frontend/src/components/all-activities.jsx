@@ -800,7 +800,7 @@ export default function AllActivities() {
     );
   };
 
-  const backgroundImage = "url('@/src/assets/images/allActivities.jpg')";
+  const backgroundImage = "url('/assets/images/allActivities.jpg')";
 
   return (
     <div className="bg-gray-100">
