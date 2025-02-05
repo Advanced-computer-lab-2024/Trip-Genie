@@ -39,9 +39,7 @@ const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json({ limit: "50mb" }));
-app.use(
-  cors({ origin: "https://trip-genie-acl.vercel.app", credentials: true })
-);
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
@@ -155,7 +153,7 @@ app.post("/create-checkout-session", async (req, res) => {
       )}&deliveryTime=${encodeURIComponent(
         deliveryInfo.time
       )}&shippingId=${encodeURIComponent(deliveryInfo.shippingId)}`,
-      cancel_url: `https://trip-genie-acl.vercel.app/checkout2`,
+      cancel_url: `http://localhost:3000/checkout2`,
       metadata: {
         shippingId: deliveryInfo.shippingId,
         deliveryType: deliveryInfo.type,
