@@ -155,7 +155,7 @@ app.post("/create-checkout-session", async (req, res) => {
       )}&deliveryTime=${encodeURIComponent(
         deliveryInfo.time
       )}&shippingId=${encodeURIComponent(deliveryInfo.shippingId)}`,
-      cancel_url: `http://localhost:3000/checkout2`,
+      cancel_url: `https://trip-genie-acl.vercel.app/checkout2`,
       metadata: {
         shippingId: deliveryInfo.shippingId,
         deliveryType: deliveryInfo.type,
@@ -182,22 +182,30 @@ app.post("/create-booking-session", async (req, res) => {
       selectedDate,
       selectedTransportID,
       discountPercentage,
-      promoCode ,
-      loyaltyPoints
+      promoCode,
+      loyaltyPoints,
     } = req.body;
 
     // Calculate the total price of items
     const itemsTotal = items.reduce((sum, item) => sum + item.totalPrice, 0);
-   console.log("itemsTotal", items);
+    console.log("itemsTotal", items);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: items.map((item) => ({
         price_data: {
           currency: currency,
           product_data: {
-            name: discountPercentage > 0? item.product.name + `(-${discountPercentage}%)` :item.product.name,
+            name:
+              discountPercentage > 0
+                ? item.product.name + `(-${discountPercentage}%)`
+                : item.product.name,
           },
-          unit_amount: discountPercentage>0?  Math.round((item.totalPrice * (1 - (discountPercentage/100))) * 100) : Math.round((item.totalPrice) * 100),
+          unit_amount:
+            discountPercentage > 0
+              ? Math.round(
+                  item.totalPrice * (1 - discountPercentage / 100) * 100
+                )
+              : Math.round(item.totalPrice * 100),
         },
         quantity: item.quantity,
       })),
@@ -294,9 +302,17 @@ app.post("/create-flight-checkout-session", async (req, res) => {
         price_data: {
           currency: currency,
           product_data: {
-            name: discountPercentage > 0? item.product.name + `(-${discountPercentage}%)` :item.product.name,
+            name:
+              discountPercentage > 0
+                ? item.product.name + `(-${discountPercentage}%)`
+                : item.product.name,
           },
-          unit_amount: discountPercentage>0?  Math.round((item.totalPrice * (1 - (discountPercentage/100))) * 100) : Math.round((item.totalPrice) * 100),
+          unit_amount:
+            discountPercentage > 0
+              ? Math.round(
+                  item.totalPrice * (1 - discountPercentage / 100) * 100
+                )
+              : Math.round(item.totalPrice * 100),
         },
         quantity: item.quantity,
       })),
@@ -329,9 +345,9 @@ app.post("/create-hotel-booking-session", async (req, res) => {
       numberOfAdults,
       paymentType,
       currency,
-      returnLocation, 
+      returnLocation,
       discountPercentage,
-      promoCode // Can be used later for payment method-specific logic
+      promoCode, // Can be used later for payment method-specific logic
     } = req.body;
 
     // Ensure price is in cents (Stripe requires the price in the smallest currency unit, e.g., cents)
@@ -345,7 +361,10 @@ app.post("/create-hotel-booking-session", async (req, res) => {
           price_data: {
             currency: currency, // Adjust to dynamic currency if needed
             product_data: {
-              name:  discountPercentage > 0 ? `(-${discountPercentage}%) ${hotelName} - ${roomName}` : `${hotelName} - ${roomName}`, // Display hotel and room name in the checkout
+              name:
+                discountPercentage > 0
+                  ? `(-${discountPercentage}%) ${hotelName} - ${roomName}`
+                  : `${hotelName} - ${roomName}`, // Display hotel and room name in the checkout
               description: `Booking for ${numberOfRooms} rooms, ${numberOfAdults} adults`,
             },
             unit_amount: totalPrice,
@@ -364,7 +383,9 @@ app.post("/create-hotel-booking-session", async (req, res) => {
         checkoutDate
       )}&numberOfRooms=${numberOfRooms}&numberOfAdults=${numberOfAdults}&paymentType=${encodeURIComponent(
         paymentType
-      )}&price=${encodeURIComponent(price)}&promoCode=${promoCode}&discountPercentage=${discountPercentage}`,
+      )}&price=${encodeURIComponent(
+        price
+      )}&promoCode=${promoCode}&discountPercentage=${discountPercentage}`,
       cancel_url: `${req.body.returnLocation}&cancel=true`,
     });
 

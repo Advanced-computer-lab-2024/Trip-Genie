@@ -460,7 +460,9 @@ const ActivityDetail = () => {
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText("http://localhost:3000/activity/" + id);
+    navigator.clipboard.writeText(
+      "https://trip-genie-acl.vercel.app/activity/" + id
+    );
     setIsToastOpen(true);
     setOpen(false);
   };
@@ -2113,7 +2115,7 @@ const ActivityDetail = () => {
                 ).toFixed(2)}
                 currency={userPreferredCurrency.code}
                 symbol={userPreferredCurrency.symbol}
-                returnLoc={"http://localhost:3000/activity/" + id}
+                returnLoc={"https://trip-genie-acl.vercel.app/activity/" + id}
                 error={bookingError}
                 setError={setBookingError}
                 promoDetails={promoDetails}
