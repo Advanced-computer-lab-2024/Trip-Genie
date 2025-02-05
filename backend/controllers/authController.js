@@ -129,19 +129,23 @@ const login = async (req, res) => {
     }
 
     const token = createToken(user._id, role);
+    res.cookie("role", role, {
+      httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+      // secure: process.env.NODE_ENV === "production", // Use `secure` only in production (HTTPS)
+      // sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Allow cross-origin cookies in production
+      secure: true,
+      sameSite: "None",
+      maxAge: process.env.MAX_AGE * 1000, // Ensure `maxAge` is set in milliseconds
+    });
     res.cookie("jwt", token, {
-      httpOnly: false, // Prevent client-side JavaScript from accessing the cookie
-      secure: process.env.NODE_ENV === "production", // Use `secure` only in production (HTTPS)
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Allow cross-origin cookies in production
+      httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+      // secure: process.env.NODE_ENV === "production", // Use `secure` only in production (HTTPS)
+      // sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Allow cross-origin cookies in production
+      secure: true,
+      sameSite: "None",
       maxAge: process.env.MAX_AGE * 1000, // Ensure `maxAge` is set in milliseconds
     });
 
-    res.cookie("role", role, {
-      httpOnly: false, // Prevent client-side JavaScript from accessing the cookie
-      secure: process.env.NODE_ENV === "production", // Use `secure` only in production (HTTPS)
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Allow cross-origin cookies in production
-      maxAge: process.env.MAX_AGE * 1000, // Ensure `maxAge` is set in milliseconds
-    });
     res.setHeader("Authorization", `Bearer ${token}`);
     res.status(200).json({ message: "Login succesful", role });
   } catch (error) {
