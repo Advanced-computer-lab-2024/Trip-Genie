@@ -53,6 +53,7 @@ import LazyLoad from "react-lazyload";
 import productImage from "../assets/images/prod.png";
 import productImage2 from "../assets/images/products2.png";
 import { UserGuide } from "@/components/UserGuide";
+import backgroundImage from "../assets/images/allProducts.jpg";
 
 import { role } from "@/pages/login";
 
@@ -774,13 +775,13 @@ export function AllProducts() {
     );
   };
 
-  const backgroundImage = "url('./src/assets/images/allProducts.jpg')";
-
   return (
     <div className="bg-gray-100">
       <div
         className="relative h-[330px] bg-cover bg-center"
-        style={{ backgroundImage }}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
       >
         <div className="absolute inset-0"></div>
         <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">

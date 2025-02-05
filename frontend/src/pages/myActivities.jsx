@@ -40,6 +40,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { jwtDecode } from "jwt-decode";
+import backgroundImage from "@/assets/images/allActivities.jpg";
 
 let exchangeRateForFilter = 1;
 
@@ -629,8 +630,6 @@ export default function MyActivitiesComponent() {
     );
   };
 
-  const backgroundImage = "url('./src/assets/images/allActivities.jpg')";
-
   const sortedActivities = useMemo(() => {
     const sorted = [...filteredActivities];
     if (sortBy === "price") {
@@ -645,7 +644,9 @@ export default function MyActivitiesComponent() {
     <div className="bg-gray-100">
       <div
         className="relative h-[330px] bg-cover bg-center"
-        style={{ backgroundImage }}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
       >
         <div className="absolute inset-0"></div>
         <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">

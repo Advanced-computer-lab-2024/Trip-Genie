@@ -25,6 +25,7 @@ import Loader from "./Loader";
 import defaultImage from "../assets/images/default-image.jpg";
 import productImage from "../assets/images/prod.png";
 import DualHandleSliderComponent from "./dual-handle-slider";
+import backgroundImage from "../assets/images/allProducts.jpg";
 
 const renderStars = (rating) => {
   return (
@@ -268,13 +269,13 @@ export function MyProducts() {
     fetchProducts();
   };
 
-  const backgroundImage = "url('./src/assets/images/allProducts.jpg')";
-
   return (
     <div className="bg-gray-100">
       <div
         className="relative h-[330px] bg-cover bg-center"
-        style={{ backgroundImage }}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
       >
         <div className="absolute inset-0"></div>
         <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">

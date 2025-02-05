@@ -41,6 +41,7 @@ import {
 import DualHandleSliderComponent from "./dual-handle-slider";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Checkbox } from "@/components/ui/checkbox";
+import backgroundImage from "../assets/images/allItineraries.jpg";
 
 let exchangeRateForFilter = 1;
 
@@ -913,12 +914,13 @@ export function AllItinerariesComponent() {
     );
   };
 
-  const backgroundImage = "url('./src/assets/images/allItineraries.jpg')";
   return (
     <div className="min-h-screen bg-gray-100">
       <div
         className="relative h-[330px] bg-cover bg-center"
-        style={{ backgroundImage }}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
       >
         <div className="absolute inset-0"></div>
         <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">

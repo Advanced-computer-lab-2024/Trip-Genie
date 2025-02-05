@@ -31,6 +31,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Loader from "@/components/Loader.jsx";
 import defaultImage from "../assets/images/default-image.jpg";
 import historicalPlaceImage from "../assets/images/hp.png";
+import backgroundImage from "../assets/images/allHP.jpg";
 
 const HistoricalPlaceCard = ({
   historicalPlace,
@@ -402,13 +403,13 @@ export default function MyHistoricalPlacesComponent() {
     }
   };
 
-  const backgroundImage = "url('./src/assets/images/allHP.jpg')";
-
   return (
     <div className="bg-gray-100">
       <div
         className="relative h-[330px] bg-cover bg-center"
-        style={{ backgroundImage }}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
       >
         <div className="absolute inset-0"></div>
         <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">
