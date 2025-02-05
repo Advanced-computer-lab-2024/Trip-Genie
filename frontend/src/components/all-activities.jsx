@@ -42,6 +42,7 @@ import {
   ToastDescription,
   ToastClose,
 } from "@/components/ui/toast";
+import backgroundImage from "@/assets/images/allActivities.jpg";
 
 const renderStars = (rating) => {
   return (
@@ -800,14 +801,14 @@ export default function AllActivities() {
     );
   };
 
-  const backgroundImage = "url('/assets/images/allActivities.jpg')";
-
   return (
     <div className="bg-gray-100">
       <ToastProvider>
         <div
           className="relative h-[330px] bg-cover bg-center"
-          style={{ backgroundImage }}
+          style={{
+            backgroundImage: `url(${backgroundImage})`,
+          }}
         >
           <div className="absolute inset-0"></div>
           <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">
