@@ -218,6 +218,7 @@ export function NavbarComponent() {
   };
 
   useEffect(() => {
+    setRole(Cookies.get("role"));
     document.addEventListener("mousedown", handleClickOutside);
 
     const handleScroll = () => {
