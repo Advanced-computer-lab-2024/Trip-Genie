@@ -35,7 +35,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Loader from "@/components/loader";
+import Loader from "@/components/Loader.jsx";
 import { UserGuide } from "@/components/UserGuide";
 import defaultImage from "../assets/images/default-image.jpg";
 import historicalPlaceImage from "../assets/images/hp.png";
