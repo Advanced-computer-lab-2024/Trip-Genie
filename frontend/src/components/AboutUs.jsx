@@ -141,7 +141,7 @@ export function AboutUs() {
           </div>
           <div className="relative h-[500px] rounded-lg overflow-hidden">
             <img
-              src="..\src\assets\images\about-us.jpg"
+              src="..\assets\images\about-us.jpg"
               alt="Travel Adventure"
               className="object-cover w-full h-full"
             />
