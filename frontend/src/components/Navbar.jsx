@@ -65,7 +65,7 @@ const NavLink = ({ to, children, className }) => (
 export function NavbarComponent() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [role, setRole] = useState(Cookies.get("role"));
+  const role = Cookies.get("role");
   const navigate = useNavigate();
   const itinerariesRef = useRef(null);
   const productsRef = useRef(null);
@@ -218,7 +218,6 @@ export function NavbarComponent() {
   };
 
   useEffect(() => {
-    setRole(Cookies.get("role"));
     document.addEventListener("mousedown", handleClickOutside);
 
     const handleScroll = () => {

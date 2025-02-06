@@ -103,9 +103,14 @@ function AppContent() {
   }, [location]);
 
   const role = Cookies.get("role");
-
-  Cookies.set("jwt", localStorage.getItem("jwt"), { expires: 1 });
-  Cookies.set("role", localStorage.getItem("role"), { expires: 1 });
+  const localJwt = localStorage.getItem("jwt");
+  if (localJwt) {
+    Cookies.set("jwt", localJwt, { expires: 1 });
+  }
+  const localRole = localStorage.getItem("role");
+  if (localRole) {
+    Cookies.set("role", localRole, { expires: 1 });
+  }
 
   return (
     <div className="App">

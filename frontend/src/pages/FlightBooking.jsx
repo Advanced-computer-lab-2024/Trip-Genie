@@ -454,7 +454,7 @@ function BookingPage() {
           body: JSON.stringify({
             metadata,
             items,
-            returnLocation: "https://trip-genie-acl.vercel.app/flights",
+            returnLocation: "http://localhost:3000/flights",
             currency: currencyCode,
             discountPercentage: promoDetails ? promoDetails.percentOff : 0,
           }),
