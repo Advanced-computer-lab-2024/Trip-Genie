@@ -63,6 +63,7 @@ export function NotificationsDropdownTourGuide() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tour-guide/unseen-notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -78,6 +79,7 @@ export function NotificationsDropdownTourGuide() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tour-guide/notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -103,6 +105,7 @@ export function NotificationsDropdownTourGuide() {
         `https://trip-genie-apis.vercel.app/tour-guide/mark-dropdown-opened`,
         {},
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -119,6 +122,7 @@ export function NotificationsDropdownTourGuide() {
         `https://trip-genie-apis.vercel.app/tour-guide/notifications/markAsSeen/${notificationId}`,
         {},
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -140,6 +144,7 @@ export function NotificationsDropdownTourGuide() {
         `https://trip-genie-apis.vercel.app/tour-guide/mark-notifications-seen`,
         {},
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );

@@ -161,6 +161,7 @@ export default function AllHistoricalPlacesComponent() {
       const role = getUserRole();
       let url = `https://trip-genie-apis.vercel.app/${role}/historical-places`;
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -226,6 +227,7 @@ export default function AllHistoricalPlacesComponent() {
         `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${historicalPlaceToDelete.id}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -263,6 +265,7 @@ export default function AllHistoricalPlacesComponent() {
 
       const token = Cookies.get("jwt");
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

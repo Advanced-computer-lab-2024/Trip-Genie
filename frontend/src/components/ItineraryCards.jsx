@@ -20,6 +20,7 @@ export const ItineraryCards = () => {
         const response = await axios.get(
           `https://trip-genie-apis.vercel.app/${role}/itineraries`,
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -43,6 +44,7 @@ export const ItineraryCards = () => {
         `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -73,7 +75,10 @@ export const ItineraryCards = () => {
       const token = Cookies.get("jwt");
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${itineraryCurrency}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       setCurrencySymbol(response.data);
     } catch (error) {
@@ -108,13 +113,17 @@ export const ItineraryCards = () => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         const currencyId = response.data.preferredCurrency;
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         setUserPreferredCurrency(response2.data);
       } catch (error) {

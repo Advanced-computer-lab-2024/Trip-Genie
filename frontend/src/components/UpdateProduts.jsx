@@ -71,6 +71,7 @@ const UpdateProduct = () => {
         const response = await fetch(
           `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -181,6 +182,7 @@ const UpdateProduct = () => {
         `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

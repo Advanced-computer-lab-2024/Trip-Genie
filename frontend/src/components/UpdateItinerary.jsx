@@ -614,6 +614,7 @@ export default function UpdateItinerary() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tour-guide/itineraries/${id}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -854,6 +855,7 @@ export default function UpdateItinerary() {
         `https://trip-genie-apis.vercel.app/tour-guide/itineraries/${id}`,
         formData,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

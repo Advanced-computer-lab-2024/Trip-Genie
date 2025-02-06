@@ -59,6 +59,7 @@ export default function FileComplaintForm({
         `https://trip-genie-apis.vercel.app/tourist/complaint`,
         { ...data },
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

@@ -38,6 +38,7 @@ export default function CartDropdown({
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -57,6 +58,7 @@ export default function CartDropdown({
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -65,6 +67,7 @@ export default function CartDropdown({
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -96,6 +99,7 @@ export default function CartDropdown({
         `https://trip-genie-apis.vercel.app/tourist/update/cart`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -118,6 +122,7 @@ export default function CartDropdown({
         `https://trip-genie-apis.vercel.app/tourist/remove/cart/${productId}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

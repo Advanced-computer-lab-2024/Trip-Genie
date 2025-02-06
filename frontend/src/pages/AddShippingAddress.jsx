@@ -58,6 +58,7 @@ export default function ShippingAddresses({
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/shippingAdds",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -110,7 +111,10 @@ export default function ShippingAddresses({
         await axios.put(
           `https://trip-genie-apis.vercel.app/tourist/update-shippingAdd/${currentAddressId}`,
           addressDetails,
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         showToast("Address updated successfully!", "success"); // Show success toast
       } else {
@@ -118,7 +122,10 @@ export default function ShippingAddresses({
         await axios.put(
           "https://trip-genie-apis.vercel.app/tourist/add-shippingAdd",
           addressDetails,
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         showToast("Address added successfully!", "success"); // Show success toast
       }
@@ -139,7 +146,10 @@ export default function ShippingAddresses({
       await axios.put(
         `https://trip-genie-apis.vercel.app/tourist/add-default-shippingAdds/${addressId}`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       fetchAddresses();
       fetch();
@@ -163,7 +173,10 @@ export default function ShippingAddresses({
       const token = Cookies.get("jwt");
       await axios.delete(
         `https://trip-genie-apis.vercel.app/tourist/shippingAdds/${addressToDelete}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       fetchAddresses();
       setIsDeleteConfirmOpen(false);

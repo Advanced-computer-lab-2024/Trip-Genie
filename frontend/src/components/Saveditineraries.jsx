@@ -44,7 +44,10 @@ const ItineraryCard = ({
       const response = await axios.post(
         `https://trip-genie-apis.vercel.app/tourist/save-itinerary/${itinerary._id}`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       if (response.data.success) {
         onItineraryUnsaved(itinerary._id);
@@ -264,6 +267,7 @@ export default function SavedItineraries() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -272,6 +276,7 @@ export default function SavedItineraries() {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -308,6 +313,7 @@ export default function SavedItineraries() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/saved-itineraries",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

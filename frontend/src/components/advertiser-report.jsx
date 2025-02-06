@@ -74,6 +74,7 @@ const AdvertiserReport = () => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/advertiser/activities-report`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -101,6 +102,7 @@ const AdvertiserReport = () => {
         return axios.get(
           `https://trip-genie-apis.vercel.app/advertiser/activities-report?year=${currentYear}&month=${month}`,
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -160,6 +162,7 @@ const AdvertiserReport = () => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/advertiser/activities-report?${queryParams.toString()}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

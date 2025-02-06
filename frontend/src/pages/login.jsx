@@ -108,6 +108,7 @@ const Login = () => {
         "https://trip-genie-apis.vercel.app/auth/login",
         {
           method: "POST",
+
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
@@ -120,8 +121,8 @@ const Login = () => {
         const data = await response.json();
         role = data.role;
 
-        // localStorage.setItem("role", role);
-        // localStorage.setItem("jwt", Cookies.get("jwt"));
+        localStorage.setItem("role", role);
+        localStorage.setItem("jwt", Cookies.get("jwt"));
 
         if (role === "admin") {
           navigate("/admin");
@@ -158,6 +159,7 @@ const Login = () => {
         "https://trip-genie-apis.vercel.app/auth/forgot-password",
         {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         }
@@ -187,6 +189,7 @@ const Login = () => {
         "https://trip-genie-apis.vercel.app/auth/verify-otp",
         {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, otp: otpString }),
         }
@@ -218,6 +221,7 @@ const Login = () => {
         "https://trip-genie-apis.vercel.app/auth/reset-password",
         {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password: newPassword }),
         }

@@ -111,6 +111,7 @@ export default function UserApproval() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/admin/files/${filename}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
           responseType: "blob",
         }
@@ -129,6 +130,7 @@ export default function UserApproval() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/admin/unaccepted-advertiser",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -147,6 +149,7 @@ export default function UserApproval() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/admin/unaccepted-seller",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -165,6 +168,7 @@ export default function UserApproval() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/admin/unaccepted-tourguide",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -199,7 +203,10 @@ export default function UserApproval() {
       await axios.put(
         `https://trip-genie-apis.vercel.app/admin/approve-${role}/${userId}`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       showToast(`Successfully approved the ${role}.`, "success");
       // Re-fetch the user type list after approval
@@ -220,6 +227,7 @@ export default function UserApproval() {
       await axios.delete(
         `https://trip-genie-apis.vercel.app/admin/reject/${role}s/${user._id}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

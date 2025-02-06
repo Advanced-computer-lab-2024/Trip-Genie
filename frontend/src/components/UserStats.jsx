@@ -70,6 +70,7 @@ export default function UserStats() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/admin/users-report",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -92,7 +93,10 @@ export default function UserStats() {
         `https://trip-genie-apis.vercel.app/admin/users-report?month=${
           currentDate.getMonth() + 1
         }&year=${currentDate.getFullYear()}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
       // Get last month stats
@@ -100,7 +104,10 @@ export default function UserStats() {
         `https://trip-genie-apis.vercel.app/admin/users-report?month=${
           lastMonth.getMonth() + 1
         }&year=${lastMonth.getFullYear()}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
       setMonthlyStats({
@@ -121,7 +128,10 @@ export default function UserStats() {
       const token = Cookies.get("jwt");
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/admin/users-report?month=${filters.month}&year=${filters.year}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       setFilteredStats(response.data);
       setIsFiltering(false);
@@ -485,7 +495,10 @@ export function UserGrowthChart() {
           `https://trip-genie-apis.vercel.app/admin/users-report?month=${
             month + 1
           }&year=${currentYear}`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         monthlyData.push({
           month: format(new Date(currentYear, month), "MMM"),

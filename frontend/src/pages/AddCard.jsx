@@ -29,6 +29,7 @@ export default function AddCard() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/cards",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -107,6 +108,7 @@ export default function AddCard() {
         "https://trip-genie-apis.vercel.app/tourist/add-card",
         cardDetails,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -142,7 +144,10 @@ export default function AddCard() {
       await axios.put(
         `https://trip-genie-apis.vercel.app/tourist/add-default-card/${cardId}`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       fetchCards();
       setMessage({
@@ -165,6 +170,7 @@ export default function AddCard() {
       await axios.delete(
         `https://trip-genie-apis.vercel.app/tourist/card/${cardId}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

@@ -131,6 +131,7 @@ export default function TransportationPage() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -174,6 +175,7 @@ export default function TransportationPage() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -182,6 +184,7 @@ export default function TransportationPage() {
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -211,6 +214,7 @@ export default function TransportationPage() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${role}/transportations`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -306,6 +310,7 @@ export default function TransportationPage() {
           promoCode,
         },
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -427,6 +432,7 @@ export default function TransportationPage() {
         `https://trip-genie-apis.vercel.app/${role}/transportations`,
         data,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -459,6 +465,7 @@ export default function TransportationPage() {
         `https://trip-genie-apis.vercel.app/${role}/transportations/${editingTransportation._id}`,
         data,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -516,6 +523,7 @@ export default function TransportationPage() {
       await axios.delete(
         `https://trip-genie-apis.vercel.app/${role}/transportations/${id}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

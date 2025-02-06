@@ -167,6 +167,7 @@ export default function CheckoutPage() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -195,6 +196,7 @@ export default function CheckoutPage() {
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -212,6 +214,7 @@ export default function CheckoutPage() {
         "https://trip-genie-apis.vercel.app/tourist/addAddress",
         addressData,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -220,6 +223,7 @@ export default function CheckoutPage() {
         const userResponse = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -241,6 +245,7 @@ export default function CheckoutPage() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/cart",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -263,6 +268,7 @@ export default function CheckoutPage() {
         `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -291,6 +297,7 @@ export default function CheckoutPage() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${cartItems[0]?.product.currency}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -386,6 +393,7 @@ export default function CheckoutPage() {
         "https://trip-genie-apis.vercel.app/tourist/purchase",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -435,6 +443,7 @@ export default function CheckoutPage() {
         "https://trip-genie-apis.vercel.app/tourist/empty/cart",
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -458,6 +467,7 @@ export default function CheckoutPage() {
         "https://trip-genie-apis.vercel.app/tourist/addCard",
         cardData,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -467,6 +477,7 @@ export default function CheckoutPage() {
         const userResponse = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );

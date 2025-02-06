@@ -165,6 +165,7 @@ export function AdvertiserProfileComponent() {
         const role = getUserRole();
         const api = `https://trip-genie-apis.vercel.app/${role}`;
         const response = await axios.get(api, {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         });
         setAdvertiser(response.data);
@@ -196,6 +197,7 @@ export function AdvertiserProfileComponent() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/advertiser/notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -294,6 +296,7 @@ export function AdvertiserProfileComponent() {
 
       const api = `https://trip-genie-apis.vercel.app/${role}`;
       const response = await axios.put(api, formData, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

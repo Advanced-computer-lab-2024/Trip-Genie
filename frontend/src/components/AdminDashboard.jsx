@@ -69,7 +69,10 @@ function UserGrowthChart() {
           `https://trip-genie-apis.vercel.app/admin/users-report?month=${
             month + 1
           }&year=${currentYear}`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         monthlyData.push({
           month: format(new Date(currentYear, month), "MMM"),
@@ -153,7 +156,7 @@ export function Dashboard({ setActiveTab }) {
   //     }
 
   //     const response = await axios.get( `https://trip-genie-apis.vercel.app/admin/sales-report?month=${lastMonth}&year=${lastMonthYear}`,
-  //       { headers: { Authorization: `Bearer ${Cookies.get("jwt")}` } }
+  //       {  credentials: "include", headers: { Authorization: `Bearer ${Cookies.get("jwt")}` } }
   //     );
   //     setTotalRevenueLastMonth(response.data.totalAdminSalesRevenue);
   //   } catch (error) {
@@ -165,7 +168,10 @@ export function Dashboard({ setActiveTab }) {
     try {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/admin/sales-report",
-        { headers: { Authorization: `Bearer ${Cookies.get("jwt")}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
+        }
       );
       setTotalRevenue(response.data.totalAdminSalesRevenue);
       setTotalSellerRevenue(response.data.totalSellerSalesRevenue);
@@ -232,6 +238,7 @@ export function Dashboard({ setActiveTab }) {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/admin/notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -254,6 +261,7 @@ export function Dashboard({ setActiveTab }) {
         `https://trip-genie-apis.vercel.app/admin/notifications/markAsSeen/${notificationId}`,
         {},
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -275,6 +283,7 @@ export function Dashboard({ setActiveTab }) {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/admin/admin-info",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -70,6 +70,7 @@ const HistoricalPlaceCard = ({
         `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -97,6 +98,7 @@ const HistoricalPlaceCard = ({
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${historicalPlace.currency}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -272,6 +274,7 @@ export default function AllHistoricalPlacesComponent() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -280,6 +283,7 @@ export default function AllHistoricalPlacesComponent() {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -301,6 +305,7 @@ export default function AllHistoricalPlacesComponent() {
         const preferredResponse = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/historical-places-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -311,6 +316,7 @@ export default function AllHistoricalPlacesComponent() {
         const notPreferredResponse = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/historical-places-not-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -321,6 +327,7 @@ export default function AllHistoricalPlacesComponent() {
         setHistoricalPlaces([...preferredData, ...notPreferredData]);
       } else {
         const response = await fetch(url, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -394,6 +401,7 @@ export default function AllHistoricalPlacesComponent() {
         `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${historicalPlaceToDelete.id}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -432,6 +440,7 @@ export default function AllHistoricalPlacesComponent() {
 
       const token = Cookies.get("jwt");
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

@@ -53,6 +53,7 @@ export function DeleteAccount() {
       const token = Cookies.get("jwt");
       const url = "https://trip-genie-apis.vercel.app/admin/userbyrole";
       const response = await axios.get(url, {
+        credentials: "include",
         headers: { Authorization: `Bearer ${token}` },
         params: { role: role === "all" ? undefined : role },
       });
@@ -95,6 +96,7 @@ export function DeleteAccount() {
       }
       const url = `https://trip-genie-apis.vercel.app/admin/${userRole}s/${id}`;
       const response = await axios.delete(url, {
+        credentials: "include",
         headers: { Authorization: `Bearer ${token}` },
       });
       if ([200, 204, 201].includes(response.status)) {

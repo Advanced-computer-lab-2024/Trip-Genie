@@ -172,6 +172,7 @@ export function Dashboard() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/admin/unseen-notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -189,6 +190,7 @@ export function Dashboard() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/admin/admin-info",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },

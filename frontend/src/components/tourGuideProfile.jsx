@@ -690,6 +690,7 @@ export function TourGuideProfileComponent() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tour-guide/unseen-notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -705,6 +706,7 @@ export function TourGuideProfileComponent() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tour-guide/notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -727,6 +729,7 @@ export function TourGuideProfileComponent() {
         `https://trip-genie-apis.vercel.app/tour-guide/notifications/markAsSeen/${notificationID}`,
         {},
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -761,6 +764,7 @@ export function TourGuideProfileComponent() {
 
         const api = `https://trip-genie-apis.vercel.app/${role}`;
         const response = await axios.get(api, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -900,6 +904,7 @@ export function TourGuideProfileComponent() {
 
       const api = `https://trip-genie-apis.vercel.app/${role}`;
       const response = await axios.put(api, formData, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -989,6 +994,7 @@ export function TourGuideProfileComponent() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

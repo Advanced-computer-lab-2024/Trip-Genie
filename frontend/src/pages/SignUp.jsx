@@ -593,6 +593,7 @@ export function SignupForm() {
         `https://trip-genie-apis.vercel.app/auth/sign-up/${userType}`,
         finalData,
         {
+          credentials: "include",
           headers: {
             "Content-Type": "multipart/form-data",
           },

@@ -98,6 +98,7 @@ const HistoricalPlaceDetail = () => {
         const response = await fetch(
           `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${id}`,
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -141,6 +142,7 @@ const HistoricalPlaceDetail = () => {
         `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json", // Ensure content type is set to JSON
@@ -171,6 +173,7 @@ const HistoricalPlaceDetail = () => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${historicalPlace.currency}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -210,6 +213,7 @@ const HistoricalPlaceDetail = () => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -218,6 +222,7 @@ const HistoricalPlaceDetail = () => {
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -256,6 +261,7 @@ const HistoricalPlaceDetail = () => {
         `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${id}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

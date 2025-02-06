@@ -272,6 +272,7 @@ const ActivityDetail = () => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -348,6 +349,7 @@ const ActivityDetail = () => {
           seatsToBook: seatsToBook,
         },
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -514,6 +516,7 @@ const ActivityDetail = () => {
         `https://trip-genie-apis.vercel.app/${userRole}/activities/${activity._id}`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -547,6 +550,7 @@ const ActivityDetail = () => {
       const response = await fetch(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -623,6 +627,7 @@ const ActivityDetail = () => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -632,6 +637,7 @@ const ActivityDetail = () => {
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -663,6 +669,7 @@ const ActivityDetail = () => {
         const response = await fetch(
           `https://trip-genie-apis.vercel.app/${userRole}/activities/${id}`,
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -728,6 +735,7 @@ const ActivityDetail = () => {
         const response = await axios.get(
           `https://trip-genie-apis.vercel.app/${userRole}/touristActivityAttendedBookings`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -745,6 +753,7 @@ const ActivityDetail = () => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/touristActivityBookings",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -775,6 +784,7 @@ const ActivityDetail = () => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/saved-activities",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -814,6 +824,7 @@ const ActivityDetail = () => {
           paymentType,
         },
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -844,6 +855,7 @@ const ActivityDetail = () => {
         `https://trip-genie-apis.vercel.app/${userRole}/activities/${id}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -908,6 +920,7 @@ const ActivityDetail = () => {
         `https://trip-genie-apis.vercel.app/${userRole}/activityBooking`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -978,7 +991,10 @@ const ActivityDetail = () => {
       const response = await axios.post(
         `https://trip-genie-apis.vercel.app/tourist/save-activity/${itemId}`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       if (response.data.success) {
         // Update the saved state locally
@@ -1059,6 +1075,7 @@ const ActivityDetail = () => {
         `https://trip-genie-apis.vercel.app/${userRole}/activities/rate/${id}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${Cookies.get("jwt")}`,
@@ -1101,6 +1118,7 @@ const ActivityDetail = () => {
 
       const response = await fetch(url, {
         method: method,
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${Cookies.get("jwt")}`,
@@ -1207,6 +1225,7 @@ const ActivityDetail = () => {
 
       const response = await fetch(url, {
         method: method,
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${Cookies.get("jwt")}`,

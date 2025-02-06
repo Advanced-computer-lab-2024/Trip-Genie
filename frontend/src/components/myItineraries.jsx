@@ -105,6 +105,7 @@ const ItineraryCard = ({
         `https://trip-genie-apis.vercel.app/${userInfo.role}/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -134,7 +135,7 @@ const ItineraryCard = ({
     //   const response = await axios.get(
     //     `https://trip-genie-apis.vercel.app/${userInfo.role}/getCurrency/${itinerary.currency}`,
     //     {
-    //       headers: { Authorization: `Bearer ${token}` },
+    //        credentials: "include", headers: { Authorization: `Bearer ${token}` },
     //     }
     //   );
     //   setCurrencySymbol(response.data.symbol);
@@ -164,7 +165,10 @@ const ItineraryCard = ({
       const response = await axios.post(
         `https://trip-genie-apis.vercel.app/tourist/save-itinerary/${itinerary._id}`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       if (response.data.success) {
         const newSavedState = !isSaved;
@@ -408,6 +412,7 @@ export function MyItinerariesComponent() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -416,6 +421,7 @@ export function MyItinerariesComponent() {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -461,6 +467,7 @@ export function MyItinerariesComponent() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/saved-itineraries",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -501,6 +508,7 @@ export function MyItinerariesComponent() {
       `https://trip-genie-apis.vercel.app/${role}/max-price-itinerary-my`
     );
     const response = await fetch(url, {
+      credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -525,6 +533,7 @@ export function MyItinerariesComponent() {
         : "https://trip-genie-apis.vercel.app/tourist/itineraries";
 
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -541,6 +550,7 @@ export function MyItinerariesComponent() {
         const otherItineraries = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/itineraries-not-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -576,6 +586,7 @@ export function MyItinerariesComponent() {
         const preferredItineraries = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/itineraries-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -585,6 +596,7 @@ export function MyItinerariesComponent() {
         const otherItineraries = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/itineraries-not-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -598,6 +610,7 @@ export function MyItinerariesComponent() {
           `https://trip-genie-apis.vercel.app/${role}/itineraries?myItineraries=true`
         );
         const response = await fetch(url, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -683,6 +696,7 @@ export function MyItinerariesComponent() {
 
       const token = Cookies.get("jwt");
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -792,7 +806,7 @@ export function MyItinerariesComponent() {
   //       `https://trip-genie-apis.vercel.app/${getUserRole()}/itineraries/${selectedItinerary}`,
   //       {
   //         method: "DELETE",
-  //         headers: {
+  //          credentials: "include", headers: {
   //           Authorization: `Bearer ${token}`,
   //         },
   //       }
@@ -850,6 +864,7 @@ export function MyItinerariesComponent() {
 
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

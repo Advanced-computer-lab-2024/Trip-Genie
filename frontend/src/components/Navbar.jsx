@@ -144,6 +144,7 @@ export function NavbarComponent() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tourist/unseen-notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -160,6 +161,7 @@ export function NavbarComponent() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/admin/unseen-notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -176,6 +178,7 @@ export function NavbarComponent() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/seller/unseen-notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -191,6 +194,7 @@ export function NavbarComponent() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tour-guide/unseen-notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -206,6 +210,7 @@ export function NavbarComponent() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/advertiser/unseen-notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -246,6 +251,7 @@ export function NavbarComponent() {
       const response = await fetch(
         "https://trip-genie-apis.vercel.app/tourist/cart",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

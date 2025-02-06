@@ -705,6 +705,7 @@ const ItineraryForm = () => {
         `https://trip-genie-apis.vercel.app/${role}/itineraries`,
         formData,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

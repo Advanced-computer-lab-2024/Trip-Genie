@@ -90,6 +90,7 @@ const ProductReport = () => {
         });
 
         const response = await axios.get(url.toString(), {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

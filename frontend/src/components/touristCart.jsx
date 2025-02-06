@@ -155,6 +155,7 @@ const ShoppingCart = () => {
         "https://trip-genie-apis.vercel.app/tourist/get/promo-code",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${Cookies.get("jwt")}`,
             "Content-Type": "application/json",
@@ -221,6 +222,7 @@ const ShoppingCart = () => {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -239,6 +241,7 @@ const ShoppingCart = () => {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -249,6 +252,7 @@ const ShoppingCart = () => {
       const response2 = await axios.get(
         `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -281,6 +285,7 @@ const ShoppingCart = () => {
       const response = await fetch(
         "https://trip-genie-apis.vercel.app/tourist/cart",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -339,6 +344,7 @@ const ShoppingCart = () => {
         "https://trip-genie-apis.vercel.app/tourist/empty/cart",
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -365,6 +371,7 @@ const ShoppingCart = () => {
         `https://trip-genie-apis.vercel.app/tourist/remove/cart/${productId}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -393,6 +400,7 @@ const ShoppingCart = () => {
         `https://trip-genie-apis.vercel.app/tourist/update/cart`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -450,6 +458,7 @@ const ShoppingCart = () => {
         "https://trip-genie-apis.vercel.app/tourist/purchase",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,

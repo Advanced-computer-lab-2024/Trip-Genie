@@ -39,6 +39,7 @@ export function TagsPage() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/admin/tags",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -69,6 +70,7 @@ export function TagsPage() {
           "https://trip-genie-apis.vercel.app/admin/tags",
           { type: newTag },
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -93,6 +95,7 @@ export function TagsPage() {
           `https://trip-genie-apis.vercel.app/admin/tags/${editTagId}`,
           { type: editTagName },
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -116,6 +119,7 @@ export function TagsPage() {
       await axios.delete(
         `https://trip-genie-apis.vercel.app/admin/tags/${tagId}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

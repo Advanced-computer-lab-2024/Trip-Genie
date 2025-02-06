@@ -62,6 +62,7 @@ const HistoricalPlaceCard = ({
         `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -89,6 +90,7 @@ const HistoricalPlaceCard = ({
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${historicalPlace.currency}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -262,6 +264,7 @@ export default function MyHistoricalPlacesComponent() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -269,6 +272,7 @@ export default function MyHistoricalPlacesComponent() {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -286,6 +290,7 @@ export default function MyHistoricalPlacesComponent() {
       const response = await fetch(
         `https://trip-genie-apis.vercel.app/${role}/historical-places?myPlaces=true`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -347,6 +352,7 @@ export default function MyHistoricalPlacesComponent() {
         `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${historicalPlaceToDelete.id}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -384,6 +390,7 @@ export default function MyHistoricalPlacesComponent() {
 
       const token = Cookies.get("jwt");
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

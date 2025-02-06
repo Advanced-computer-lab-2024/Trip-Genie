@@ -14,6 +14,7 @@ const HistoricalPlaceList = () => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourism-governor/my-historical-places",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },

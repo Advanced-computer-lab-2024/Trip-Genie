@@ -19,6 +19,7 @@ const PromoBanner = ({ setPromoMargin }) => {
         if (role !== "tourist") return;
         const api = `https://trip-genie-apis.vercel.app/tourist/promo-codes`;
         const response = await axios.get(api, {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         });
         const promoCodes = response.data.promoCodes;

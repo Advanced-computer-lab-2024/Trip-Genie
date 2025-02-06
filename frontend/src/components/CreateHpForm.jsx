@@ -119,6 +119,7 @@ export default function CreateHpForm() {
         const response = await axios.get(
           `https://trip-genie-apis.vercel.app/${role}/currencies`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -142,6 +143,7 @@ export default function CreateHpForm() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${role}/historical-tag`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -160,6 +162,7 @@ export default function CreateHpForm() {
         "https://countriesnow.space/api/v0.1/countries/cities",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -228,6 +231,7 @@ export default function CreateHpForm() {
         `https://trip-genie-apis.vercel.app/tourism-governor/historical-places`,
         formData,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",

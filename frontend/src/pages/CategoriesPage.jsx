@@ -43,6 +43,7 @@ export default function CategoriesPage() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/admin/categories",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -74,6 +75,7 @@ export default function CategoriesPage() {
           "https://trip-genie-apis.vercel.app/admin/categories",
           { name: newCategory },
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -98,6 +100,7 @@ export default function CategoriesPage() {
           `https://trip-genie-apis.vercel.app/admin/categories/${selectedCategoryId}`,
           { name: updatedCategory },
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -121,6 +124,7 @@ export default function CategoriesPage() {
       await axios.delete(
         `https://trip-genie-apis.vercel.app/admin/categories/${categoryId}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -28,6 +28,7 @@ const HistoricalPlaceList = () => {
         const api = `https://trip-genie-apis.vercel.app/'${role}/historical-places`;
         console.log(api);
         const response = await axios.get(api, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

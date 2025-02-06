@@ -165,6 +165,7 @@ export default function CreateActivity() {
         "https://countriesnow.space/api/v0.1/countries/cities",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -223,6 +224,7 @@ export default function CreateActivity() {
         `https://trip-genie-apis.vercel.app/${role}/activities`,
         formData,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",

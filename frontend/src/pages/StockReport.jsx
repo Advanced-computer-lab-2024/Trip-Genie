@@ -68,6 +68,7 @@ const StockReport = () => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${role}/stock-report`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -99,6 +100,7 @@ const StockReport = () => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${role}/stock-report?${queryParams.toString()}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

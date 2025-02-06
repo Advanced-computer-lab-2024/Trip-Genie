@@ -256,6 +256,7 @@ export function AllActivitiesComponent() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -274,6 +275,7 @@ export function AllActivitiesComponent() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -282,6 +284,7 @@ export function AllActivitiesComponent() {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -438,6 +441,7 @@ export function AllActivitiesComponent() {
         const preferredActivities = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/activities-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -447,6 +451,7 @@ export function AllActivitiesComponent() {
         const otherActivities = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/activities-not-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -461,6 +466,7 @@ export function AllActivitiesComponent() {
           `https://trip-genie-apis.vercel.app/${role}/activities`
         );
         const response = await fetch(url, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -492,6 +498,7 @@ export function AllActivitiesComponent() {
       `https://trip-genie-apis.vercel.app/${role}/maxPriceActivities`
     );
     const response = await fetch(url, {
+      credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -553,6 +560,7 @@ export function AllActivitiesComponent() {
       }
       const token = Cookies.get("jwt");
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -594,6 +602,7 @@ export function AllActivitiesComponent() {
         `https://trip-genie-apis.vercel.app/${role}/activities/${activityToDelete.id}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -642,6 +651,7 @@ export function AllActivitiesComponent() {
         const preferredActivities = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/activities-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -651,6 +661,7 @@ export function AllActivitiesComponent() {
         const otherActivities = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/activities-not-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -664,6 +675,7 @@ export function AllActivitiesComponent() {
           `https://trip-genie-apis.vercel.app/${role}/activities`
         );
         const response = await fetch(url, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

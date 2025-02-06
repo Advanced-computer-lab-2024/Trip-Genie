@@ -98,6 +98,7 @@ const ItineraryCard = ({
         `https://trip-genie-apis.vercel.app/${userInfo.role}/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -127,7 +128,7 @@ const ItineraryCard = ({
     //   const response = await axios.get(
     //     `https://trip-genie-apis.vercel.app/${userInfo.role}/getCurrency/${itinerary.currency}`,
     //     {
-    //       headers: { Authorization: `Bearer ${token}` },
+    //        credentials: "include", headers: { Authorization: `Bearer ${token}` },
     //     }
     //   );
     //   setCurrencySymbol(response.data.symbol);
@@ -318,6 +319,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -326,6 +328,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -370,6 +373,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
       `https://trip-genie-apis.vercel.app/${role}/max-price-itinerary`
     );
     const response = await fetch(url, {
+      credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -394,6 +398,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
         : "https://trip-genie-apis.vercel.app/tourist/itineraries";
 
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -410,6 +415,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
         const otherItineraries = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/itineraries-not-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -445,6 +451,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
         const preferredItineraries = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/itineraries-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -454,6 +461,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
         const otherItineraries = await fetch(
           "https://trip-genie-apis.vercel.app/tourist/itineraries-not-preference",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -467,6 +475,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
           `https://trip-genie-apis.vercel.app/${role}/itineraries`
         );
         const response = await fetch(url, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -550,6 +559,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
 
       const token = Cookies.get("jwt");
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -672,7 +682,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
   //       `https://trip-genie-apis.vercel.app/${getUserRole()}/itineraries/${selectedItinerary}`,
   //       {
   //         method: "DELETE",
-  //         headers: {
+  //          credentials: "include", headers: {
   //           Authorization: `Bearer ${token}`,
   //         },
   //       }
@@ -716,6 +726,7 @@ export function AllItinerariesComponent({ onSelectItinerary }) {
 
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

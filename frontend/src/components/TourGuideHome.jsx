@@ -13,6 +13,7 @@ const TourGuideHome = () => {
       const response = await fetch(
         "https://trip-genie-apis.vercel.app/tour-guide",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,6 +39,7 @@ const TourGuideHome = () => {
         const response = await fetch(
           "https://trip-genie-apis.vercel.app/tour-guide/itinerary",
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },

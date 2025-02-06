@@ -72,6 +72,7 @@ const TourGuideItineraryReport = () => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -116,6 +117,7 @@ const TourGuideItineraryReport = () => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report?${queryParams.toString()}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -155,6 +157,7 @@ const TourGuideItineraryReport = () => {
         const response = await axios.get(
           `https://trip-genie-apis.vercel.app/tour-guide/itineraries-report?year=${currentYear}&month=${month}`,
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },

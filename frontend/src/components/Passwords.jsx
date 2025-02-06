@@ -70,6 +70,7 @@ export default function PasswordChanger({ onSuccess }) {
           newPassword,
         },
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

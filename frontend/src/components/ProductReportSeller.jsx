@@ -90,6 +90,7 @@ const ProductReport = () => {
         if (year) url.searchParams.append("year", year);
 
         const response = await axios.get(url.toString(), {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

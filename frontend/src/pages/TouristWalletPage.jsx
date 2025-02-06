@@ -45,6 +45,7 @@ const TouristWalletPage = () => {
       const response = await fetch(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -89,6 +90,7 @@ const TouristWalletPage = () => {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -98,6 +100,7 @@ const TouristWalletPage = () => {
       const response2 = await axios.get(
         `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

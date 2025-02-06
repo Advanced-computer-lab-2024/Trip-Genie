@@ -43,6 +43,7 @@ export function MyComplaintsComponent() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/complaints",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

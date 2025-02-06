@@ -265,6 +265,7 @@ export default function HotelBookingPage() {
         "https://test.api.amadeus.com/v1/security/oauth2/token",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -295,6 +296,7 @@ export default function HotelBookingPage() {
         "https://trip-genie-apis.vercel.app/tourist/currencies/code",
         {
           method: "GET",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -361,6 +363,7 @@ export default function HotelBookingPage() {
       const response = await fetch(
         `https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=${city}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -385,6 +388,7 @@ export default function HotelBookingPage() {
                 ","
               )}&adults=${adults}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&currency=USD`,
               {
+                credentials: "include",
                 headers: {
                   Authorization: `Bearer ${accessToken}`,
                 },
@@ -500,6 +504,7 @@ export default function HotelBookingPage() {
       const response = await fetch(
         `https://test.api.amadeus.com/v3/shopping/hotel-offers/${hotel.offers[0].id}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

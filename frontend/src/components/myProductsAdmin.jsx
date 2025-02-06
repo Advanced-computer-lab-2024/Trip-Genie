@@ -51,6 +51,7 @@ const ProductCard = ({ product, onSelect, userInfo }) => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${userInfo.role}/getCurrency/${product.currency}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -138,6 +139,7 @@ export function MyProducts() {
         const response = await axios.get(
           `https://trip-genie-apis.vercel.app/${role}/`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -164,6 +166,7 @@ export function MyProducts() {
       `https://trip-genie-apis.vercel.app/${role}/max-price-products-my`
     );
     const response = await fetch(url, {
+      credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -199,6 +202,7 @@ export function MyProducts() {
         }
 
         const response = await fetch(url, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

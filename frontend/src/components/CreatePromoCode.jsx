@@ -109,6 +109,7 @@ export function CreatePromoCode() {
         "https://trip-genie-apis.vercel.app/admin/promo-code",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,

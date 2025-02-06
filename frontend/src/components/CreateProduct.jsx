@@ -73,6 +73,7 @@ const CreateProductForm = () => {
         const response = await axios.get(
           `https://trip-genie-apis.vercel.app/${userRole}/currencies`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -131,6 +132,7 @@ const CreateProductForm = () => {
         `https://trip-genie-apis.vercel.app/${userRole}/products`,
         formData,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",

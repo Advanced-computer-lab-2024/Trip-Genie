@@ -242,6 +242,7 @@ const SingleActivityAdmin = ({ activityId }) => {
           seatsToBook: seatsToBook,
         },
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -404,6 +405,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         `https://trip-genie-apis.vercel.app/${userRole}/activities/${activity._id}`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -430,6 +432,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         `https://trip-genie-apis.vercel.app/${userRole}/activityBooking`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -495,6 +498,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         const response = await fetch(
           `https://trip-genie-apis.vercel.app/${userRole}/activities/${activityIdToUse}`,
           {
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -559,6 +563,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         const response = await axios.get(
           `https://trip-genie-apis.vercel.app/${userRole}/touristActivityAttendedBookings`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -576,6 +581,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/touristActivityBookings",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -607,6 +613,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json", // Ensure content type is set to JSON
@@ -637,6 +644,7 @@ const SingleActivityAdmin = ({ activityId }) => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${activity.currency}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -674,6 +682,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -682,6 +691,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -733,6 +743,7 @@ const SingleActivityAdmin = ({ activityId }) => {
           paymentType,
         },
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -763,6 +774,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         `https://trip-genie-apis.vercel.app/${userRole}/activities/${id}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -820,6 +832,7 @@ const SingleActivityAdmin = ({ activityId }) => {
         `https://trip-genie-apis.vercel.app/${userRole}/activities/rate/${id}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${Cookies.get("jwt")}`,
@@ -862,6 +875,7 @@ const SingleActivityAdmin = ({ activityId }) => {
 
       const response = await fetch(url, {
         method: method,
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${Cookies.get("jwt")}`,
@@ -893,6 +907,7 @@ const SingleActivityAdmin = ({ activityId }) => {
 
       const response = await fetch(url, {
         method: method,
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${Cookies.get("jwt")}`,

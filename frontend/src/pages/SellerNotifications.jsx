@@ -84,6 +84,7 @@ export default function SellerNotificationsPage() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/seller/notifications`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -129,6 +130,7 @@ export default function SellerNotificationsPage() {
         `https://trip-genie-apis.vercel.app/seller/mark-notifications-seen`,
         {},
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -151,6 +153,7 @@ export default function SellerNotificationsPage() {
         `https://trip-genie-apis.vercel.app/seller/notifications/markAsSeen/${notificationId}`,
         {},
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );

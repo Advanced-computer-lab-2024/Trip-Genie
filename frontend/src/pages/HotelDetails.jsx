@@ -98,6 +98,7 @@ export default function HotelDetails() {
           "https://trip-genie-apis.vercel.app/tourist/currencies/code",
           {
             method: "GET",
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -141,6 +142,7 @@ export default function HotelDetails() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -150,6 +152,7 @@ export default function HotelDetails() {
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -320,6 +323,7 @@ export default function HotelDetails() {
       const response = await fetch(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -520,6 +524,7 @@ export default function HotelDetails() {
         "https://trip-genie-apis.vercel.app/tourist/book-hotel",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,

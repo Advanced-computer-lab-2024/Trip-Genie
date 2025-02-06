@@ -12,6 +12,7 @@ const FileViewer = ({ filename }) => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/admin/files/${filename}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
           responseType: "blob", // Important for binary data
         }

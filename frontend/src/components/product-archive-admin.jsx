@@ -127,6 +127,7 @@ export default function ProductArchive() {
         if (params.rating) url.searchParams.append("rating", params.rating);
 
         const response = await fetch(url, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -171,6 +172,7 @@ export default function ProductArchive() {
       `https://trip-genie-apis.vercel.app/${role}/max-price-products-archived`
     );
     const response = await fetch(url, {
+      credentials: "include",
       headers: {
         Authorization: `Bearer ${token}`,
       },

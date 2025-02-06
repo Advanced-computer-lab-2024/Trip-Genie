@@ -261,6 +261,7 @@ function BookingPage() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -270,6 +271,7 @@ function BookingPage() {
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -328,6 +330,7 @@ function BookingPage() {
         "https://trip-genie-apis.vercel.app/tourist/get/promo-code",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${Cookies.get("jwt")}`,
             "Content-Type": "application/json",
@@ -448,6 +451,7 @@ function BookingPage() {
         "https://trip-genie-apis.vercel.app/create-flight-checkout-session",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -532,6 +536,7 @@ function BookingPage() {
                 "https://trip-genie-apis.vercel.app/tourist/book-flight",
                 {
                   method: "POST",
+                  credentials: "include",
                   headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -622,6 +627,7 @@ function BookingPage() {
           "https://trip-genie-apis.vercel.app/tourist/book-flight",
           {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
@@ -707,6 +713,7 @@ function BookingPage() {
       const response = await fetch(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -758,6 +765,7 @@ function BookingPage() {
         "https://test.api.amadeus.com/v1/security/oauth2/token",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -788,6 +796,7 @@ function BookingPage() {
         "https://trip-genie-apis.vercel.app/tourist/currencies/code",
         {
           method: "GET",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -838,6 +847,7 @@ function BookingPage() {
           tripType === "roundTrip" ? `&returnDate=${returnDate}` : ""
         }&adults=1&nonStop=true&currencyCode=${currencyCode}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

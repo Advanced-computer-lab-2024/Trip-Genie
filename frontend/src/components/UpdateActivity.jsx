@@ -198,6 +198,7 @@ export default function UpdateActivity() {
             axios.get(
               `https://trip-genie-apis.vercel.app/${role}/activities/${id}`,
               {
+                credentials: "include",
                 headers: { Authorization: `Bearer ${token}` },
               }
             ),
@@ -314,6 +315,7 @@ export default function UpdateActivity() {
         `https://trip-genie-apis.vercel.app/${role}/activities/${id}`,
         formData,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
@@ -354,6 +356,7 @@ export default function UpdateActivity() {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/advertiser/currencies`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -421,7 +424,7 @@ export default function UpdateActivity() {
   //         `https://trip-genie-apis.vercel.app/advertiser/transportations/${transportations[editingTransportationIndex]._id}`,
   //         data,
   //         {
-  //           headers: { Authorization: `Bearer ${token}` },
+  //            credentials: "include", headers: { Authorization: `Bearer ${token}` },
   //         }
   //       );
   //       const updatedTransportations = [...transportations];
@@ -433,7 +436,7 @@ export default function UpdateActivity() {
   //         "https://trip-genie-apis.vercel.app/advertiser/transportations",
   //         data,
   //         {
-  //           headers: { Authorization: `Bearer ${token}` },
+  //            credentials: "include", headers: { Authorization: `Bearer ${token}` },
   //         }
   //       );
   //       setTransportations((prevTransportations) => [
@@ -473,7 +476,7 @@ export default function UpdateActivity() {
   //     await axios.delete(
   //       `https://trip-genie-apis.vercel.app/advertiser/transportations/${transportations[index]._id}`,
   //       {
-  //         headers: { Authorization: `Bearer ${token}` },
+  //          credentials: "include", headers: { Authorization: `Bearer ${token}` },
   //       }
   //     );
   //     const updatedTransportations = transportations.filter(

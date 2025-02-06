@@ -210,6 +210,7 @@ export default function TravelPreferences() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -218,6 +219,7 @@ export default function TravelPreferences() {
       const currencyResponse = await axios.get(
         `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

@@ -63,6 +63,7 @@ const WishlistPage = () => {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -109,6 +110,7 @@ const WishlistPage = () => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -118,6 +120,7 @@ const WishlistPage = () => {
           const response2 = await axios.get(
             `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
             {
+              credentials: "include",
               headers: { Authorization: `Bearer ${token}` },
             }
           );
@@ -150,6 +153,7 @@ const WishlistPage = () => {
       const response = await fetch(
         "https://trip-genie-apis.vercel.app/tourist/wishlist",
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -212,6 +216,7 @@ const WishlistPage = () => {
         `https://trip-genie-apis.vercel.app/tourist/remove/wishlist/${productId}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -247,6 +252,7 @@ const WishlistPage = () => {
         `https://trip-genie-apis.vercel.app/tourist/move/wishlist/${productId}`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -277,6 +283,7 @@ const WishlistPage = () => {
         "https://trip-genie-apis.vercel.app/tourist/move/all/wishlist",
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -307,6 +314,7 @@ const WishlistPage = () => {
         "https://trip-genie-apis.vercel.app/tourist/remove/all/wishlist",
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -54,6 +54,7 @@ const fetchUpcomingBookings = async () => {
     const response = await axios.get(
       "https://trip-genie-apis.vercel.app/tourist/upcoming-transportation",
       {
+        credentials: "include",
         headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
       }
     );
@@ -282,6 +283,7 @@ export default function UpcomingTransportation() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -290,6 +292,7 @@ export default function UpcomingTransportation() {
       const response2 = await axios.get(
         `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -307,6 +310,7 @@ export default function UpcomingTransportation() {
         `https://trip-genie-apis.vercel.app/tourist/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json", // Ensure content type is set to JSON
@@ -413,6 +417,7 @@ export default function UpcomingTransportation() {
       await axios.delete(
         `https://trip-genie-apis.vercel.app/tourist/transportation-booking/${selectedBooking._id}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );

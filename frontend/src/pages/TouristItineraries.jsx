@@ -252,6 +252,7 @@ export default function BookedItineraries() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -261,6 +262,7 @@ export default function BookedItineraries() {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -284,6 +286,7 @@ export default function BookedItineraries() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/touristItineraryBookings",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -346,6 +349,7 @@ export default function BookedItineraries() {
       const response = await axios.delete(
         `https://trip-genie-apis.vercel.app/tourist/itineraryBooking/${selectedBooking._id}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );

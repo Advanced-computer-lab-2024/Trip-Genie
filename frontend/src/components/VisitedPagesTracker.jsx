@@ -20,7 +20,7 @@
 //         const response = await axios.get(
 //           "https://trip-genie-apis.vercel.app/tourist/visited-pages",
 //           {
-//             headers: { Authorization: `Bearer ${token}` },
+//              credentials: "include", headers: { Authorization: `Bearer ${token}` },
 //           }
 //         );
 //         const visitedPages = await response.json();

@@ -23,6 +23,7 @@ export const UserGuide = ({ steps, onStepChange, pageName }) => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/visited-pages",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -45,6 +46,7 @@ export const UserGuide = ({ steps, onStepChange, pageName }) => {
               visitedPages,
             },
             {
+              credentials: "include",
               headers: { Authorization: `Bearer ${token}` },
             }
           );

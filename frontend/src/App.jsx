@@ -103,14 +103,16 @@ function AppContent() {
   }, [location]);
 
   const role = Cookies.get("role");
-  const localJwt = localStorage.getItem("jwt");
-  if (localJwt) {
-    Cookies.set("jwt", localJwt, { expires: 1 });
-  }
-  const localRole = localStorage.getItem("role");
-  if (localRole) {
-    Cookies.set("role", localRole, { expires: 1 });
-  }
+  useEffect(() => {
+    const localJwt = localStorage.getItem("jwt");
+    if (localJwt) {
+      Cookies.set("jwt", localJwt, { expires: 1 });
+    }
+    const localRole = localStorage.getItem("role");
+    if (localRole) {
+      Cookies.set("role", localRole, { expires: 1 });
+    }
+  }, []);
 
   return (
     <div className="App">

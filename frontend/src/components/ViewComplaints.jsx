@@ -41,6 +41,7 @@ export function ViewComplaints({ onSelectComplaint }) {
         let role = Cookies.get("role") || "guest";
         const api = `https://trip-genie-apis.vercel.app/${role}/complaints`;
         const response = await axios.get(api, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

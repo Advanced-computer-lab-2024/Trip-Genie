@@ -55,6 +55,7 @@ export default function CreateHtForm() {
         `https://trip-genie-apis.vercel.app/tourism-governor/historical-tag`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

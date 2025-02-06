@@ -246,6 +246,7 @@ export default function BookedActivities() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -255,6 +256,7 @@ export default function BookedActivities() {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -278,6 +280,7 @@ export default function BookedActivities() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/touristActivityBookings",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -340,6 +343,7 @@ export default function BookedActivities() {
       const response = await axios.delete(
         `https://trip-genie-apis.vercel.app/tourist/activityBooking/${selectedBooking._id}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );

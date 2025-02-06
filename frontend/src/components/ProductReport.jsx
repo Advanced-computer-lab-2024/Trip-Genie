@@ -89,6 +89,7 @@ const ProductReport = () => {
         url.searchParams.append("year", currentYear);
         url.searchParams.append("month", month);
         return axios.get(url.toString(), {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -156,6 +157,7 @@ const ProductReport = () => {
       if (newFilters.year) url.searchParams.append("year", newFilters.year);
 
       const response = await axios.get(url.toString(), {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
         },

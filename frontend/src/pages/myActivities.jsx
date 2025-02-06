@@ -73,6 +73,7 @@ const ActivityCard = ({ activity, onSelect, userInfo, onDeleteConfirm }) => {
           `https://trip-genie-apis.vercel.app/${userInfo.role}/populate`,
           {
             method: "POST",
+            credentials: "include",
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
@@ -269,6 +270,7 @@ export default function MyActivitiesComponent() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -277,6 +279,7 @@ export default function MyActivitiesComponent() {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -322,6 +325,7 @@ export default function MyActivitiesComponent() {
         });
 
         const response = await fetch(url, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -354,6 +358,7 @@ export default function MyActivitiesComponent() {
         `https://trip-genie-apis.vercel.app/${role}/max-price-activities-my`
       );
       const response = await fetch(url, {
+        credentials: "include",
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -387,6 +392,7 @@ export default function MyActivitiesComponent() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -472,12 +478,14 @@ export default function MyActivitiesComponent() {
           axios.get(
             "https://trip-genie-apis.vercel.app/tourist/activities-preference",
             {
+              credentials: "include",
               headers: { Authorization: `Bearer ${token}` },
             }
           ),
           axios.get(
             "https://trip-genie-apis.vercel.app/tourist/activities-not-preference",
             {
+              credentials: "include",
               headers: { Authorization: `Bearer ${token}` },
             }
           ),
@@ -521,6 +529,7 @@ export default function MyActivitiesComponent() {
         }`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

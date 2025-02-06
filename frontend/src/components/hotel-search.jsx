@@ -129,6 +129,7 @@ export default function HotelSearch() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -136,6 +137,7 @@ export default function HotelSearch() {
       const currencyResponse = await axios.get(
         `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -181,6 +183,7 @@ export default function HotelSearch() {
             searchQuery
           )}`,
           {
+            credentials: "include",
             headers: {
               "x-rapidapi-host": "booking-com.p.rapidapi.com",
               "x-rapidapi-key": API_KEY,
@@ -203,6 +206,7 @@ export default function HotelSearch() {
             "yyyy-MM-dd"
           )}&adults_number=${adults}&room_number=1&units=metric&filter_by_currency=USD&locale=en-gb&dest_type=city`,
           {
+            credentials: "include",
             headers: {
               "x-rapidapi-host": "booking-com.p.rapidapi.com",
               "x-rapidapi-key": API_KEY,

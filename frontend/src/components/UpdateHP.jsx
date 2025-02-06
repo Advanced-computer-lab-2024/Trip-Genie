@@ -106,6 +106,7 @@ export default function UpdateHistoricalPlace() {
         const response = await axios.get(
           `https://trip-genie-apis.vercel.app/tourism-governor/currencies`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -127,6 +128,7 @@ export default function UpdateHistoricalPlace() {
         const response = await fetch(
           `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${id}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -181,6 +183,7 @@ export default function UpdateHistoricalPlace() {
         "https://countriesnow.space/api/v0.1/countries/cities",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -213,6 +216,7 @@ export default function UpdateHistoricalPlace() {
       const response = await fetch(
         `https://trip-genie-apis.vercel.app/${userRole}/historical-tag`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -427,6 +431,7 @@ export default function UpdateHistoricalPlace() {
         `https://trip-genie-apis.vercel.app/${userRole}/historical-places/${id}`,
         formData,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",

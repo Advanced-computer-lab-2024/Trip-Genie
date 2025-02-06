@@ -41,7 +41,10 @@ const ActivityCard = ({
       const response = await axios.post(
         `https://trip-genie-apis.vercel.app/tourist/save-activity/${activity._id}`,
         {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          credentials: "include",
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       if (response.data.success) {
         onActivityUnsaved(activity._id);
@@ -252,6 +255,7 @@ export default function SavedActivities() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/currencies",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
         }
       );
@@ -271,6 +275,7 @@ export default function SavedActivities() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -279,6 +284,7 @@ export default function SavedActivities() {
         const currencyResponse = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -316,6 +322,7 @@ export default function SavedActivities() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/saved-activities",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

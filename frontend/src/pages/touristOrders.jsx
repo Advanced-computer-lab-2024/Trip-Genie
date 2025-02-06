@@ -99,6 +99,7 @@ export default function OrdersPage() {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -107,6 +108,7 @@ export default function OrdersPage() {
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -131,6 +133,7 @@ export default function OrdersPage() {
         `https://trip-genie-apis.vercel.app/tourist/cancelPurchase/${orderToCancel}`,
         {},
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -217,6 +220,7 @@ export default function OrdersPage() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/purchase",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

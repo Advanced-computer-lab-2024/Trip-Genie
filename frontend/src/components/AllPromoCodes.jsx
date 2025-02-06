@@ -40,6 +40,7 @@ const AllPromoCodes = () => {
         let role = Cookies.get("role") || "guest";
         const api = `https://trip-genie-apis.vercel.app/${role}/promo-code`;
         const response = await axios.get(api, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -80,6 +81,7 @@ const AllPromoCodes = () => {
         api,
         {},
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -103,6 +105,7 @@ const AllPromoCodes = () => {
         const token = Cookies.get("jwt");
         const api = `https://trip-genie-apis.vercel.app/admin/promo-code/${promoCodeToDelete._id}`;
         await axios.delete(api, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -134,6 +137,7 @@ const AllPromoCodes = () => {
         api,
         { status: newStatus },
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

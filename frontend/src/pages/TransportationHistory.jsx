@@ -31,6 +31,7 @@ const fetchData = async (userRole, dataType) => {
     const response = await axios.get(
       `https://trip-genie-apis.vercel.app/${userRole}/history-transportation`,
       {
+        credentials: "include",
         headers: { Authorization: `Bearer ${Cookies.get("jwt")}` },
       }
     );
@@ -189,6 +190,7 @@ export default function TouristTransportationHistory() {
       const response = await axios.get(
         "https://trip-genie-apis.vercel.app/tourist/",
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -198,6 +200,7 @@ export default function TouristTransportationHistory() {
       const response2 = await axios.get(
         `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -214,6 +217,7 @@ export default function TouristTransportationHistory() {
         `https://trip-genie-apis.vercel.app/tourist/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json", // Ensure content type is set to JSON

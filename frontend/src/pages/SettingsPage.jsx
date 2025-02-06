@@ -72,6 +72,7 @@ export default function SettingsPage() {
           newPassword,
         },
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );

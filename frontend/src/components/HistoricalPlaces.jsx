@@ -19,6 +19,7 @@ export function HistoricalPlacesComponent() {
         const token = Cookies.get("jwt");
         const api = `https://trip-genie-apis.vercel.app/tourism-governor/historical-places`;
         const response = await axios.get(api, {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },

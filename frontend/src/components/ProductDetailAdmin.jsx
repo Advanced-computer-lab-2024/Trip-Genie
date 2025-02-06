@@ -304,6 +304,7 @@ const ProductDetail = ({ id, onBack }) => {
         `https://trip-genie-apis.vercel.app/${userRole}/populate`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json", // Ensure content type is set to JSON
@@ -334,6 +335,7 @@ const ProductDetail = ({ id, onBack }) => {
       const response = await axios.get(
         `https://trip-genie-apis.vercel.app/${userRole}/getCurrency/${product.currency}`,
         {
+          credentials: "include",
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -372,6 +374,7 @@ const ProductDetail = ({ id, onBack }) => {
         const response = await axios.get(
           "https://trip-genie-apis.vercel.app/tourist/",
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -380,6 +383,7 @@ const ProductDetail = ({ id, onBack }) => {
         const response2 = await axios.get(
           `https://trip-genie-apis.vercel.app/tourist/getCurrency/${currencyId}`,
           {
+            credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
           }
         );
@@ -508,6 +512,7 @@ const ProductDetail = ({ id, onBack }) => {
       const response = await fetch(
         `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -583,7 +588,7 @@ const ProductDetail = ({ id, onBack }) => {
   //     const response = await fetch(
   //       `https://trip-genie-apis.vercel.app/${userRole}/products/${id}/reviews?rating=${rating}`,
   //       {
-  //         headers: {
+  //          credentials: "include", headers: {
   //           Authorization: `Bearer ${token}`,
   //         },
   //       }
@@ -610,6 +615,7 @@ const ProductDetail = ({ id, onBack }) => {
         `https://trip-genie-apis.vercel.app/${userRole}/archiveproducts/${id}`,
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -648,6 +654,7 @@ const ProductDetail = ({ id, onBack }) => {
         `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -701,6 +708,7 @@ const ProductDetail = ({ id, onBack }) => {
         "https://trip-genie-apis.vercel.app/tourist/product/addToCart",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -730,6 +738,7 @@ const ProductDetail = ({ id, onBack }) => {
         `https://trip-genie-apis.vercel.app/tourist/product/addToWishlist/${id}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -760,6 +769,7 @@ const ProductDetail = ({ id, onBack }) => {
         "https://trip-genie-apis.vercel.app/tourist/purchase",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -812,6 +822,7 @@ const ProductDetail = ({ id, onBack }) => {
         `https://trip-genie-apis.vercel.app/tourist/product/rate/${id}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -830,6 +841,7 @@ const ProductDetail = ({ id, onBack }) => {
       const updatedProductResponse = await fetch(
         `https://trip-genie-apis.vercel.app/${userRole}/products/${id}`,
         {
+          credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -854,6 +866,7 @@ const ProductDetail = ({ id, onBack }) => {
 
       const response = await fetch(url, {
         method: method,
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -879,6 +892,7 @@ const ProductDetail = ({ id, onBack }) => {
 
       const response = await fetch(url, {
         method: method,
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
