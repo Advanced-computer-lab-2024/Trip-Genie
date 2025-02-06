@@ -120,6 +120,9 @@ const Login = () => {
         const data = await response.json();
         role = data.role;
 
+        localStorage.setItem("role", role);
+        localStorage.setItem("jwt", Cookies.get("jwt"));
+
         if (role === "admin") {
           navigate("/admin");
         } else {

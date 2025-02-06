@@ -104,6 +104,9 @@ function AppContent() {
 
   const role = Cookies.get("role");
 
+  Cookies.set("jwt", localStorage.getItem("jwt"), { expires: 1 });
+  Cookies.set("role", localStorage.getItem("role"), { expires: 1 });
+
   return (
     <div className="App">
       <ScrollToTop />
