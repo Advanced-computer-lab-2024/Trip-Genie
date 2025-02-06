@@ -1201,7 +1201,7 @@ export default function TransportationPage() {
                 ).toFixed(2)}
                 currency={userPreferredCurrency.code}
                 symbol={userPreferredCurrency.symbol}
-                returnLoc={"http://localhost:3000/transportation"}
+                returnLoc={"https://trip-genie-acl.vercel.app/transportation"}
                 error={bookingError}
                 setError={setBookingError}
                 selectedTransportID={selectedTransportation._id}

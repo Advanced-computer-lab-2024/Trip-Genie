@@ -2575,7 +2575,9 @@ const ItineraryDetail = () => {
                 priceOne={(itinerary.price * exchangeRates).toFixed(2)}
                 currency={userPreferredCurrency.code}
                 symbol={userPreferredCurrency.symbol}
-                returnLoc={"http://localhost:3000/itinerary/" + itinerary._id}
+                returnLoc={
+                  "https://trip-genie-acl.vercel.app/itinerary/" + itinerary._id
+                }
                 error={bookingError}
                 setError={setBookingError}
                 availableDates={itinerary.availableDates}

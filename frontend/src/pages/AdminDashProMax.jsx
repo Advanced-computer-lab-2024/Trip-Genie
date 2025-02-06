@@ -222,6 +222,8 @@ export function Dashboard() {
         "https://trip-genie-apis.vercel.app/auth/logout"
       );
       if (response.ok) {
+        localStorage.removeItem("role");
+        localStorage.removeItem("jwt");
         Cookies.remove("jwt");
         Cookies.remove("role");
         console.log("Logged out successfully");

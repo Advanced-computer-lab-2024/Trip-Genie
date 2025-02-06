@@ -345,6 +345,8 @@ export function NavbarComponent() {
       );
 
       if (response.ok) {
+        localStorage.removeItem("role");
+        localStorage.removeItem("jwt");
         Cookies.set("jwt", "");
         Cookies.set("role", "");
         Cookies.remove("jwt");

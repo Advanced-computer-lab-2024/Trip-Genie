@@ -801,7 +801,7 @@ export default function HotelDetails() {
               hotelName={hotelData?.name}
               stripeKey={import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY}
               hotelID={hotelId}
-              returnLocation={`http://localhost:3000/hotels/${hotelId}?checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&adults=${numberOfAdults}`}
+              returnLocation={`https://trip-genie-acl.vercel.app/hotels/${hotelId}?checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&adults=${numberOfAdults}`}
               roomName={selectedRoom?.name}
               maxRooms={10}
               onWalletPayment={handleConfirmBooking}

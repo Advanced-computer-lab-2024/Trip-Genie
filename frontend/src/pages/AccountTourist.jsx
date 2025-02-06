@@ -2238,6 +2238,8 @@ export default function AccountManagement() {
         "https://trip-genie-apis.vercel.app/auth/logout"
       );
       if (response.ok) {
+        localStorage.removeItem("role");
+        localStorage.removeItem("jwt");
         Cookies.set("jwt", "");
         Cookies.set("role", "");
         Cookies.remove("jwt");

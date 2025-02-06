@@ -132,6 +132,8 @@ export function DashboardSidebar({
       );
 
       if (response.ok) {
+        localStorage.removeItem("role");
+        localStorage.removeItem("jwt");
         Cookies.remove("jwt");
         Cookies.remove("role");
         console.log("Logged out successfully");

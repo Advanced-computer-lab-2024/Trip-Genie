@@ -59,6 +59,8 @@ const Login = () => {
       );
 
       if (response.ok) {
+        localStorage.removeItem("role");
+        localStorage.removeItem("jwt");
         Cookies.set("jwt", "");
         Cookies.set("role", "");
         Cookies.remove("jwt");
@@ -122,7 +124,7 @@ const Login = () => {
         role = data.role;
 
         localStorage.setItem("role", role);
-        localStorage.setItem("jwt", Cookies.get("jwt"));
+        localStorage.setItem("jwt", data.jwt);
 
         if (role === "admin") {
           navigate("/admin");
@@ -133,6 +135,8 @@ const Login = () => {
         window.location.reload();
       } else {
         const errorData = await response.json();
+        localStorage.removeItem("role");
+        localStorage.removeItem("jwt");
 
         if (errorData.message === "Your account is not accepted yet") {
           setLoginErrorMessage(
