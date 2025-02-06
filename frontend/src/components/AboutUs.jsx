@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { MapPin, DollarSign, Building2, Users, Package } from "lucide-react";
+import aboutUsImage from "../assets/images/about-us.jpg";
 
 export function AboutUs() {
   const [counts, setCounts] = useState({
@@ -141,7 +142,7 @@ export function AboutUs() {
           </div>
           <div className="relative h-[500px] rounded-lg overflow-hidden">
             <img
-              src="..\assets\images\about-us.jpg"
+              src={aboutUsImage}
               alt="Travel Adventure"
               className="object-cover w-full h-full"
             />
