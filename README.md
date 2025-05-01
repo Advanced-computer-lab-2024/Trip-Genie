@@ -1,4 +1,6 @@
-# Trip Genie 🧞‍♂️
+# [Trip Genie 🧞‍♂️](https://trip-genie-acl.vercel.app/)
+
+(https://trip-genie-acl.vercel.app/)
 
 <p align="center">
   <img src="frontend/src/assets/images/TGlogoBG.png" alt="Trip Genie Logo" width=1012>
