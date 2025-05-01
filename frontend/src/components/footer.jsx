@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Facebook, Twitter, Instagram } from 'lucide-react';
-import teapot from '../assets/images/teapot.svg';
-import Cookies from 'js-cookie';
+import React, { useEffect, useState } from "react";
+import { Facebook, Twitter, Instagram } from "lucide-react";
+import teapot from "../assets/images/teapot.svg";
+import Cookies from "js-cookie";
 
 const FooterSection = ({ title, items }) => (
   <div className="mb-6 md:mb-0">
@@ -19,33 +19,38 @@ const FooterSection = ({ title, items }) => (
 );
 
 const SocialIcon = ({ Icon, href }) => (
-  <a href={href} className="text-gray-300 hover:text-white" target="_blank" rel="noopener noreferrer">
+  <a
+    href={href}
+    className="text-gray-300 hover:text-white"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
     <Icon className="w-5 h-5" />
   </a>
 );
 
 export function FooterComponent() {
-  const [userRole, setUserRole] = useState('guest');
+  const [userRole, setUserRole] = useState("guest");
   const year = new Date().getFullYear();
 
   useEffect(() => {
-    const role = Cookies.get('role');
-    setUserRole(role || 'guest');
+    const role = Cookies.get("role");
+    setUserRole(role || "guest");
   }, []);
 
   const getMenuItems = () => {
     const baseItems = [
-      { name: "FAQ's", link: '/faqs' },
-      { name: 'Terms & Conditions', link: '/terms' },
-      { name: 'Privacy', link: '/privacy' }
+      { name: "FAQ's", link: "/faqs" },
+      { name: "Terms & Conditions", link: "/terms" },
+      { name: "Privacy", link: "/privacy" },
     ];
 
     const roleSpecificItems = {
       tourist: [
-        { name: 'Historical Places', link: '/all-historical-places' },
-        { name: 'Activities', link: '/activity' },
-        { name: 'Itineraries', link: '/all-itineraries' },
-        { name: 'Products', link: '/all-products' }
+        { name: "Historical Places", link: "/all-historical-places" },
+        { name: "Activities", link: "/activity" },
+        { name: "Itineraries", link: "/all-itineraries" },
+        { name: "Products", link: "/all-products" },
       ],
       // admin: [
       //   { name: 'Historical Places', link: 'all-historical-places' },
@@ -54,24 +59,20 @@ export function FooterComponent() {
       //   { name: 'Products', link: '/all-products' }
       // ],
       guest: [
-        { name: 'Historical Places', link: '/all-historical-places' },
-        { name: 'Activities', link: '/activity' },
-        { name: 'Itineraries', link: '/all-itineraries' },
-        { name: 'Products', link: '/all-products' }
+        { name: "Historical Places", link: "/all-historical-places" },
+        { name: "Activities", link: "/activity" },
+        { name: "Itineraries", link: "/all-itineraries" },
+        { name: "Products", link: "/all-products" },
       ],
-      seller: [
-        { name: 'Products', link: '/all-products' }
+      seller: [{ name: "Products", link: "/all-products" }],
+      "tour-guide": [
+        { name: "Activities", link: "/activity" },
+        { name: "Itineraries", link: "/all-itineraries" },
       ],
-      'tour-guide': [
-        { name: 'Activities', link: '/activity' },
-        { name: 'Itineraries', link: '/all-itineraries' }
+      "tourism-governor": [
+        { name: "Historical Places", link: "all-historical-places" },
       ],
-      'tourism-governor': [
-        { name: 'Historical Places', link: 'all-historical-places' }
-      ],
-      advertiser: [
-        { name: 'Activities', link: '/activity' }
-      ]
+      advertiser: [{ name: "Activities", link: "/activity" }],
     };
 
     return [...(roleSpecificItems[userRole] || [])];
@@ -99,17 +100,20 @@ export function FooterComponent() {
           <FooterSection
             title="Information"
             items={[
-              { name: "FAQ's", link: '/faqs' },
-              { name: 'Terms & Conditions', link: '/terms' },
-              { name: 'Privacy', link: '/privacy' }
-            ]} />
+              { name: "FAQ's", link: "/faqs" },
+              { name: "Terms & Conditions", link: "/terms" },
+              { name: "Privacy", link: "/privacy" },
+            ]}
+          />
 
           {/* Contact Info */}
           <div>
-            <h2 className="text-sm font-semibold text-white uppercase mb-4">Contact Info</h2>
+            <h2 className="text-sm font-semibold text-white uppercase mb-4">
+              Contact Info
+            </h2>
             <ul className="text-gray-300">
               <li className="mb-2">+20 1069070700</li>
-              <li className="mb-2">info@tripGenie.com</li>
+              <li className="mb-2">tripgenieservice@gmail.com</li>
               <li className="mb-2">13523, Cairo, Egypt</li>
             </ul>
           </div>
@@ -120,7 +124,10 @@ export function FooterComponent() {
           <div className="flex justify-center md:justify-end space-x-6">
             <SocialIcon Icon={Facebook} href="https://facebook.com/tripgenie" />
             <SocialIcon Icon={Twitter} href="https://twitter.com/tripgenie" />
-            <SocialIcon Icon={Instagram} href="https://instagram.com/tripgenie" />
+            <SocialIcon
+              Icon={Instagram}
+              href="https://instagram.com/tripgenie"
+            />
           </div>
         </div>
       </div>
