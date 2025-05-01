@@ -39,9 +39,7 @@ const getAllItineraries = async (req, res) => {
       isBooked
     );
 
-
     const searchResult = await Itinerary.findByFields(searchBy);
-
 
     const searchResultIds = searchResult.map((itinerary) => itinerary._id);
     const filterResultIds = filterResult.map((itinerary) => itinerary._id);
@@ -55,9 +53,6 @@ const getAllItineraries = async (req, res) => {
     }
 
     // print the itineraries that match these search results and filter results
-    
-
-
 
     // query.push({ appropriate: true });
 
@@ -75,19 +70,15 @@ const getAllItineraries = async (req, res) => {
 
     // Handle different user roles
     if (userRole === "tourist") {
-      const bookedItineraries = await ItineraryBooking.find({ user: userId }).distinct("itinerary");
+      const bookedItineraries = await ItineraryBooking.find({
+        user: userId,
+      }).distinct("itinerary");
       query.push({
-        $or: [
-          { isActivated: true },
-          { _id: { $in: bookedItineraries } },
-        ],
+        $or: [{ isActivated: true }, { _id: { $in: bookedItineraries } }],
       });
     } else if (userRole === "tour-guide") {
       query.push({
-        $or: [
-          { isActivated: true },
-          { tourGuide: userId },
-        ],
+        $or: [{ isActivated: true }, { tourGuide: userId }],
       });
     } else {
       query.push({ isActivated: true });
@@ -96,8 +87,7 @@ const getAllItineraries = async (req, res) => {
     // If role is 'tour-guide', skip the 'appropriate' check for their own itineraries
     if (userRole !== "tour-guide") {
       query.push({ appropriate: true });
-    } 
-    else {
+    } else {
       query.push({
         $or: [
           { tourGuide: userId }, // Tour guide's own itineraries
@@ -148,7 +138,7 @@ const getMaxPrice = async (req, res) => {
       },
     }).sort({ price: -1 });
 
-    const maxPrice = maxPriceItinerary ? maxPriceItinerary.price : 0;
+    const maxPrice = maxPriceItinerary ? maxPriceItinerary.price : 1;
     console.log(maxPrice);
     res.status(200).json(maxPrice);
   } catch (error) {
@@ -191,11 +181,10 @@ const getItinerariesByPreference = async (req, res) => {
       budget, //max
       price, //min
       undefined,
-      undefined, 
+      undefined,
       tourType,
       tourLanguages
     );
-
 
     const filterResultIds = filterResult.map((itinerary) => itinerary._id);
 
@@ -225,10 +214,9 @@ const getItinerariesByPreference = async (req, res) => {
       query.push({ isActivated: true });
     }
 
-        // appropriate must be true and isActivated must be true 
+    // appropriate must be true and isActivated must be true
 
     query.push({ appropriate: true });
-
 
     let itinerariesQuery = Itinerary.find({
       $and: query,
@@ -243,7 +231,6 @@ const getItinerariesByPreference = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 const theHolyAntiFilter = async (req, res) => {
   try {

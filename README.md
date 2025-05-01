@@ -1,4 +1,5 @@
 # [Trip Genie 🧞‍♂️](https://trip-genie-acl.vercel.app/)
+
 (https://trip-genie-acl.vercel.app/)
 
 <p align="center">

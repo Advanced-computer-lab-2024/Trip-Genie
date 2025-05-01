@@ -77,7 +77,7 @@ const getMaxPrice = async (req, res) => {
   if (maxPriceProduct) {
     maxPrice = await maxPriceProduct.price;
   } else {
-    maxPrice = 0;
+    maxPrice = 1;
   }
   res.status(200).json(maxPrice);
 };
